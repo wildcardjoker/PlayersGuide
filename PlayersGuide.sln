@@ -7,6 +7,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Level03", "Level03", "{0447
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelloWorld", "Level03\HelloWorld\HelloWorld.csproj", "{73507C31-BEC9-4C7E-9241-DB12E3AE2DF2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsolasAndTelim", "Level03\ConsolasAndTelim\ConsolasAndTelim.csproj", "{D51EC919-2049-406F-8BA8-064A29A78F95}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,12 +19,17 @@ Global
 		{73507C31-BEC9-4C7E-9241-DB12E3AE2DF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73507C31-BEC9-4C7E-9241-DB12E3AE2DF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73507C31-BEC9-4C7E-9241-DB12E3AE2DF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D51EC919-2049-406F-8BA8-064A29A78F95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D51EC919-2049-406F-8BA8-064A29A78F95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D51EC919-2049-406F-8BA8-064A29A78F95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D51EC919-2049-406F-8BA8-064A29A78F95}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{73507C31-BEC9-4C7E-9241-DB12E3AE2DF2} = {04473F7E-16B7-4496-B056-E9E930DD1AF8}
+		{D51EC919-2049-406F-8BA8-064A29A78F95} = {04473F7E-16B7-4496-B056-E9E930DD1AF8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F9CE9BD2-E80F-4C81-B512-F1FA1D48E5FC}
