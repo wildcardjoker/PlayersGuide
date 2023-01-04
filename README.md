@@ -5,4 +5,10 @@ The code samples start from the beginning - sure, I could start halfway through 
 
 As such, even though many of the samples are incredibly simple (nobody needs a Hello World sample), I've decided to include them regardless. It's not like they're complicated samples, so I may as well enjoy the ride.
 
-_Note_: You'll notice that the samples start at `Level 3`. That's because the first two chapters relate to a description of `C#` and installing `Visual Studio`. No code required :smiley:
+## Missing Levels
+
+You'll notice that some levels don't have a matching code sample. The :blue_book: doesn't have code samples for every ~chapter~ Level :smiley:. Here's a list of the "missing" chapters, and why there's no corresponding sample:
+
+- :bookmark: Level 1: A description and introduction to `C#`.
+- :bookmark: Level 2: A guide to installing Visual Studio.
+- :bookmark: Level 5: An introduction to variables.
