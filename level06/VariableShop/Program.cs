@@ -46,3 +46,53 @@ Console.WriteLine($"{nameof(floatVariable).PadRight(padding)}: {floatVariable}")
 Console.WriteLine($"{nameof(doubleVariable).PadRight(padding)}: {doubleVariable}");
 Console.WriteLine($"{nameof(decimalVariable).PadRight(padding)}: {decimalVariable}");
 Console.WriteLine($"{nameof(wildCardJokerIsAwesome).PadRight(padding)}: {wildCardJokerIsAwesome}");
+
+
+/* The Variable Shop Returns
+ *
+ * "Hey! Programmer!" It's the shopkeeper from the Variable Shop who hobbles over to you.
+ * "Thans to your help, variables are selling like RAM cakes! But these people just arent any good at programming. They keep asking
+ * how to modify the values of the variables thy're buying, and ... well ... frankly, I have no clue. But you're a programmer, right?
+ * Maybe you could show me so I can show my customers?"
+ *
+ * Objectives:
+ * Modify your Variable Shop program to assign a new, different literal value to each of the 14 original variables.
+ * Do not declare any additional variables.
+ * Use Console.WriteLine to display the updated contents of each variable.
+ */
+
+// It feels wrong to not use methods here, but in keeping with the spirit of the book, I'm going to update the variables
+// one by one, and then use another set of Console.WriteLine statements to display the new values.
+
+byteVariable = 128;
+shortVariable = 1;
+intVariable = 77;
+longVariable = 10_000_000;
+sbyteVariable = 16;
+uShortVariable = 254;
+uintVariable = 0;
+singleCharacter = 'Z';
+stringVariable = "The string has been updated";
+floatVariable = 0.25f;
+doubleVariable = -1.2345;
+decimalVariable = 17.85m;
+wildCardJokerIsAwesome = false; // a little white lie for the sake of demonstration purposes 🙂
+
+// Add some white space.
+// We could use the \n control character, but in keeping with the spirit of the book, I'll just use empty Console.WriteLine statements
+Console.WriteLine();
+Console.WriteLine();
+Console.WriteLine($"{nameof(byteVariable).PadRight(padding)}: {byteVariable}");
+Console.WriteLine($"{nameof(shortVariable).PadRight(padding)}: {shortVariable}");
+Console.WriteLine($"{nameof(intVariable).PadRight(padding)}: {intVariable}");
+Console.WriteLine($"{nameof(longVariable).PadRight(padding)}: {longVariable}");
+Console.WriteLine($"{nameof(sbyteVariable).PadRight(padding)}: {sbyteVariable}");
+Console.WriteLine($"{nameof(uShortVariable).PadRight(padding)}: {uShortVariable}");
+Console.WriteLine($"{nameof(uintVariable).PadRight(padding)}: {uintVariable}");
+Console.WriteLine($"{nameof(ulongVariable).PadRight(padding)}: {ulongVariable}");
+Console.WriteLine($"{nameof(singleCharacter).PadRight(padding)}: {singleCharacter}");
+Console.WriteLine($"{nameof(stringVariable).PadRight(padding)}: {stringVariable}");
+Console.WriteLine($"{nameof(floatVariable).PadRight(padding)}: {floatVariable}");
+Console.WriteLine($"{nameof(doubleVariable).PadRight(padding)}: {doubleVariable}");
+Console.WriteLine($"{nameof(decimalVariable).PadRight(padding)}: {decimalVariable}");
+Console.WriteLine($"{nameof(wildCardJokerIsAwesome).PadRight(padding)}: {wildCardJokerIsAwesome}");
