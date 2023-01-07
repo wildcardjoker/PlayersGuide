@@ -65,7 +65,8 @@ var leftColumn  = column - 1;
 var rightColumn = column + 1;
 
 // Display the deployment instructions in a different colour of your choosing
-Console.ForegroundColor = ConsoleColor.Yellow;
+Console.ForegroundColor = ConsoleColor.White;
+Console.BackgroundColor = ConsoleColor.DarkRed;
 Console.WriteLine($"({row},{leftColumn})");
 Console.WriteLine($"({bottomRow},{column})");
 Console.WriteLine($"({row},{rightColumn})");
