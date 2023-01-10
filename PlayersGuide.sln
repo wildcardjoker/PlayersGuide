@@ -57,6 +57,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "level13", "level13", "{0EAD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TakingANumber", "level13\TakingANumber\TakingANumber.csproj", "{215265C2-F602-49CA-AB13-4898A767D61F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Countdown", "level13\Countdown\Countdown.csproj", "{E0A089F0-A8A5-4A52-BECA-BF442DCB2C9E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -131,6 +133,10 @@ Global
 		{215265C2-F602-49CA-AB13-4898A767D61F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{215265C2-F602-49CA-AB13-4898A767D61F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{215265C2-F602-49CA-AB13-4898A767D61F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0A089F0-A8A5-4A52-BECA-BF442DCB2C9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0A089F0-A8A5-4A52-BECA-BF442DCB2C9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0A089F0-A8A5-4A52-BECA-BF442DCB2C9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0A089F0-A8A5-4A52-BECA-BF442DCB2C9E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -153,6 +159,7 @@ Global
 		{9675FF7B-BA20-4DE3-A460-08F696F1F6C1} = {143FC1A3-57A6-454E-AD8D-408F747F7294}
 		{F538CBA8-20B2-4F1A-B281-7130887238EA} = {143FC1A3-57A6-454E-AD8D-408F747F7294}
 		{215265C2-F602-49CA-AB13-4898A767D61F} = {0EAD40E7-0380-4BEC-8889-C3203E53EC63}
+		{E0A089F0-A8A5-4A52-BECA-BF442DCB2C9E} = {0EAD40E7-0380-4BEC-8889-C3203E53EC63}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F9CE9BD2-E80F-4C81-B512-F1FA1D48E5FC}
