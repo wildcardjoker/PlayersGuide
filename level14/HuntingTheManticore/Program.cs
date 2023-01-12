@@ -26,7 +26,8 @@ Console.Clear();
 do
 {
     DisplayStatus();
-    var targetLocation = AskForManticoreLocation("Enter desired cannon range");
+    var manticoreLocationEstimate = AskForManticoreLocation("Enter desired cannon range");
+    ShootCannon(manticoreLocationEstimate);
     currentRound++;
 }
 while (cityHealth > minCityHealth && manticoreHealth > minManticoreHealth);
@@ -66,6 +67,29 @@ void DisplayStatus()
     Console.WriteLine($"The cannon is expected to deal {damage} damage this round.");
 }
 
+// Determines whether the current round deals Electric Fire damage
+bool IsElectricFireRound() => currentRound % electricFireRound == 0;
+
+// Determines whether the current round deals Electric damage
+bool IsElectricRound() => currentRound % electricRound == 0;
+
+// Determines whether the current round deals Fire damage
+bool IsFireRound() => currentRound % fireRound == 0;
+
 // Calculate the damage to the Manticore if the hunter scores a hit this round.
-int CalculateDamage() => currentRound % electricFireRound == 0                              ? majorDamage :
-                         currentRound % electricRound == 0 || currentRound % fireRound == 0 ? bonusDamage : standardDamage;
+int CalculateDamage() => IsElectricFireRound() ? majorDamage : IsElectricRound() || IsFireRound() ? bonusDamage : standardDamage;
+
+// Fire at the Manticore
+void ShootCannon(int location)
+{
+    if (location == manticoreLocation)
+    {
+        Console.WriteLine("That round was a DIRECT HIT!");
+        manticoreHealth -= CalculateDamage();
+    }
+    else
+    {
+        Console.WriteLine($"That round {(location < manticoreLocation ? "FELL SHORT" : "OVERSHOT")} the range.");
+        cityHealth--;
+    }
+}
