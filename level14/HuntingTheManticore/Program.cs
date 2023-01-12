@@ -87,17 +87,30 @@ bool IsFireRound() => currentRound % fireRound == 0;
 // Calculate the damage to the Manticore if the hunter scores a hit this round.
 int CalculateDamage() => IsElectricFireRound() ? majorDamage : IsElectricRound() || IsFireRound() ? bonusDamage : standardDamage;
 
+// Determine the console colour by the Round damage type
+ConsoleColor GetDamageColour() =>
+    IsElectricFireRound() ? ConsoleColor.Green : IsElectricRound() ? ConsoleColor.Cyan : IsFireRound() ? ConsoleColor.Red : ConsoleColor.White;
+
 // Fire at the Manticore
 void ShootCannon(int location)
 {
     if (location == manticoreLocation)
     {
+        Console.ForegroundColor = GetDamageColour();
         Console.WriteLine("That round was a DIRECT HIT!");
         manticoreHealth -= CalculateDamage();
     }
     else
     {
+        Console.ForegroundColor = ConsoleColor.Magenta;
         Console.WriteLine($"That round {(location < manticoreLocation ? "FELL SHORT" : "OVERSHOT")} the range.");
+    }
+
+    Console.ResetColor();
+
+    // If the Manticore is still alive, reduce the city's health by 1
+    if (manticoreHealth > minManticoreHealth)
+    {
         cityHealth--;
     }
 }
