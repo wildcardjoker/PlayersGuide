@@ -32,6 +32,14 @@ do
 }
 while (cityHealth > minCityHealth && manticoreHealth > minManticoreHealth);
 
+// Something has been destroyed - either the Manticore, or the city.
+// Advise the player of the outcome.
+Console.WriteLine();
+Console.WriteLine(
+    cityHealth > minCityHealth
+        ? "The Manticore has been destroyed! The city of Consolas has been saved!"
+        : "The city has been destroyed, reduced to a pile of rubble.\nThe Uncoded One laughs at your pitiful defences.");
+
 // Methods
 
 // Accept input from the console and convert it to an integer.
