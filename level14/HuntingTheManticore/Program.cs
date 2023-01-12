@@ -35,10 +35,14 @@ while (cityHealth > minCityHealth && manticoreHealth > minManticoreHealth);
 // Something has been destroyed - either the Manticore, or the city.
 // Advise the player of the outcome.
 Console.WriteLine();
+Console.ForegroundColor = ConsoleColor.Yellow;
 Console.WriteLine(
     cityHealth > minCityHealth
         ? "The Manticore has been destroyed! The city of Consolas has been saved!"
         : "The city has been destroyed, reduced to a pile of rubble.\nThe Uncoded One laughs at your pitiful defences.");
+Console.ResetColor();
+
+// End of application
 
 // Methods
 
@@ -96,17 +100,29 @@ void ShootCannon(int location)
 {
     if (location == manticoreLocation)
     {
+        Console.Write("That round was a ");
         Console.ForegroundColor = GetDamageColour();
-        Console.WriteLine("That round was a DIRECT HIT!");
+        Console.WriteLine($"DIRECT HIT for {CalculateDamage()} damage!");
+        Console.ResetColor();
         manticoreHealth -= CalculateDamage();
     }
     else
     {
-        Console.ForegroundColor = ConsoleColor.Magenta;
-        Console.WriteLine($"That round {(location < manticoreLocation ? "FELL SHORT" : "OVERSHOT")} the range.");
-    }
+        Console.Write("That round ");
+        if (location < manticoreLocation)
+        {
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.Write("FELL SHORT of");
+        }
+        else
+        {
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write("OVERSHOT");
+        }
 
-    Console.ResetColor();
+        Console.ResetColor();
+        Console.WriteLine(" the range.");
+    }
 
     // If the Manticore is still alive, reduce the city's health by 1
     if (manticoreHealth > minManticoreHealth)
