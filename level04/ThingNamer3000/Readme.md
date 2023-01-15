@@ -18,6 +18,6 @@ He shows you the following program:
 
 ## Objectives
 - Rebuild the program above on your computer.
-- Add comments near each of the four variables that describe what they store. You must use at least one of each comment type (// and /)
+- Add comments near each of the four variables that describe what they store. You must use at least one of each comment type (`//` and `/*`)
 - Find the bug in the text displayed and fix it.
 - Answer this question: Aside from comments, what else could you do to make this code more understandable?
