@@ -9,6 +9,7 @@ As such, even though many of the samples are incredibly simple (nobody needs a H
 
 You'll notice that some levels don't have a matching code sample. The :blue_book: doesn't have code samples for every ~chapter~ Level :smiley:. Here's a list of the "missing" chapters, and why there's no corresponding sample:
 
-- :bookmark: Level 1: A description and introduction to `C#`.
-- :bookmark: Level 2: A guide to installing Visual Studio.
-- :bookmark: Level 5: An introduction to variables.
+- :bookmark: Level  1: A description and introduction to `C#`.
+- :bookmark: Level  2: A guide to installing Visual Studio.
+- :bookmark: Level  5: An introduction to variables.
+- :bookmark: Level 15: Object-oriented Concepts.
