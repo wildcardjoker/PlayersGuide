@@ -15,6 +15,10 @@ void RequestAction()
     {
         Console.Write($"The chest is {state}. What do you want to do? ");
         action = Console.ReadLine();
+        if (action == null)
+        {
+            action = string.Empty;
+        }
     }
     while (!CanPerformAction(action));
 
