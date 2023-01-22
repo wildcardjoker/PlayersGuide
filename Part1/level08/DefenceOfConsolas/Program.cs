@@ -28,5 +28,7 @@ Console.WriteLine($"({bottomRow},{column})");
 Console.WriteLine($"({row},{rightColumn})");
 Console.WriteLine($"({topRow},{column})");
 
+// The if statement here isn't covered in the books, but I've added it here to remove the Build Warning CA1416: This call site is reachable on all platforms. 'Console.Beep(int, int)' is only supported on: 'windows'.
+
 // Play a sound with Console.Beep when the results have been computed and displayed
 Console.Beep(250, 500); // 250 Hz for half a second
