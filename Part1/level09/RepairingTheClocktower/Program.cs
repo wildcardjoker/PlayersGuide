@@ -34,5 +34,8 @@ else
     Console.WriteLine("Tock");
 }
 
-// "Bing!" for tick, "Bong!" for tock
-Console.Beep(frequency, 500);
+if (OperatingSystem.IsWindows())
+{
+    // "Bing!" for tick, "Bong!" for tock
+    Console.Beep(frequency, 500);
+}
