@@ -75,14 +75,16 @@ internal class Arrow
         {
             ArrowHeadType.Wood     => 3,
             ArrowHeadType.Obsidian => 5,
-            ArrowHeadType.Steel    => 10
+            ArrowHeadType.Steel    => 10,
+            _                      => 0
         };
 
         var fletchingCost = Fletching switch
         {
             FletchingType.GooseFeathers  => 3,
             FletchingType.Plastic        => 10,
-            FletchingType.TurkeyFeathers => 5
+            FletchingType.TurkeyFeathers => 5,
+            _                            => 0
         };
         return arrowHeadCost + fletchingCost + Length * 0.05f;
     }
