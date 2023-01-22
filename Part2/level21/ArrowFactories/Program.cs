@@ -1,20 +1,52 @@
 ﻿// ReSharper disable FieldCanBeMadeReadOnly.Local
 
-var title     = "The Properties of Arrows";
-var minLength = 60;
-var maxLength = 100;
+var title = "Arrow Factories";
 Console.Title = title;
 Console.WriteLine(title);
-DisplayArrowHeadTypes();
-var arrowHead = (ArrowHeadType) AskForNumberInRange("Which arrowhead type would you like", 1, 3);
-DisplayFletchingTypes();
-var fletching = (FletchingType) AskForNumberInRange("Which fletching would you like", 1, 3);
-var length    = AskForNumberInRange($"How long would you like your arrow ({minLength} - {maxLength})", minLength, maxLength);
-var arrow     = new Arrow(arrowHead, fletching, length);
+var arrow = GetArrowChoice();
 
 Console.ForegroundColor = ConsoleColor.Yellow;
 Console.WriteLine($"\n\nAn arrow with a {arrow.ArrowHead} head and {arrow.Fletching} fletching, of length {arrow.Length}cm will cost {arrow.Cost} gold");
 Console.ResetColor();
+
+Arrow CreateCustomArrow()
+{
+    var minLength = 60;
+    var maxLength = 100;
+    DisplayArrowHeadTypes();
+    var arrowHead = (ArrowHeadType) AskForNumberInRange("Which arrowhead type would you like", 1, 3);
+    DisplayFletchingTypes();
+    var fletching = (FletchingType) AskForNumberInRange("Which fletching would you like", 1, 3);
+    var length    = AskForNumberInRange($"How long would you like your arrow ({minLength} - {maxLength})", minLength, maxLength);
+    return new Arrow(arrowHead, fletching, length);
+}
+
+Arrow GetArrowChoice()
+{
+    DisplayStandardArrows();
+    var arrowType = (StandardArrow) AskForNumberInRange("Which arrow would you like", 1, 4);
+    switch (arrowType)
+    {
+        case StandardArrow.Beginner:
+            return Arrow.CreateBeginnerArrow();
+        case StandardArrow.Elite:
+            return Arrow.CreateEliteArrow();
+        case StandardArrow.Marksman:
+            return Arrow.CreateMarksmanArrow();
+        case StandardArrow.Custom:
+        default:
+            return CreateCustomArrow();
+    }
+}
+
+void DisplayStandardArrows()
+{
+    Console.WriteLine("\nPlease choose an Arrow:");
+    Console.WriteLine($"{(int) StandardArrow.Beginner} - {StandardArrow.Beginner}");
+    Console.WriteLine($"{(int) StandardArrow.Elite} - {StandardArrow.Elite}");
+    Console.WriteLine($"{(int) StandardArrow.Marksman} - {StandardArrow.Marksman}");
+    Console.WriteLine($"{(int) StandardArrow.Custom} - {StandardArrow.Custom}");
+}
 
 void DisplayArrowHeadTypes()
 {
@@ -106,6 +138,12 @@ internal class Arrow
         }
     }
     #endregion
+
+    // Factory methods for creating standard arrows
+    public static Arrow CreateBeginnerArrow() => new Arrow(ArrowHeadType.Wood,  FletchingType.GooseFeathers, 75);
+    public static Arrow CreateEliteArrow()    => new Arrow(ArrowHeadType.Steel, FletchingType.Plastic,       95);
+
+    public static Arrow CreateMarksmanArrow() => new Arrow(ArrowHeadType.Steel, FletchingType.GooseFeathers, 65);
 }
 
 internal enum ArrowHeadType
@@ -120,4 +158,12 @@ internal enum FletchingType
     Plastic = 1,
     TurkeyFeathers,
     GooseFeathers
+}
+
+internal enum StandardArrow
+{
+    Beginner = 1,
+    Elite,
+    Marksman,
+    Custom
 }
