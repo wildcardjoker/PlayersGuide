@@ -1,6 +1,6 @@
 ﻿// ReSharper disable FieldCanBeMadeReadOnly.Local
 
-var title     = "Vin Fletcher's Arrows";
+var title     = "The Properties of Arrows";
 var minLength = 60;
 var maxLength = 100;
 Console.Title = title;
