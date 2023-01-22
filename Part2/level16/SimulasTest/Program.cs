@@ -14,7 +14,11 @@ void RequestAction()
     do
     {
         Console.Write($"The chest is {state}. What do you want to do? ");
+
+        // Disable a build warning that action may be null
+#pragma warning disable CS8600
         action = Console.ReadLine();
+#pragma warning restore CS8600
         if (action == null)
         {
             action = string.Empty;
