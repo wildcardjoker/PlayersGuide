@@ -14,3 +14,4 @@ You'll notice that some levels don't have a matching code sample. The :blue_book
 - :bookmark: Level  5: An introduction to variables.
 - :bookmark: Level 15: Object-oriented Concepts.
 - :bookmark: Level 22: Null handling.
+- :bookmark: Level 23: A primer on object-oriented design concepts.
