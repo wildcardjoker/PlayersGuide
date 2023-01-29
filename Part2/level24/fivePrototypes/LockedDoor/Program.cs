@@ -50,7 +50,16 @@ public class Door
     {
         DisplayDoorStatus();
         DisplayActions();
-        return (Action) AskForNumber("Which action would you like to perform");
+        Console.Write("What is your command? ");
+        var action = Console.ReadLine();
+        return action switch
+        {
+            "Open"            => Action.Open,
+            "Close"           => Action.Close,
+            "Lock"            => Action.Lock,
+            "Unlock"          => Action.Unlock,
+            "Change Passcode" => Action.ChangePasscode
+        };
     }
 
     public string PerformAction(Action action) => PerformAction(action, 0, 0);
@@ -97,11 +106,7 @@ public class Door
 
     private void DisplayActions()
     {
-        Console.WriteLine("The following actions are available:");
-        foreach (var action in Actions)
-        {
-            Console.WriteLine($"{(int) action}: {action}");
-        }
+        Console.WriteLine("You can choose from the following commands: Open, Close, Lock, Unlock, Change Passcode");
     }
 
     private void DisplayDoorStatus() => Console.WriteLine($"The door is {DoorStatus}");
