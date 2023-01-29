@@ -54,7 +54,8 @@ public class Door
             "Close"           => Action.Close,
             "Lock"            => Action.Lock,
             "Unlock"          => Action.Unlock,
-            "Change Passcode" => Action.ChangePasscode
+            "Change Passcode" => Action.ChangePasscode,
+            _                 => Action.Open
         };
     }
 
