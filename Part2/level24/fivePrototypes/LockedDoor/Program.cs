@@ -23,10 +23,6 @@ while (true)
 
 public class Door
 {
-    #region Fields
-    private static readonly Action[] Actions = {Action.Open, Action.Close, Action.Lock, Action.Unlock, Action.ChangePasscode};
-    #endregion
-
     #region Constructors
     public Door(int passCode)
     {
@@ -146,7 +142,7 @@ public class Door
         //- A locked door can be unlocked, but a numeric passcode is needed, and the door will only unlock if the code supplied matches the door's current passcode.
         if (DoorStatus == Status.Locked && PassCode == passcode)
         {
-            DoorStatus = Status.Unlocked;
+            DoorStatus = Status.Closed;
             return "You unlock the door.";
         }
 
@@ -154,7 +150,7 @@ public class Door
         {
             case Status.Locked:
                 return "You didn't enter the correct passcode.";
-            case Status.Unlocked:
+            case Status.Closed:
                 return "The door is already unlocked.";
             default:
                 return "You cannot unlock the door at this time.";
@@ -175,6 +171,5 @@ public enum Status
 {
     Closed,
     Locked,
-    Open,
-    Unlocked
+    Open
 }
