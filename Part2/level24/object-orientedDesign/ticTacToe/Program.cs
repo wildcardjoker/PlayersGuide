@@ -14,12 +14,17 @@ while (turn < 9)
     DisplayBoard();
     Console.WriteLine($"\nIt's {currentplayer.Symbol}'s turn");
     currentplayer.GetSquare(board);
+    if (currentplayer.HasWon(board))
+    {
+        break;
+    }
+
     currentplayer = currentplayer == player1 ? player2 : player1;
     turn++;
 }
 
 DisplayBoard();
-Console.WriteLine("\nIt's a draw. Let's play again...");
+Console.WriteLine(currentplayer.HasWon(board) ? $"\n {currentplayer.Symbol} has won. Congratulations!" : "\nIt's a draw. Let's play again...");
 
 void DisplayBoard()
 {
@@ -38,7 +43,11 @@ public class Board
     private readonly Cell[,] _cells = new Cell[3, 3];
     #endregion
 
-    public string GetCellValue(int x, int y) => _cells[x, y] switch
+    public Cell GetCell(int x, int y) => _cells[x, y];
+
+    public string GetCellValue(Square square) => GetCellValue(square.X, square.Y);
+
+    public string GetCellValue(int x, int y) => GetCell(x, y) switch
     {
         Cell.Empty => " ",
         Cell.O     => "O",
@@ -100,6 +109,16 @@ public class Player
 
         board.SetCell(square, Symbol);
     }
+
+    public bool HasWon(Board board) =>
+        (board.GetCell(0,    0) == Symbol && board.GetCell(0, 1) == Symbol && board.GetCell(0, 2) == Symbol)
+        || (board.GetCell(1, 0) == Symbol && board.GetCell(1, 1) == Symbol && board.GetCell(1, 2) == Symbol)
+        || (board.GetCell(2, 0) == Symbol && board.GetCell(2, 1) == Symbol && board.GetCell(2, 2) == Symbol)
+        || (board.GetCell(0, 0) == Symbol && board.GetCell(1, 0) == Symbol && board.GetCell(2, 0) == Symbol)
+        || (board.GetCell(0, 1) == Symbol && board.GetCell(1, 1) == Symbol && board.GetCell(2, 1) == Symbol)
+        || (board.GetCell(0, 2) == Symbol && board.GetCell(1, 2) == Symbol && board.GetCell(2, 2) == Symbol)
+        || (board.GetCell(0, 0) == Symbol && board.GetCell(1, 1) == Symbol && board.GetCell(2, 2) == Symbol)
+        || (board.GetCell(0, 2) == Symbol && board.GetCell(1, 1) == Symbol && board.GetCell(2, 0) == Symbol);
 }
 
 public class Square
