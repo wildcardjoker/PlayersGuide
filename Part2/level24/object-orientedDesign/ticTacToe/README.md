@@ -25,3 +25,10 @@ Your job is to recreate the game of Tick-Tac-Toe, allowing two players to compet
 
 - Build the game of Tic-Tac-Toe as described in the requirements above. Starting with CRC cards is recommended, but the goal is to make working software, not CRC cards.
 - **Answer this question**: How might you modify your completed program if running multiple rounds was a requirement (for example, a best-out-of-five series)?
+
+### Amswer
+
+The program would need to be modified in the following ways:
+
+- A `Round` class would be added
+- The `Game` would create a number of rounds and record the result (Player1 win, Player2 win, or Draw).
