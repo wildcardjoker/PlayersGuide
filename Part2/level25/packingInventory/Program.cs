@@ -1,4 +1,28 @@
-﻿// InventoryItem class
+﻿// Create a new pack.
+
+Console.Title = "Packing Inventory";
+var maxItems  = Convert.ToInt32(AskForNumberInRange("How many items can your pack hold", 1, 20));
+var maxWeight = AskForNumberInRange("What is the maximum weight", 10, 100);
+var maxVolume = AskForNumberInRange("What is the maximum volume", 10, 100);
+var pack      = new Pack(maxItems, maxWeight, maxVolume);
+
+float AskForNumber(string text)
+{
+    Console.Write($"{text}? "); // Add a space to the end of the question
+    return Convert.ToSingle(Console.ReadLine());
+}
+
+float AskForNumberInRange(string text, int min, int max)
+{
+    float number;
+    do
+    {
+        number = AskForNumber(text);
+    }
+    while (number < min || number > max);
+
+    return number;
+}
 
 public class InventoryItem
 {
