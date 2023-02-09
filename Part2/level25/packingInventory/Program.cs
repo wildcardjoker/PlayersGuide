@@ -58,4 +58,22 @@ public class Sword : InventoryItem
     #endregion
 }
 
-// // Pack class
+public class Pack
+{
+    #region Constructors
+    public Pack(int maxItems, float maxWeight, float maxVolume)
+    {
+        InventoryItems = new InventoryItem[maxItems];
+        MaxItems       = maxItems;
+        MaxWeight      = maxWeight;
+        MaxVolume      = maxVolume;
+    }
+    #endregion
+
+    #region Properties
+    public InventoryItem[] InventoryItems {get;}
+    public int             MaxItems       {get;}
+    public float           MaxVolume      {get;}
+    public float           MaxWeight      {get;}
+    #endregion
+}
