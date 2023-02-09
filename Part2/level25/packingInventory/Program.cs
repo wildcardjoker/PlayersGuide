@@ -37,7 +37,13 @@ public class Rope : InventoryItem
     #endregion
 }
 
-// Water class
+public class Water : InventoryItem
+{
+    #region Constructors
+    public Water() : base(2, 3) {}
+    #endregion
+}
+
 // FoodRation class
 // Sword class
 // // Pack class
