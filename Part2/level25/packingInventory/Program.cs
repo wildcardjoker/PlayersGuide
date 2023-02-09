@@ -8,12 +8,14 @@ var pack      = new Pack(maxItems, maxWeight, maxVolume);
 
 do
 {
-    Console.WriteLine($"The pack contains {pack.CurrentItemCount} items, weighs {pack.CurrentWeight} and has a volume of {pack.CurrentVolume}");
+    DisplayPackStats();
     DisplayInventoryMenu();
     var item = GetInventoryItem();
     Console.WriteLine(pack.Add(item) ? $"{item} was added to your pack" : $"Could not add {item} due to pack limits");
 }
 while (pack.CurrentItemCount < pack.MaxItems && pack.CurrentVolume < pack.MaxVolume && pack.CurrentWeight < pack.MaxWeight);
+
+DisplayPackStats();
 
 void DisplayInventoryMenu()
 {
@@ -57,6 +59,10 @@ float AskForNumberInRange(string text, int min, int max)
 
     return number;
 }
+
+void DisplayPackStats() =>
+    Console.WriteLine(
+        $"The pack contains {pack.CurrentItemCount} of {pack.MaxItems} items, weighs {pack.CurrentWeight} of {pack.MaxWeight} and has a volume of {pack.CurrentVolume} of {pack.MaxVolume}");
 
 public class InventoryItem
 {
