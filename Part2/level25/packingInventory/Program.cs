@@ -51,5 +51,11 @@ public class FoodRation : InventoryItem
     #endregion
 }
 
-// Sword class
+public class Sword : InventoryItem
+{
+    #region Constructors
+    public Sword() : base(5, 3) {}
+    #endregion
+}
+
 // // Pack class
