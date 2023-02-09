@@ -6,6 +6,24 @@ var maxWeight = AskForNumberInRange("What is the maximum weight", 10, 100);
 var maxVolume = AskForNumberInRange("What is the maximum volume", 10, 100);
 var pack      = new Pack(maxItems, maxWeight, maxVolume);
 
+do
+{
+    Console.WriteLine($"The pack contains {pack.CurrentItemCount} items, weighs {pack.CurrentWeight} and has a volume of {pack.CurrentVolume}");
+    DisplayInventoryMenu();
+}
+while (pack.CurrentItemCount < pack.MaxItems && pack.CurrentVolume < pack.MaxVolume && pack.CurrentWeight < pack.MaxWeight);
+
+void DisplayInventoryMenu()
+{
+    Console.WriteLine("\nThe following items can be added to your pack:");
+    Console.WriteLine("1) Arrow");
+    Console.WriteLine("2) Bow");
+    Console.WriteLine("3) Rope");
+    Console.WriteLine("4) Water");
+    Console.WriteLine("5) Food Rations");
+    Console.WriteLine("6) Sword");
+}
+
 float AskForNumber(string text)
 {
     Console.Write($"{text}? "); // Add a space to the end of the question
