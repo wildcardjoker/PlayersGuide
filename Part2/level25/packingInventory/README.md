@@ -11,7 +11,7 @@ There are many item types that you might add to your inventory, each their own c
 3. `Rope` has a weight of `1` and a volume of `1.5`.
 4. `Water` has a weight of `2` and a volume of `3`.
 5. `Food rations` have a weight of `1` and a volume of `0.5`.
-6. A `sword` has a weight of 5 and a volume of `3`.
+6. A `sword` has a weight of `5` and a volume of `3`.
 
 ## Objectives
 
