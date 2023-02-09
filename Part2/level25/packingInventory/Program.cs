@@ -23,7 +23,13 @@ public class Arrow : InventoryItem
     #endregion
 }
 
-// Bow class
+public class Bow : InventoryItem
+{
+    #region Constructors
+    public Bow() : base(1, 4) {}
+    #endregion
+}
+
 // Rope class
 // Water class
 // FoodRation class
