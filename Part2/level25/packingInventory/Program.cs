@@ -10,6 +10,8 @@ do
 {
     Console.WriteLine($"The pack contains {pack.CurrentItemCount} items, weighs {pack.CurrentWeight} and has a volume of {pack.CurrentVolume}");
     DisplayInventoryMenu();
+    var item = GetInventoryItem();
+    Console.WriteLine(pack.Add(item) ? $"{item} was added to your pack" : $"Could not add {item} due to pack limits");
 }
 while (pack.CurrentItemCount < pack.MaxItems && pack.CurrentVolume < pack.MaxVolume && pack.CurrentWeight < pack.MaxWeight);
 
@@ -22,6 +24,20 @@ void DisplayInventoryMenu()
     Console.WriteLine("4) Water");
     Console.WriteLine("5) Food Rations");
     Console.WriteLine("6) Sword");
+}
+
+InventoryItem GetInventoryItem()
+{
+    InventoryItem item = AskForNumberInRange("Which item would you like to add to your pack", 1, 6) switch
+    {
+        1 => new Arrow(),
+        2 => new Bow(),
+        3 => new Rope(),
+        4 => new Water(),
+        5 => new FoodRation(),
+        6 => new Sword()
+    };
+    return item;
 }
 
 float AskForNumber(string text)
@@ -131,7 +147,7 @@ public class Pack
             return false;
         }
 
-        InventoryItems[CurrentItemCount - 1] = item;
+        InventoryItems[CurrentItemCount] = item;
         CurrentItemCount++;
         CurrentVolume += item.Volume;
         CurrentWeight += item.Weight;
