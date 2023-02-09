@@ -16,7 +16,13 @@ public class InventoryItem
     #endregion
 }
 
-// Arrow class
+public class Arrow : InventoryItem
+{
+    #region Constructors
+    public Arrow() : base(0.1f, 0.05f) {}
+    #endregion
+}
+
 // Bow class
 // Rope class
 // Water class
