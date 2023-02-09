@@ -60,12 +60,6 @@ public class Sword : InventoryItem
 
 public class Pack
 {
-    #region Fields
-    private float _currentVolume;
-    private float _currentWeight;
-    private int   _currentItemCount;
-    #endregion
-
     #region Constructors
     public Pack(int maxItems, float maxWeight, float maxVolume)
     {
@@ -77,6 +71,10 @@ public class Pack
     #endregion
 
     #region Properties
+    public int CurrentItemCount {get; private set;}
+
+    public float           CurrentVolume  {get; private set;}
+    public float           CurrentWeight  {get; private set;}
     public InventoryItem[] InventoryItems {get;}
     public int             MaxItems       {get;}
     public float           MaxVolume      {get;}
@@ -86,15 +84,15 @@ public class Pack
     public bool Add(InventoryItem item)
     {
         // We should use Lists and Linq here, but neither have been introduced, so we'll do it the manual way
-        if (_currentItemCount == MaxItems || item.Volume + _currentVolume > MaxVolume || item.Weight + _currentWeight > MaxWeight)
+        if (CurrentItemCount == MaxItems || item.Volume + CurrentVolume > MaxVolume || item.Weight + CurrentWeight > MaxWeight)
         {
             return false;
         }
 
-        InventoryItems[_currentItemCount - 1] = item;
-        _currentItemCount++;
-        _currentVolume += item.Volume;
-        _currentWeight += item.Weight;
+        InventoryItems[CurrentItemCount - 1] = item;
+        CurrentItemCount++;
+        CurrentVolume += item.Volume;
+        CurrentWeight += item.Weight;
         return true;
     }
 }
