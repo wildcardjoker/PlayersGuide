@@ -184,4 +184,20 @@ public class Pack
         CurrentWeight += item.Weight;
         return true;
     }
+
+    #region Overrides of Object
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        // String.Join() would be the best approach here, but it should be used with Linq to remove null entries.
+        // Let's do it the old-fashioned way and loop through the array.
+        var contents = "Your pack contains: ";
+        for (var i = 0; i < CurrentItemCount; i++)
+        {
+            contents += $"{InventoryItems[i]} ";
+        }
+
+        return contents;
+    }
+    #endregion
 }
