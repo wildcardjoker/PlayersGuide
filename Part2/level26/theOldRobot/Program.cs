@@ -43,3 +43,59 @@ internal class OffCommand : RobotCommand
     }
     #endregion
 }
+
+internal class NorthCommand : RobotCommand
+{
+    #region Overrides of RobotCommand
+    /// <inheritdoc />
+    public override void Run(Robot robot)
+    {
+        if (robot.IsPowered)
+        {
+            robot.Y++;
+        }
+    }
+    #endregion
+}
+
+internal class SouthCommand : RobotCommand
+{
+    #region Overrides of RobotCommand
+    /// <inheritdoc />
+    public override void Run(Robot robot)
+    {
+        if (robot.IsPowered)
+        {
+            robot.Y--;
+        }
+    }
+    #endregion
+}
+
+internal class EastCommand : RobotCommand
+{
+    #region Overrides of RobotCommand
+    /// <inheritdoc />
+    public override void Run(Robot robot)
+    {
+        if (robot.IsPowered)
+        {
+            robot.X++;
+        }
+    }
+    #endregion
+}
+
+internal class WestCommand : RobotCommand
+{
+    #region Overrides of RobotCommand
+    /// <inheritdoc />
+    public override void Run(Robot robot)
+    {
+        if (robot.IsPowered)
+        {
+            robot.X--;
+        }
+    }
+    #endregion
+}
