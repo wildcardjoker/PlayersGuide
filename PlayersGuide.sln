@@ -117,6 +117,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "level26", "level26", "{B918
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "labelingInventory", "Part2\level26\labelingInventory\labelingInventory.csproj", "{D5DE23F0-D9C9-45C2-BA05-967894B7E82E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "theOldRobot", "Part2\level26\theOldRobot\theOldRobot.csproj", "{1D9AD1BA-6E89-4CA1-9EA6-F539F6043386}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -255,6 +257,10 @@ Global
 		{D5DE23F0-D9C9-45C2-BA05-967894B7E82E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5DE23F0-D9C9-45C2-BA05-967894B7E82E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5DE23F0-D9C9-45C2-BA05-967894B7E82E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D9AD1BA-6E89-4CA1-9EA6-F539F6043386}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D9AD1BA-6E89-4CA1-9EA6-F539F6043386}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D9AD1BA-6E89-4CA1-9EA6-F539F6043386}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D9AD1BA-6E89-4CA1-9EA6-F539F6043386}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -315,6 +321,7 @@ Global
 		{8A52E579-85DE-46AE-A0BF-250BFD5AFE68} = {D4CE4501-4F86-4C7C-A34E-3242DB0D9123}
 		{B9187470-40D1-4115-87F2-335E9220D9FB} = {A7794B26-E553-4028-A27C-546C992B7B84}
 		{D5DE23F0-D9C9-45C2-BA05-967894B7E82E} = {B9187470-40D1-4115-87F2-335E9220D9FB}
+		{1D9AD1BA-6E89-4CA1-9EA6-F539F6043386} = {B9187470-40D1-4115-87F2-335E9220D9FB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F9CE9BD2-E80F-4C81-B512-F1FA1D48E5FC}
