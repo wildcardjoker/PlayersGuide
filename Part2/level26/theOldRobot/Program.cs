@@ -21,3 +21,25 @@ public abstract class RobotCommand
 {
     public abstract void Run(Robot robot);
 }
+
+internal class OnCommand : RobotCommand
+{
+    #region Overrides of RobotCommand
+    /// <inheritdoc />
+    public override void Run(Robot robot)
+    {
+        robot.IsPowered = true;
+    }
+    #endregion
+}
+
+internal class OffCommand : RobotCommand
+{
+    #region Overrides of RobotCommand
+    /// <inheritdoc />
+    public override void Run(Robot robot)
+    {
+        robot.IsPowered = false;
+    }
+    #endregion
+}
