@@ -8,7 +8,7 @@ var pack      = new Pack(maxItems, maxWeight, maxVolume);
 
 do
 {
-    DisplayPackStats();
+    Console.WriteLine(pack);
     DisplayInventoryMenu();
     var item = GetInventoryItem();
     Console.WriteLine(pack.Add(item) ? $"{item} was added to your pack" : $"Could not add {item} due to pack limits");
@@ -16,6 +16,7 @@ do
 while (pack.CurrentItemCount < pack.MaxItems && pack.CurrentVolume < pack.MaxVolume && pack.CurrentWeight < pack.MaxWeight);
 
 DisplayPackStats();
+Console.WriteLine(pack);
 
 void DisplayInventoryMenu()
 {
