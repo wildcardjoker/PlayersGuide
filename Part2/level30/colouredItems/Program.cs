@@ -1,4 +1,14 @@
-﻿public class Sword {}
+﻿var sword = new ColouredItem<Sword>(new Sword(), ConsoleColor.Blue);
+var bow   = new ColouredItem<Bow>(new Bow(), ConsoleColor.Red);
+var axe   = new ColouredItem<Axe>(new Axe(), ConsoleColor.Green);
+
+Console.WriteLine("Before you, you see the following items:");
+sword.Display();
+bow.Display();
+axe.Display();
+Console.ResetColor();
+
+public class Sword {}
 
 public class Bow {}
 
@@ -10,8 +20,22 @@ public class Axe {}
 /// <typeparam name="T">The item type to be coloured.</typeparam>
 public class ColouredItem<T>
 {
+    #region Constructors
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="ColouredItem{T}" /> class.
+    /// </summary>
+    /// <param name="item">The item to be colourised.</param>
+    /// <param name="color">The color.</param>
+    public ColouredItem(T item, ConsoleColor color)
+    {
+        Item       = item;
+        ItemColour = color;
+    }
+    #endregion
+
     #region Properties
-    private ConsoleColor Color {get; init;}
+    private T            Item       {get;}
+    private ConsoleColor ItemColour {get;}
     #endregion
 
     /// <summary>
@@ -19,6 +43,7 @@ public class ColouredItem<T>
     /// </summary>
     public void Display()
     {
-        Console.ForegroundColor = Color;
+        Console.ForegroundColor = ItemColour;
+        Console.WriteLine(Item?.ToString());
     }
 }
