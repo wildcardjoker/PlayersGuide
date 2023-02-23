@@ -121,7 +121,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "theOldRobot", "Part2\level2
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "level27", "level27", "{46AA303C-8CFD-4BCE-AB3B-43B6A00C396F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "roboticInterface", "Part2\level27\roboticInterface\roboticInterface.csproj", "{DCD7E515-0457-4530-B542-90D1C28C27C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "roboticInterface", "Part2\level27\roboticInterface\roboticInterface.csproj", "{DCD7E515-0457-4530-B542-90D1C28C27C0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "level28", "level28", "{6F27DDE9-7AD5-44AA-A659-6AFFF8B55631}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "roomCoordinates", "Part2\level28\roomCoordinates\roomCoordinates.csproj", "{C139F33D-4937-4E19-9116-276B92F3DB54}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -269,6 +273,10 @@ Global
 		{DCD7E515-0457-4530-B542-90D1C28C27C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DCD7E515-0457-4530-B542-90D1C28C27C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DCD7E515-0457-4530-B542-90D1C28C27C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C139F33D-4937-4E19-9116-276B92F3DB54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C139F33D-4937-4E19-9116-276B92F3DB54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C139F33D-4937-4E19-9116-276B92F3DB54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C139F33D-4937-4E19-9116-276B92F3DB54}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -332,6 +340,8 @@ Global
 		{1D9AD1BA-6E89-4CA1-9EA6-F539F6043386} = {B9187470-40D1-4115-87F2-335E9220D9FB}
 		{46AA303C-8CFD-4BCE-AB3B-43B6A00C396F} = {A7794B26-E553-4028-A27C-546C992B7B84}
 		{DCD7E515-0457-4530-B542-90D1C28C27C0} = {46AA303C-8CFD-4BCE-AB3B-43B6A00C396F}
+		{6F27DDE9-7AD5-44AA-A659-6AFFF8B55631} = {A7794B26-E553-4028-A27C-546C992B7B84}
+		{C139F33D-4937-4E19-9116-276B92F3DB54} = {6F27DDE9-7AD5-44AA-A659-6AFFF8B55631}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F9CE9BD2-E80F-4C81-B512-F1FA1D48E5FC}
