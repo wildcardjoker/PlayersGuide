@@ -35,6 +35,7 @@ void Move(Direction direction)
         case Direction.West:
             currentLocation = currentLocation with {Column = currentLocation.Column - 1};
             break;
+        case Direction.Unknown:
         default:
             throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
     }
@@ -55,5 +56,6 @@ internal enum Direction
     North,
     South,
     East,
-    West
+    West,
+    Unknown
 }
