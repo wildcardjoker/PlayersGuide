@@ -37,7 +37,7 @@ You hear water dripping in this room. The Fountain of Objects is here!
 What do you want to do? enable fountain
 -------------------------------------------------------------------------------------
 You are in the room at (Row=0, Column=2).
-You hear th rushing waters from the Fountain of Objects. It has been reactivated!
+You hear the rushing waters from the Fountain of Objects. It has been reactivated!
 What do you want to do? move west
 -------------------------------------------------------------------------------------
 You are in the room at (Row=0, Column=1)
