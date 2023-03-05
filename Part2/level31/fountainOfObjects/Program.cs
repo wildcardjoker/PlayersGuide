@@ -5,12 +5,15 @@ var rooms = new[,] {{0, 1, 2}, {0, 1, 2}};
 // Set locations
 const string EntranceText        = "You see light coming from the cavern entrance.";
 const string WinText             = "The Fountain of Objects has been reactivated, and you have escaped with your life!\nYou win!";
+const string FountainArrival     = "You hear water dripping in this room. The Fountain of Objects is here!";
+const string FountainActive      = "You hear the rushing waters from the Fountain of Objects. It has been reactivated!";
 var          fountainLocation    = new Point(0, 2);
 var          entranceLocation    = new Point(0, 0);
 var          currentLocation     = entranceLocation;
 var          narrativeItem       = new ColouredItem<string>($"You are in the room at {currentLocation}", ConsoleColor.Magenta);
 var          descriptiveText     = new ColouredItem<string>(string.Empty,                                ConsoleColor.White);
 var          entranceDescription = new ColouredItem<string>(EntranceText,                                ConsoleColor.Yellow);
+var          waterText           = new ColouredItem<string>(FountainArrival,                             ConsoleColor.Blue);
 
 // Simulate the player moving to the room
 DisplayStatus();
@@ -20,7 +23,9 @@ Move(Direction.East);
 DisplayStatus();
 
 // Check that we are at the Fountain's location.
-Console.WriteLine(currentLocation == fountainLocation);
+Console.WriteLine(AtFountainLocation());
+
+bool AtFountainLocation() => currentLocation == fountainLocation;
 
 void DisplayStatus()
 {
@@ -34,6 +39,11 @@ void DisplayStatus()
     if (currentLocation.Equals(entranceLocation))
     {
         entranceDescription.Display();
+    }
+
+    if (AtFountainLocation())
+    {
+        waterText.Display();
     }
 }
 
