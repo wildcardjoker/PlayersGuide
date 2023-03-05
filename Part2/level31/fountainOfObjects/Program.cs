@@ -1,10 +1,8 @@
 ﻿// Create a 4x4 grid
 
-var       rooms = new[,] {{0, 1, 2, 3}, {0, 1, 2, 3}};
-const int min   = 0;
-const int max   = 3;
-
-// Set locations
+var          rooms               = new[,] {{0, 1, 2, 3}, {0, 1, 2, 3}};
+const int    min                 = 0;
+const int    max                 = 3;
 const string entranceText        = "You see light coming from the cavern entrance.";
 const string winText             = "The Fountain of Objects has been reactivated, and you have escaped with your life!\nYou win!";
 const string fountainArrival     = "You hear water dripping in this room. The Fountain of Objects is here!";
@@ -24,21 +22,26 @@ var          fountainIsActive    = false;
 
 while (!(AtEntrance() && fountainIsActive))
 {
-    // Simulate the player moving to the room
     DisplayStatus();
     ParseCommand();
 }
 
+// The player has escaped!
 narrativeItem.SetItem(winText);
 narrativeItem.Display();
 Console.ResetColor();
 
-bool AtEntrance()         => currentLocation == entranceLocation;
+// Is the player at the entrance?
+bool AtEntrance() => currentLocation == entranceLocation;
+
+// Is the player at the Fountain's location?
 bool AtFountainLocation() => currentLocation == fountainLocation;
 
+// After receiving the player's command, process it and display an error if the command input isn't valid or can't be performed.
 void ParseCommand()
 {
-    var input = GetCommand();
+    prompt?.Display(false);
+    var input = command.GetInput();
     var result = input?.ToLower() switch
     {
         "move north"      => Move(Direction.North),
@@ -54,10 +57,12 @@ void ParseCommand()
         return;
     }
 
+    // There was a problem processing the command - display an error message.
     error?.SetItem(result);
     error?.Display();
 }
 
+// Activate the fountain if the player is at the Fountain's location.
 string? EnableFountain()
 {
     if (!AtFountainLocation())
@@ -71,18 +76,11 @@ string? EnableFountain()
     return string.Empty;
 }
 
-string? GetCommand()
-{
-    prompt?.Display(false);
-    return command.GetInput();
-}
-
-void SetStatus() => narrativeItem?.SetItem($"{status} {currentLocation}");
-
+// Inform the player of their location, any descriptive text for this room, and whether they are in the presence of the Fountain.
 void DisplayStatus()
 {
-    SetStatus();
-    narrativeItem.Display();
+    narrativeItem?.SetItem($"{status} {currentLocation}");
+    narrativeItem?.Display();
     var description = descriptiveText.ToString();
     if (!string.IsNullOrWhiteSpace(description))
     {
@@ -114,6 +112,7 @@ string Move(Direction direction)
         return "A wall blocks your path. You cannot move in that direction.";
     }
 
+    // Update the current location based on the desired direction.
     currentLocation = direction switch
     {
         Direction.North   => currentLocation with {Row = currentLocation.Row       - 1},
@@ -126,6 +125,7 @@ string Move(Direction direction)
     return string.Empty;
 }
 
+// Determine whether the player can move in this direction
 bool CanMove(Direction direction) => (direction    == Direction.North && currentLocation.Row    != min)
                                      || (direction == Direction.South && currentLocation.Row    != max)
                                      || (direction == Direction.West  && currentLocation.Column != min)
@@ -198,7 +198,7 @@ public class ColouredItem<T>
     }
 
     /// <summary>
-    ///     Update the item related to this object. In this project, we need to update the Current Location.
+    ///     Update the item related to this object.
     /// </summary>
     /// <param name="item">The item.</param>
     public void SetItem(T item) => Item = item;
