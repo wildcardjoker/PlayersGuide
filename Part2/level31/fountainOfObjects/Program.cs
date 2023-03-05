@@ -24,6 +24,13 @@ DisplayStatus();
 Move(Direction.East);
 DisplayStatus();
 
+// Simulate fountain commands.
+if (AtFountainLocation())
+{
+    waterText.SetItem(FountainActive);
+    DisplayStatus();
+}
+
 Console.ResetColor();
 
 bool AtEntrance()         => currentLocation == entranceLocation;
