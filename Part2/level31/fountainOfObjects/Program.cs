@@ -20,6 +20,7 @@ var          command             = new ColouredItem<string>(string.Empty,       
 var          error               = new ColouredItem<string>(string.Empty,               ConsoleColor.Red);
 var          fountainIsActive    = false;
 
+Console.Title = "The Fountain of Objects";
 while (!(AtEntrance() && fountainIsActive))
 {
     DisplayStatus();
@@ -79,6 +80,8 @@ string? EnableFountain()
 // Inform the player of their location, any descriptive text for this room, and whether they are in the presence of the Fountain.
 void DisplayStatus()
 {
+    Console.ResetColor();
+    Console.WriteLine("--------------------------------------------------------------------------------------");
     narrativeItem?.SetItem($"{status} {currentLocation}");
     narrativeItem?.Display();
     var description = descriptiveText.ToString();
