@@ -10,10 +10,12 @@ const string FountainActive      = "You hear the rushing waters from the Fountai
 var          fountainLocation    = new Point(0, 2);
 var          entranceLocation    = new Point(0, 0);
 var          currentLocation     = entranceLocation;
-var          narrativeItem       = new ColouredItem<string>("You are in the room at ", ConsoleColor.Magenta);
-var          descriptiveText     = new ColouredItem<string>(string.Empty,              ConsoleColor.White);
-var          entranceDescription = new ColouredItem<string>(EntranceText,              ConsoleColor.Yellow);
-var          waterText           = new ColouredItem<string>(FountainArrival,           ConsoleColor.Blue);
+var          status              = "You are in the room at";
+var          narrativeItem       = new ColouredItem<string>(string.Empty,               ConsoleColor.Magenta);
+var          descriptiveText     = new ColouredItem<string>(string.Empty,               ConsoleColor.White);
+var          prompt              = new ColouredItem<string>("What do you want to do? ", ConsoleColor.White);
+var          entranceDescription = new ColouredItem<string>(EntranceText,               ConsoleColor.Yellow);
+var          waterText           = new ColouredItem<string>(FountainArrival,            ConsoleColor.Blue);
 
 // Simulate the player moving to the room
 DisplayStatus();
@@ -21,15 +23,18 @@ Move(Direction.East);
 DisplayStatus();
 Move(Direction.East);
 DisplayStatus();
+
 Console.ResetColor();
 
 bool AtEntrance()         => currentLocation == entranceLocation;
 bool AtFountainLocation() => currentLocation == fountainLocation;
 
+void SetStatus() => narrativeItem?.SetItem($"{status} {currentLocation}");
+
 void DisplayStatus()
 {
-    narrativeItem.Display(false);
-    Console.WriteLine(currentLocation);
+    SetStatus();
+    narrativeItem.Display();
     var description = descriptiveText.ToString();
     if (!string.IsNullOrWhiteSpace(description))
     {
@@ -110,22 +115,24 @@ public class ColouredItem<T>
     #endregion
 
     #region Properties
-    private T            Item       {get;}
+    private T            Item       {get; set;}
     private ConsoleColor ItemColour {get;}
     #endregion
 
     /// <summary>
     ///     Change the console colour to the object's specified colour.
     /// </summary>
-    public void Display(bool newLine = true)
+    public void Display()
     {
         Console.ForegroundColor = ItemColour;
-        Console.Write(Item?.ToString());
-        if (newLine)
-        {
-            Console.WriteLine();
-        }
+        Console.WriteLine(Item?.ToString());
     }
+
+    /// <summary>
+    ///     Update the item related to this object. In this project, we need to update the Current Location.
+    /// </summary>
+    /// <param name="item">The item.</param>
+    public void SetItem(T item) => Item = item;
 
     #region Overrides of Object
     /// <inheritdoc />
