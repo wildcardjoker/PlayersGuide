@@ -16,10 +16,12 @@ var          descriptiveText     = new ColouredItem<string>(string.Empty,       
 var          prompt              = new ColouredItem<string>("What do you want to do? ", ConsoleColor.White);
 var          entranceDescription = new ColouredItem<string>(entranceText,               ConsoleColor.Yellow);
 var          waterText           = new ColouredItem<string>(fountainArrival,            ConsoleColor.Blue);
+var          command             = new ColouredItem<string>(string.Empty,               ConsoleColor.Cyan);
 
 // Simulate the player moving to the room
 DisplayStatus();
-GetCommand();
+var commandText = GetCommand();
+
 Move(Direction.East);
 
 DisplayStatus();
@@ -41,8 +43,7 @@ bool AtFountainLocation() => currentLocation == fountainLocation;
 string? GetCommand()
 {
     prompt?.Display(false);
-    Console.ForegroundColor = ConsoleColor.Cyan;
-    return Console.ReadLine();
+    return command.GetInput();
 }
 
 void SetStatus() => narrativeItem?.SetItem($"{status} {currentLocation}");
@@ -146,6 +147,16 @@ public class ColouredItem<T>
         {
             Console.WriteLine();
         }
+    }
+
+    /// <summary>
+    ///     Gets the input.
+    /// </summary>
+    /// <returns></returns>
+    public string? GetInput()
+    {
+        Console.ForegroundColor = ItemColour;
+        return Console.ReadLine();
     }
 
     /// <summary>
