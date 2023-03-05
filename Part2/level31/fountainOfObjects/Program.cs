@@ -1,6 +1,8 @@
 ﻿// Create a 3x3 grid
 
-var rooms = new[,] {{0, 1, 2}, {0, 1, 2}};
+var       rooms = new[,] {{0, 1, 2}, {0, 1, 2}};
+const int min   = 0;
+const int max   = 2;
 
 // Set locations
 const string entranceText        = "You see light coming from the cavern entrance.";
@@ -17,11 +19,11 @@ var          prompt              = new ColouredItem<string>("What do you want to
 var          entranceDescription = new ColouredItem<string>(entranceText,               ConsoleColor.Yellow);
 var          waterText           = new ColouredItem<string>(fountainArrival,            ConsoleColor.Blue);
 var          command             = new ColouredItem<string>(string.Empty,               ConsoleColor.Cyan);
+var          error               = new ColouredItem<string>(string.Empty,               ConsoleColor.Red);
 
 // Simulate the player moving to the room
 DisplayStatus();
-var commandText = GetCommand();
-
+ParseCommand();
 Move(Direction.East);
 
 DisplayStatus();
@@ -39,6 +41,28 @@ Console.ResetColor();
 
 bool AtEntrance()         => currentLocation == entranceLocation;
 bool AtFountainLocation() => currentLocation == fountainLocation;
+
+void ParseCommand()
+{
+    var input = GetCommand();
+    var result = input?.ToLower() switch
+    {
+        "move north"      => Move(Direction.North),
+        "move south"      => Move(Direction.South),
+        "move east"       => Move(Direction.East),
+        "move west"       => Move(Direction.West),
+        "enable fountain" => "invalid command",
+        _                 => "invalid command"
+    };
+
+    if (string.IsNullOrWhiteSpace(result))
+    {
+        return;
+    }
+
+    error?.SetItem(result);
+    error?.Display();
+}
 
 string? GetCommand()
 {
@@ -70,28 +94,35 @@ void DisplayStatus()
 }
 
 // Move in the specified direction
-// TODO: Check for boundaries and prevent movement outside the grid
-void Move(Direction direction)
+string Move(Direction direction)
 {
-    switch (direction)
+    if (currentLocation == null)
     {
-        case Direction.North:
-            currentLocation = currentLocation with {Column = currentLocation.Row + 1};
-            break;
-        case Direction.South:
-            currentLocation = currentLocation with {Column = currentLocation.Row - 1};
-            break;
-        case Direction.East:
-            currentLocation = currentLocation with {Column = currentLocation.Column + 1};
-            break;
-        case Direction.West:
-            currentLocation = currentLocation with {Column = currentLocation.Column - 1};
-            break;
-        case Direction.Unknown:
-        default:
-            throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
+        return "I don't know what your current location is!";
     }
+
+    // Is this a valid move?
+    if (!CanMove(direction))
+    {
+        return "A wall blocks your path. You cannot move in that direction.";
+    }
+
+    currentLocation = direction switch
+    {
+        Direction.North   => currentLocation with {Column = currentLocation.Row    + 1},
+        Direction.South   => currentLocation with {Column = currentLocation.Row    - 1},
+        Direction.East    => currentLocation with {Column = currentLocation.Column + 1},
+        Direction.West    => currentLocation with {Column = currentLocation.Column - 1},
+        Direction.Unknown => throw new ArgumentOutOfRangeException(nameof(direction), direction, null),
+        _                 => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
+    };
+    return string.Empty;
 }
+
+bool CanMove(Direction direction) => (direction    == Direction.North && currentLocation.Row    != min)
+                                     || (direction == Direction.South && currentLocation.Row    != max)
+                                     || (direction == Direction.West  && currentLocation.Column != min)
+                                     || (direction == Direction.East  && currentLocation.Column != max);
 
 // Create a simple object to hold the player's location
 internal record Point(int Row, int Column)
