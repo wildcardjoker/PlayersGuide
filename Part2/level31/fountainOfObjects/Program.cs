@@ -3,20 +3,39 @@
 var rooms = new[,] {{0, 1, 2}, {0, 1, 2}};
 
 // Set locations
-var fountainLocation = new Point(0, 2);
-var entranceLocation = new Point(0, 0);
-var currentLocation  = entranceLocation;
-var narrativeItem    = new ColouredItem<string>($"You are in the room at {currentLocation}", ConsoleColor.Magenta);
+const string EntranceText        = "You see light coming from the cavern entrance.";
+const string WinText             = "The Fountain of Objects has been reactivated, and you have escaped with your life!\nYou win!";
+var          fountainLocation    = new Point(0, 2);
+var          entranceLocation    = new Point(0, 0);
+var          currentLocation     = entranceLocation;
+var          narrativeItem       = new ColouredItem<string>($"You are in the room at {currentLocation}", ConsoleColor.Magenta);
+var          descriptiveText     = new ColouredItem<string>(string.Empty,                                ConsoleColor.White);
+var          entranceDescription = new ColouredItem<string>(EntranceText,                                ConsoleColor.Yellow);
 
 // Simulate the player moving to the room
-narrativeItem.Display();
+DisplayStatus();
 Move(Direction.East);
-narrativeItem.Display();
+DisplayStatus();
 Move(Direction.East);
-narrativeItem.Display();
+DisplayStatus();
 
 // Check that we are at the Fountain's location.
 Console.WriteLine(currentLocation == fountainLocation);
+
+void DisplayStatus()
+{
+    narrativeItem.Display();
+    var description = descriptiveText.ToString();
+    if (!string.IsNullOrWhiteSpace(description))
+    {
+        descriptiveText.Display();
+    }
+
+    if (currentLocation.Equals(entranceLocation))
+    {
+        entranceDescription.Display();
+    }
+}
 
 // Move in the specified direction
 // TODO: Check for boundaries and prevent movement outside the grid
@@ -94,4 +113,9 @@ public class ColouredItem<T>
         Console.WriteLine(Item?.ToString());
         Console.ResetColor();
     }
+
+    #region Overrides of Object
+    /// <inheritdoc />
+    public override string? ToString() => Item?.ToString();
+    #endregion
 }
