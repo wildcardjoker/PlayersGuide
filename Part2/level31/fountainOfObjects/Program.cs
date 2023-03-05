@@ -3,23 +3,25 @@
 var rooms = new[,] {{0, 1, 2}, {0, 1, 2}};
 
 // Set locations
-const string EntranceText        = "You see light coming from the cavern entrance.";
-const string WinText             = "The Fountain of Objects has been reactivated, and you have escaped with your life!\nYou win!";
-const string FountainArrival     = "You hear water dripping in this room. The Fountain of Objects is here!";
-const string FountainActive      = "You hear the rushing waters from the Fountain of Objects. It has been reactivated!";
+const string entranceText        = "You see light coming from the cavern entrance.";
+const string winText             = "The Fountain of Objects has been reactivated, and you have escaped with your life!\nYou win!";
+const string fountainArrival     = "You hear water dripping in this room. The Fountain of Objects is here!";
+const string fountainActive      = "You hear the rushing waters from the Fountain of Objects. It has been reactivated!";
+const string status              = "You are in the room at";
 var          fountainLocation    = new Point(0, 2);
 var          entranceLocation    = new Point(0, 0);
 var          currentLocation     = entranceLocation;
-var          status              = "You are in the room at";
 var          narrativeItem       = new ColouredItem<string>(string.Empty,               ConsoleColor.Magenta);
 var          descriptiveText     = new ColouredItem<string>(string.Empty,               ConsoleColor.White);
 var          prompt              = new ColouredItem<string>("What do you want to do? ", ConsoleColor.White);
-var          entranceDescription = new ColouredItem<string>(EntranceText,               ConsoleColor.Yellow);
-var          waterText           = new ColouredItem<string>(FountainArrival,            ConsoleColor.Blue);
+var          entranceDescription = new ColouredItem<string>(entranceText,               ConsoleColor.Yellow);
+var          waterText           = new ColouredItem<string>(fountainArrival,            ConsoleColor.Blue);
 
 // Simulate the player moving to the room
 DisplayStatus();
+GetCommand();
 Move(Direction.East);
+
 DisplayStatus();
 Move(Direction.East);
 DisplayStatus();
@@ -27,7 +29,7 @@ DisplayStatus();
 // Simulate fountain commands.
 if (AtFountainLocation())
 {
-    waterText.SetItem(FountainActive);
+    waterText.SetItem(fountainActive);
     DisplayStatus();
 }
 
@@ -35,6 +37,13 @@ Console.ResetColor();
 
 bool AtEntrance()         => currentLocation == entranceLocation;
 bool AtFountainLocation() => currentLocation == fountainLocation;
+
+string? GetCommand()
+{
+    prompt?.Display(false);
+    Console.ForegroundColor = ConsoleColor.Cyan;
+    return Console.ReadLine();
+}
 
 void SetStatus() => narrativeItem?.SetItem($"{status} {currentLocation}");
 
@@ -129,10 +138,14 @@ public class ColouredItem<T>
     /// <summary>
     ///     Change the console colour to the object's specified colour.
     /// </summary>
-    public void Display()
+    public void Display(bool newLine = true)
     {
         Console.ForegroundColor = ItemColour;
-        Console.WriteLine(Item?.ToString());
+        Console.Write(Item?.ToString());
+        if (newLine)
+        {
+            Console.WriteLine();
+        }
     }
 
     /// <summary>
