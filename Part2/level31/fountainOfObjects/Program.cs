@@ -27,15 +27,10 @@ while (!(AtEntrance() && fountainIsActive))
     // Simulate the player moving to the room
     DisplayStatus();
     ParseCommand();
-
-    // Simulate fountain commands.
-    if (AtFountainLocation())
-    {
-        waterText.SetItem(fountainActive);
-        DisplayStatus();
-    }
 }
 
+narrativeItem.SetItem(winText);
+narrativeItem.Display();
 Console.ResetColor();
 
 bool AtEntrance()         => currentLocation == entranceLocation;
@@ -50,7 +45,7 @@ void ParseCommand()
         "move south"      => Move(Direction.South),
         "move east"       => Move(Direction.East),
         "move west"       => Move(Direction.West),
-        "enable fountain" => "invalid command",
+        "enable fountain" => EnableFountain(),
         _                 => "invalid command"
     };
 
@@ -61,6 +56,19 @@ void ParseCommand()
 
     error?.SetItem(result);
     error?.Display();
+}
+
+string? EnableFountain()
+{
+    if (!AtFountainLocation())
+    {
+        return "You cannot touch the fountain. Your command has no effect.";
+    }
+
+    // Activate the Fountain
+    fountainIsActive = true;
+    waterText.SetItem(fountainActive);
+    return string.Empty;
 }
 
 string? GetCommand()
