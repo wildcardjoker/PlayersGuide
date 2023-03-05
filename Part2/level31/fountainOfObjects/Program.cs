@@ -10,10 +10,10 @@ const string FountainActive      = "You hear the rushing waters from the Fountai
 var          fountainLocation    = new Point(0, 2);
 var          entranceLocation    = new Point(0, 0);
 var          currentLocation     = entranceLocation;
-var          narrativeItem       = new ColouredItem<string>($"You are in the room at {currentLocation}", ConsoleColor.Magenta);
-var          descriptiveText     = new ColouredItem<string>(string.Empty,                                ConsoleColor.White);
-var          entranceDescription = new ColouredItem<string>(EntranceText,                                ConsoleColor.Yellow);
-var          waterText           = new ColouredItem<string>(FountainArrival,                             ConsoleColor.Blue);
+var          narrativeItem       = new ColouredItem<string>("You are in the room at ", ConsoleColor.Magenta);
+var          descriptiveText     = new ColouredItem<string>(string.Empty,              ConsoleColor.White);
+var          entranceDescription = new ColouredItem<string>(EntranceText,              ConsoleColor.Yellow);
+var          waterText           = new ColouredItem<string>(FountainArrival,           ConsoleColor.Blue);
 
 // Simulate the player moving to the room
 DisplayStatus();
@@ -21,22 +21,22 @@ Move(Direction.East);
 DisplayStatus();
 Move(Direction.East);
 DisplayStatus();
+Console.ResetColor();
 
-// Check that we are at the Fountain's location.
-Console.WriteLine(AtFountainLocation());
-
+bool AtEntrance()         => currentLocation == entranceLocation;
 bool AtFountainLocation() => currentLocation == fountainLocation;
 
 void DisplayStatus()
 {
-    narrativeItem.Display();
+    narrativeItem.Display(false);
+    Console.WriteLine(currentLocation);
     var description = descriptiveText.ToString();
     if (!string.IsNullOrWhiteSpace(description))
     {
         descriptiveText.Display();
     }
 
-    if (currentLocation.Equals(entranceLocation))
+    if (AtEntrance())
     {
         entranceDescription.Display();
     }
@@ -117,11 +117,14 @@ public class ColouredItem<T>
     /// <summary>
     ///     Change the console colour to the object's specified colour.
     /// </summary>
-    public void Display()
+    public void Display(bool newLine = true)
     {
         Console.ForegroundColor = ItemColour;
-        Console.WriteLine(Item?.ToString());
-        Console.ResetColor();
+        Console.Write(Item?.ToString());
+        if (newLine)
+        {
+            Console.WriteLine();
+        }
     }
 
     #region Overrides of Object
