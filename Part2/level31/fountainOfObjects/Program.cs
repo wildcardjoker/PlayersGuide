@@ -1,8 +1,8 @@
-﻿// Create a 3x3 grid
+﻿// Create a 4x4 grid
 
-var       rooms = new[,] {{0, 1, 2}, {0, 1, 2}};
+var       rooms = new[,] {{0, 1, 2, 3}, {0, 1, 2, 3}};
 const int min   = 0;
-const int max   = 2;
+const int max   = 3;
 
 // Set locations
 const string entranceText        = "You see light coming from the cavern entrance.";
@@ -20,21 +20,20 @@ var          entranceDescription = new ColouredItem<string>(entranceText,       
 var          waterText           = new ColouredItem<string>(fountainArrival,            ConsoleColor.Blue);
 var          command             = new ColouredItem<string>(string.Empty,               ConsoleColor.Cyan);
 var          error               = new ColouredItem<string>(string.Empty,               ConsoleColor.Red);
+var          fountainIsActive    = false;
 
-// Simulate the player moving to the room
-DisplayStatus();
-ParseCommand();
-Move(Direction.East);
-
-DisplayStatus();
-Move(Direction.East);
-DisplayStatus();
-
-// Simulate fountain commands.
-if (AtFountainLocation())
+while (!(AtEntrance() && fountainIsActive))
 {
-    waterText.SetItem(fountainActive);
+    // Simulate the player moving to the room
     DisplayStatus();
+    ParseCommand();
+
+    // Simulate fountain commands.
+    if (AtFountainLocation())
+    {
+        waterText.SetItem(fountainActive);
+        DisplayStatus();
+    }
 }
 
 Console.ResetColor();
@@ -109,8 +108,8 @@ string Move(Direction direction)
 
     currentLocation = direction switch
     {
-        Direction.North   => currentLocation with {Column = currentLocation.Row    + 1},
-        Direction.South   => currentLocation with {Column = currentLocation.Row    - 1},
+        Direction.North   => currentLocation with {Row = currentLocation.Row       - 1},
+        Direction.South   => currentLocation with {Row = currentLocation.Row       + 1},
         Direction.East    => currentLocation with {Column = currentLocation.Column + 1},
         Direction.West    => currentLocation with {Column = currentLocation.Column - 1},
         Direction.Unknown => throw new ArgumentOutOfRangeException(nameof(direction), direction, null),
