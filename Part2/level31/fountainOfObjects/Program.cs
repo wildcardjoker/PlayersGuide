@@ -1,7 +1,8 @@
 ﻿// Create a 4x4 grid
 
-const int    min                 = 0;
-var          max                 = 0;
+const int    min = 0;
+int          max;
+var          worldSize           = WorldSize.None;
 const string entranceText        = "You see light coming from the cavern entrance.";
 const string winText             = "The Fountain of Objects has been reactivated, and you have escaped with your life!\nYou win!";
 const string fountainArrival     = "You hear water dripping in this room. The Fountain of Objects is here!";
@@ -36,21 +37,30 @@ Console.ResetColor();
 // End of main program. The remaining code contains supporting methods
 void CreateWorld()
 {
-    // Get enum values and convert to a List
-    var sizes = ((int[]) Enum.GetValues(typeof(WorldSize))).ToList();
+    // Get enum values and convert to a List - remove WorldSize.None or the loop will exit immediately
+    var sizes = ((int[]) Enum.GetValues(typeof(WorldSize))).Where(x => x != 0).ToList();
     Console.WriteLine("The following game sizes are available:");
     foreach (var value in sizes)
     {
         Console.WriteLine($"{value}) - {(WorldSize) value}");
     }
 
-    while (!sizes.Contains(max))
+    while (worldSize == WorldSize.None)
     {
         Console.Write("What size would you like to use? ");
-        max = Convert.ToInt32(Console.ReadLine());
+        var desiredWorldSize = Convert.ToInt32(Console.ReadLine());
+
+        // If that value matches a valid enum, use it. Otherwise, ask again.
+        if (Enum.IsDefined(typeof(WorldSize), desiredWorldSize))
+        {
+            worldSize = (WorldSize) desiredWorldSize;
+        }
     }
 
-    Console.WriteLine($"Using a {(WorldSize) max} world.");
+    Console.WriteLine($"Using a {worldSize} world.");
+
+    // Because the world grid uses a 0-based index, we need to subtract 1 from the World Size.
+    max = (int) worldSize - 1;
     ConfigureWorld();
 }
 
@@ -193,6 +203,7 @@ internal enum Direction
 
 internal enum WorldSize
 {
+    None   = 0,
     Small  = 4,
     Medium = 6,
     Large  = 8
