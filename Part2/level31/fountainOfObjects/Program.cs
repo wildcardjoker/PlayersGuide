@@ -1,8 +1,7 @@
 ﻿// Create a 4x4 grid
 
-var          rooms               = new[,] {{0, 1, 2, 3}, {0, 1, 2, 3}};
 const int    min                 = 0;
-const int    max                 = 3;
+var          max                 = 0;
 const string entranceText        = "You see light coming from the cavern entrance.";
 const string winText             = "The Fountain of Objects has been reactivated, and you have escaped with your life!\nYou win!";
 const string fountainArrival     = "You hear water dripping in this room. The Fountain of Objects is here!";
@@ -21,6 +20,8 @@ var          error               = new ColouredItem<string>(string.Empty,       
 var          fountainIsActive    = false;
 
 Console.Title = "The Fountain of Objects";
+CreateWorld();
+
 while (!(AtEntrance() && fountainIsActive))
 {
     DisplayStatus();
@@ -31,6 +32,43 @@ while (!(AtEntrance() && fountainIsActive))
 narrativeItem.SetItem(winText);
 narrativeItem.Display();
 Console.ResetColor();
+
+// End of main program. The remaining code contains supporting methods
+void CreateWorld()
+{
+    // Get enum values and convert to a List
+    var sizes = ((int[]) Enum.GetValues(typeof(WorldSize))).ToList();
+    Console.WriteLine("The following game sizes are available:");
+    foreach (var value in sizes)
+    {
+        Console.WriteLine($"{value}) - {(WorldSize) value}");
+    }
+
+    while (!sizes.Contains(max))
+    {
+        Console.Write("What size would you like to use? ");
+        max = Convert.ToInt32(Console.ReadLine());
+    }
+
+    Console.WriteLine($"Using a {(WorldSize) max} world.");
+    ConfigureWorld();
+}
+
+void ConfigureWorld()
+{
+    SetEntranceLocation();
+}
+
+void SetEntranceLocation()
+{
+    entranceLocation = (WorldSize) max switch
+    {
+        WorldSize.Large  => new Point(2,   max),
+        WorldSize.Medium => new Point(max, 1),
+        WorldSize.Small  => new Point(0,   0),
+        _                => new Point(0,   0)
+    };
+}
 
 // Is the player at the entrance?
 bool AtEntrance() => currentLocation == entranceLocation;
@@ -151,6 +189,13 @@ internal enum Direction
     East,
     West,
     Unknown
+}
+
+internal enum WorldSize
+{
+    Small  = 4,
+    Medium = 6,
+    Large  = 8
 }
 
 /// <summary>
