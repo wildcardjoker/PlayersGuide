@@ -38,26 +38,22 @@ Console.ResetColor();
 void CreateWorld()
 {
     // Get enum values and convert to a List - remove WorldSize.None or the loop will exit immediately
-    var sizes = ((int[]) Enum.GetValues(typeof(WorldSize))).Where(x => x != 0).ToList();
+    //var sizes  = ((int[]) Enum.GetValues(typeof(WorldSize))).Where(x => x != 0).ToList();
+    var worlds = Enum.GetNames(typeof(WorldSize)).Where(world => !world.Equals("None")).ToList();
     Console.WriteLine("The following game sizes are available:");
-    foreach (var value in sizes)
+    foreach (var world in worlds)
     {
-        Console.WriteLine($"{value}) - {(WorldSize) value}");
+        Console.WriteLine(world);
     }
 
     while (worldSize == WorldSize.None)
     {
-        Console.Write("What size would you like to use? ");
-        var desiredWorldSize = Convert.ToInt32(Console.ReadLine());
-
-        // If that value matches a valid enum, use it. Otherwise, ask again.
-        if (Enum.IsDefined(typeof(WorldSize), desiredWorldSize))
-        {
-            worldSize = (WorldSize) desiredWorldSize;
-        }
+        Console.Write("What size would you like to use? (Use Capitalisation) ");
+        Enum.TryParse(typeof(WorldSize), Console.ReadLine(), out var desiredWorldSize);
+        worldSize = (WorldSize) (desiredWorldSize ?? WorldSize.None);
     }
 
-    Console.WriteLine($"Using a {worldSize} world.");
+    Console.WriteLine($"Using a {worldSize} world.\n");
 
     // Because the world grid uses a 0-based index, we need to subtract 1 from the World Size.
     max = (int) worldSize - 1;
