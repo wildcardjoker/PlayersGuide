@@ -2,13 +2,13 @@
 
 const int    min = 0;
 int          max;
-var          worldSize        = WorldSize.None;
-const string entranceText     = "You see light coming from the cavern entrance.";
-const string winText          = "The Fountain of Objects has been reactivated, and you have escaped with your life!\nYou win!";
-const string fountainArrival  = "You hear water dripping in this room. The Fountain of Objects is here!";
-const string fountainActive   = "You hear the rushing waters from the Fountain of Objects. It has been reactivated!";
-const string status           = "You are in the room at";
-var          fountainLocation = new Point(0, 2);
+var          worldSize       = WorldSize.None;
+const string entranceText    = "You see light coming from the cavern entrance.";
+const string winText         = "The Fountain of Objects has been reactivated, and you have escaped with your life!\nYou win!";
+const string fountainArrival = "You hear water dripping in this room. The Fountain of Objects is here!";
+const string fountainActive  = "You hear the rushing waters from the Fountain of Objects. It has been reactivated!";
+const string status          = "You are in the room at";
+Point        fountainLocation;
 Point        entranceLocation;
 Point        currentLocation;
 var          narrativeItem       = new ColouredItem<string>(string.Empty,               ConsoleColor.Magenta);
@@ -67,6 +67,7 @@ void CreateWorld()
 void ConfigureWorld()
 {
     SetEntranceLocation();
+    SetFountainLocation();
 }
 
 void SetEntranceLocation()
@@ -79,6 +80,17 @@ void SetEntranceLocation()
         _                => new Point(0,   0)
     };
     currentLocation = entranceLocation;
+}
+
+void SetFountainLocation()
+{
+    fountainLocation = worldSize switch
+    {
+        WorldSize.Large  => new Point(5, 2),
+        WorldSize.Medium => new Point(2, 0),
+        WorldSize.Small  => new Point(0, 2),
+        _                => new Point(0, 2)
+    };
 }
 
 // Is the player at the entrance?
