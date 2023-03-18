@@ -50,3 +50,13 @@ You win!
 
 - **Hint**: You may find two-dimensional arrays (Level 12) helpful in representing a 2D grid-based game world.
 - **Hint**: Remember your training! You do not need to solve this entire problem all at once, and you do not have to get it right in your first attempt. Pick an item or two to start and solve just those items. Rework until you are happy with it, then add the next item or two.
+
+### Boss Battle: Small, Medium, or Large
+
+The larger the Cavern of Objects, the more difficult the game becomes. The basic game only requires a small `4x4` world, but we will add a medium `6x6` world and a large `8x8` world for this challenge.
+
+#### Objectives
+
+- Before the game begins, ask the player whether they want to play a `small`, `medium`, or `large` game. Create a `4x4` world if they choose a `small` world, a `6x6` world if they choose a `medium` world, and an `8x8` world if they choose a `large` world.
+- Pick an appropriate location for both the `Fountain Room` and the `Entrance Room`.
+- **Note**: When combined with the *Amaroks*, *Maelstroms*, or *Pits* challenges, you will need to adapt the game by adding amaroks, maelstroms, and pits to all three sizes.

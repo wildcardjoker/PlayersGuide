@@ -1,16 +1,16 @@
 ﻿// Create a 4x4 grid
 
-var          rooms               = new[,] {{0, 1, 2, 3}, {0, 1, 2, 3}};
-const int    min                 = 0;
-const int    max                 = 3;
-const string entranceText        = "You see light coming from the cavern entrance.";
-const string winText             = "The Fountain of Objects has been reactivated, and you have escaped with your life!\nYou win!";
-const string fountainArrival     = "You hear water dripping in this room. The Fountain of Objects is here!";
-const string fountainActive      = "You hear the rushing waters from the Fountain of Objects. It has been reactivated!";
-const string status              = "You are in the room at";
-var          fountainLocation    = new Point(0, 2);
-var          entranceLocation    = new Point(0, 0);
-var          currentLocation     = entranceLocation;
+const int    min = 0;
+int          max;
+var          worldSize       = WorldSize.None;
+const string entranceText    = "You see light coming from the cavern entrance.";
+const string winText         = "The Fountain of Objects has been reactivated, and you have escaped with your life!\nYou win!";
+const string fountainArrival = "You hear water dripping in this room. The Fountain of Objects is here!";
+const string fountainActive  = "You hear the rushing waters from the Fountain of Objects. It has been reactivated!";
+const string status          = "You are in the room at";
+Point        fountainLocation;
+Point        entranceLocation;
+Point        currentLocation;
 var          narrativeItem       = new ColouredItem<string>(string.Empty,               ConsoleColor.Magenta);
 var          descriptiveText     = new ColouredItem<string>(string.Empty,               ConsoleColor.White);
 var          prompt              = new ColouredItem<string>("What do you want to do? ", ConsoleColor.White);
@@ -21,6 +21,8 @@ var          error               = new ColouredItem<string>(string.Empty,       
 var          fountainIsActive    = false;
 
 Console.Title = "The Fountain of Objects";
+CreateWorld();
+
 while (!(AtEntrance() && fountainIsActive))
 {
     DisplayStatus();
@@ -31,6 +33,61 @@ while (!(AtEntrance() && fountainIsActive))
 narrativeItem.SetItem(winText);
 narrativeItem.Display();
 Console.ResetColor();
+
+// End of main program. The remaining code contains supporting methods
+void CreateWorld()
+{
+    // Get enum values and convert to a List - remove WorldSize.None or the loop will exit immediately
+    //var sizes  = ((int[]) Enum.GetValues(typeof(WorldSize))).Where(x => x != 0).ToList();
+    var worlds = Enum.GetNames(typeof(WorldSize)).Where(world => !world.Equals("None")).ToList();
+    Console.WriteLine("The following game sizes are available:");
+    foreach (var world in worlds)
+    {
+        Console.WriteLine(world);
+    }
+
+    while (worldSize == WorldSize.None)
+    {
+        Console.Write("What size would you like to use? (Use Capitalisation) ");
+        Enum.TryParse(typeof(WorldSize), Console.ReadLine(), out var desiredWorldSize);
+        worldSize = (WorldSize) (desiredWorldSize ?? WorldSize.None);
+    }
+
+    Console.WriteLine($"Using a {worldSize} world.\n");
+
+    // Because the world grid uses a 0-based index, we need to subtract 1 from the World Size.
+    max = (int) worldSize - 1;
+    ConfigureWorld();
+}
+
+void ConfigureWorld()
+{
+    SetEntranceLocation();
+    SetFountainLocation();
+}
+
+void SetEntranceLocation()
+{
+    entranceLocation = worldSize switch
+    {
+        WorldSize.Large  => new Point(2,   max),
+        WorldSize.Medium => new Point(max, 1),
+        WorldSize.Small  => new Point(0,   0),
+        _                => new Point(0,   0)
+    };
+    currentLocation = entranceLocation;
+}
+
+void SetFountainLocation()
+{
+    fountainLocation = worldSize switch
+    {
+        WorldSize.Large  => new Point(5, 2),
+        WorldSize.Medium => new Point(2, 0),
+        WorldSize.Small  => new Point(0, 2),
+        _                => new Point(0, 2)
+    };
+}
 
 // Is the player at the entrance?
 bool AtEntrance() => currentLocation == entranceLocation;
@@ -151,6 +208,14 @@ internal enum Direction
     East,
     West,
     Unknown
+}
+
+internal enum WorldSize
+{
+    None   = 0,
+    Small  = 4,
+    Medium = 6,
+    Large  = 8
 }
 
 /// <summary>
