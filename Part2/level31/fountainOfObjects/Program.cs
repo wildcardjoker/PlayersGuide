@@ -14,6 +14,7 @@ Point        fountainLocation;
 Point        entranceLocation;
 Point        currentLocation;
 List<Point>  pitLocations;
+List<Point>  maelstromLocations;
 var          narrativeItem       = new ColouredItem<string>(string.Empty,               ConsoleColor.Magenta);
 var          descriptiveText     = new ColouredItem<string>(string.Empty,               ConsoleColor.White);
 var          prompt              = new ColouredItem<string>("What do you want to do? ", ConsoleColor.White);
@@ -131,11 +132,6 @@ void ParseCommand()
         _                 => "invalid command"
     };
 
-    if (PlayerIsNearPit())
-    {
-        descriptiveText.SetItem(pitWarning);
-    }
-
     if (string.IsNullOrWhiteSpace(result))
     {
         return;
@@ -167,21 +163,27 @@ void DisplayStatus()
     Console.WriteLine("--------------------------------------------------------------------------------------");
     narrativeItem?.SetItem($"{status} {currentLocation}");
     narrativeItem?.Display();
-    var description = descriptiveText.ToString();
-    if (!string.IsNullOrWhiteSpace(description))
-    {
-        descriptiveText.Display();
-    }
 
     if (AtEntrance())
     {
         entranceDescription.Display();
     }
 
+    if (NearSpecialLocation(pitLocations))
+    {
+        DisplayDescriptiveText(pitWarning);
+    }
+
     if (AtFountainLocation())
     {
         waterText.Display();
     }
+}
+
+void DisplayDescriptiveText(string text)
+{
+    descriptiveText.SetItem(text);
+    descriptiveText.Display();
 }
 
 // Move in the specified direction
@@ -208,7 +210,7 @@ string Move(Direction direction)
 
 bool PlayerIsInPit() => pitLocations.Contains(currentLocation);
 
-bool PlayerIsNearPit()
+bool NearSpecialLocation(ICollection<Point> specialLocations)
 {
     // Modified from https://www.royvanrijn.com/blog/2019/01/longest-path/
     // TODO: Incorporate into a Function library - this is a really useful method!
@@ -241,7 +243,7 @@ bool PlayerIsNearPit()
         if (nRow >= 0 && nRow < (int) worldSize && nCol >= 0 && nCol < (int) worldSize)
         {
             var neighbour = new Point(nRow, nCol);
-            if (!pitLocations.Contains(neighbour))
+            if (!specialLocations.Contains(neighbour))
             {
                 continue;
             }
