@@ -211,6 +211,7 @@ bool PlayerIsInPit() => pitLocations.Contains(currentLocation);
 bool PlayerIsNearPit()
 {
     // Modified from https://www.royvanrijn.com/blog/2019/01/longest-path/
+    // TODO: Incorporate into a Function library - this is a really useful method!
     // Create a 3x3 grid
     // 0 1 2
     // 3 4 5
