@@ -60,3 +60,14 @@ The larger the Cavern of Objects, the more difficult the game becomes. The basic
 - Before the game begins, ask the player whether they want to play a `small`, `medium`, or `large` game. Create a `4x4` world if they choose a `small` world, a `6x6` world if they choose a `medium` world, and an `8x8` world if they choose a `large` world.
 - Pick an appropriate location for both the `Fountain Room` and the `Entrance Room`.
 - **Note**: When combined with the *Amaroks*, *Maelstroms*, or *Pits* challenges, you will need to adapt the game by adding amaroks, maelstroms, and pits to all three sizes.
+
+### Boss Battle: Pits
+
+The cavern of Objects is a dangerous place. Some rooms open up to bottomless pits. Entering a pit means death. The player can sense a pit is in an adjacent room because a draft of air pushes through the pits into adjacent rooms. Add pit rooms to the game. End the game if the player stumbles into one.
+
+#### Objectives
+
+- Add a pit room to your 4x4 cavern anywhere that isn't the fountain or entrance room.
+- Players can sense the draft blowing out of pits in adjacent rooms (all eight directions): "You feel a draft. There is a pit in a nearby room."
+- If a player ends their turn in a room iwth a pit, they lose the game.
+- **Note**: When combined with the *Small, Medium, or Large* challenge, add one pit to the 4x4 world, two pits to the 6x6 world, and four pits to the 8x8 world, in locations of your choice.
