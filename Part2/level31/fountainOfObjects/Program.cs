@@ -1,16 +1,15 @@
-﻿// Create a 4x4 grid
-
-const int    min = 0;
+﻿const int    min = 0;
 int          max;
-var          worldSize        = WorldSize.None;
-const string entranceText     = "You see light coming from the cavern entrance.";
-const string winText          = "The Fountain of Objects has been reactivated, and you have escaped with your life!\nYou win!";
-const string fountainArrival  = "You hear water dripping in this room. The Fountain of Objects is here!";
-const string fountainActive   = "You hear the rushing waters from the Fountain of Objects. It has been reactivated!";
-const string maelstromWarning = "You hear the growling and groaning of a maelstrom nearby.";
-const string pitWarning       = "You feel a draft. There is a pit in a nearby room.";
-const string pitEndGame       = "You have fallen into a pit and died. The game is over.";
-const string status           = "You are in the room at";
+var          worldSize            = WorldSize.None;
+const string entranceText         = "You see light coming from the cavern entrance.";
+const string winText              = "The Fountain of Objects has been reactivated, and you have escaped with your life!\nYou win!";
+const string fountainArrival      = "You hear water dripping in this room. The Fountain of Objects is here!";
+const string fountainActive       = "You hear the rushing waters from the Fountain of Objects. It has been reactivated!";
+const string maelstromPlayerMoved = "You encountered a maelstrom! You have been blown 1 space North and 2 spaces East";
+const string maelstromWarning     = "You hear the growling and groaning of a maelstrom nearby.";
+const string pitWarning           = "You feel a draft. There is a pit in a nearby room.";
+const string pitEndGame           = "You have fallen into a pit and died. The game is over.";
+const string status               = "You are in the room at";
 Point        fountainLocation;
 Point        entranceLocation;
 Point        currentLocation;
@@ -106,9 +105,9 @@ void SetMaelstromLocations()
     maelstromLocations = worldSize switch
     {
         WorldSize.Large  => new List<Point> {new (1, 5), new (4, 2)},
-        WorldSize.Medium => new List<Point> {new (3, 2)},
-        WorldSize.Small  => new List<Point> {new (1, 0)},
-        _                => new List<Point> {new (1, 0)}
+        WorldSize.Medium => new List<Point> {new (2, 1)},
+        WorldSize.Small  => new List<Point> {new (1, 2)},
+        _                => new List<Point> {new (1, 2)}
     };
 }
 
@@ -223,10 +222,19 @@ string Move(Direction direction)
         Direction.Unknown => throw new ArgumentOutOfRangeException(nameof(direction), direction, null),
         _                 => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
     };
+
+    // If this location contains a maelstrom, move the player and maelstrom
+    if (PlayerEncounteredMaelstrom())
+    {
+        TriggerMaelstromBattle();
+    }
+
     return string.Empty;
 }
 
 bool PlayerIsInPit() => pitLocations.Contains(currentLocation);
+
+bool PlayerEncounteredMaelstrom() => maelstromLocations.Contains(currentLocation);
 
 bool NearSpecialLocation(ICollection<Point> specialLocations)
 {
@@ -280,6 +288,22 @@ bool CanMove(Direction direction) => (direction    == Direction.North && current
                                      || (direction == Direction.West  && currentLocation.Column != min)
                                      || (direction == Direction.East  && currentLocation.Column != max);
 
+void TriggerMaelstromBattle()
+{
+    // Move maelstrom 1 South, 2 West
+    maelstromLocations.Remove(currentLocation);
+    var row = Math.Clamp(currentLocation.Row    + 1, 0, max);
+    var col = Math.Clamp(currentLocation.Column - 2, 0, max);
+    maelstromLocations.Add(new Point(row, col));
+
+    // Move player 1 North, 2 East
+    row             = Math.Clamp(currentLocation.Row    - 1, 0, max);
+    col             = Math.Clamp(currentLocation.Column + 2, 0, max);
+    currentLocation = new Point(row, col);
+    DisplayDescriptiveText(maelstromPlayerMoved);
+}
+
+#region Internal declarations
 // Create a simple object to hold the player's location
 internal record Point(int Row, int Column)
 {
@@ -306,6 +330,7 @@ internal enum WorldSize
     Medium = 6,
     Large  = 8
 }
+#endregion
 
 /// <summary>
 ///     Assign a colour to any item type.
