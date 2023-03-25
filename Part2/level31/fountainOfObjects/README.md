@@ -69,5 +69,20 @@ The cavern of Objects is a dangerous place. Some rooms open up to bottomless pit
 
 - Add a pit room to your 4x4 cavern anywhere that isn't the fountain or entrance room.
 - Players can sense the draft blowing out of pits in adjacent rooms (all eight directions): "You feel a draft. There is a pit in a nearby room."
-- If a player ends their turn in a room iwth a pit, they lose the game.
+- If a player ends their turn in a room with a pit, they lose the game.
 - **Note**: When combined with the *Small, Medium, or Large* challenge, add one pit to the 4x4 world, two pits to the 6x6 world, and four pits to the 8x8 world, in locations of your choice.
+
+### Boss Battle: Maelstroms
+
+The Uncoded One knows the significance of the Fountain of Objects and has placed minions in the caverns to defend it. One of these is the maelstrom - a sentient, malevolent wind. Encountering a maelstrom does not result in instant death, but entering a room containing a maelstrom causes the player to be swept away to another room. The maelstrom also moves to a new location. If the player is moved to another dangerous location, such as a pit, that room's effects will happen upon landing in that room.
+
+A player can hear the growling and groaning of a maelstrom from a neighbouring room (including diagonals) which gives them a clue to be careful.
+
+Modify the basic Fountain of Objects game in the ways below to add maelstroms to the game.
+
+#### Objectives
+
+- Add a maelstrom to the small 4x4 game in a location of your choice.
+- The player can sense maelstroms by hearing them in adjacent rooms. ("You hear the growling and groaning of a maelstrom nearby.")
+- If a player enters a room with a maelstrom, the player moves one space north and two spaces east, while the maelstrom moves one space south and two spaces west. When the player is moved like this, tell them so. If this would move the player or maelstrom beyond the map's edge, ensure they stay on the map. (Clamp them to the map, wrap around to the other side, or any other strategy).
+- **Note**: When combined with the *Small, Medium, or Large* challenge, place one maelstrom into the medium-sized game and two into the large-sized game.
