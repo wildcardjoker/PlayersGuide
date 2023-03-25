@@ -7,10 +7,13 @@ const string entranceText    = "You see light coming from the cavern entrance.";
 const string winText         = "The Fountain of Objects has been reactivated, and you have escaped with your life!\nYou win!";
 const string fountainArrival = "You hear water dripping in this room. The Fountain of Objects is here!";
 const string fountainActive  = "You hear the rushing waters from the Fountain of Objects. It has been reactivated!";
+const string pitWarning      = "You feel a draft. There is a pit in a nearby room.";
+const string pitEndGame      = "You have fallen into a pit and died. The game is over.";
 const string status          = "You are in the room at";
 Point        fountainLocation;
 Point        entranceLocation;
 Point        currentLocation;
+List<Point>  pitLocations;
 var          narrativeItem       = new ColouredItem<string>(string.Empty,               ConsoleColor.Magenta);
 var          descriptiveText     = new ColouredItem<string>(string.Empty,               ConsoleColor.White);
 var          prompt              = new ColouredItem<string>("What do you want to do? ", ConsoleColor.White);
@@ -27,6 +30,12 @@ while (!(AtEntrance() && fountainIsActive))
 {
     DisplayStatus();
     ParseCommand();
+    if (PlayerIsInPit())
+    {
+        error.SetItem(pitEndGame);
+        error.Display();
+        return;
+    }
 }
 
 // The player has escaped!
@@ -63,6 +72,7 @@ void ConfigureWorld()
 {
     SetEntranceLocation();
     SetFountainLocation();
+    SetPitLocations();
 }
 
 void SetEntranceLocation()
@@ -75,6 +85,17 @@ void SetEntranceLocation()
         _                => new Point(0,   0)
     };
     currentLocation = entranceLocation;
+}
+
+void SetPitLocations()
+{
+    pitLocations = worldSize switch
+    {
+        WorldSize.Large  => new List<Point> {new (1, 1), new (3, 5), new (4, 3), new (6, 0)},
+        WorldSize.Medium => new List<Point> {new (1, 3), new (5, 5)},
+        WorldSize.Small  => new List<Point> {new Point(2, 1)},
+        _                => new List<Point> {new Point(2, 1)}
+    };
 }
 
 void SetFountainLocation()
@@ -97,6 +118,7 @@ bool AtFountainLocation() => currentLocation == fountainLocation;
 // After receiving the player's command, process it and display an error if the command input isn't valid or can't be performed.
 void ParseCommand()
 {
+    descriptiveText.SetItem(string.Empty);
     prompt?.Display(false);
     var input = command.GetInput();
     var result = input?.ToLower() switch
@@ -108,6 +130,11 @@ void ParseCommand()
         "enable fountain" => EnableFountain(),
         _                 => "invalid command"
     };
+
+    if (PlayerIsNearPit())
+    {
+        descriptiveText.SetItem(pitWarning);
+    }
 
     if (string.IsNullOrWhiteSpace(result))
     {
@@ -160,11 +187,6 @@ void DisplayStatus()
 // Move in the specified direction
 string Move(Direction direction)
 {
-    if (currentLocation == null)
-    {
-        return "I don't know what your current location is!";
-    }
-
     // Is this a valid move?
     if (!CanMove(direction))
     {
@@ -182,6 +204,53 @@ string Move(Direction direction)
         _                 => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
     };
     return string.Empty;
+}
+
+bool PlayerIsInPit() => pitLocations.Contains(currentLocation);
+
+bool PlayerIsNearPit()
+{
+    // Modified from https://www.royvanrijn.com/blog/2019/01/longest-path/
+    // Create a 3x3 grid
+    // 0 1 2
+    // 3 4 5
+    // 6 7 8
+    for (var direction = 0; direction < 9; direction++)
+    {
+        if (direction == 4)
+        {
+            continue; // Skip 4, this is the middle (our location).
+        }
+
+        // Using mod 3 will convert the row/column values to between 0-2
+        // 0 1 2     -1 0 1
+        // 0 1 2  => -1 0 1
+        // 0 1 2     -1 0 1
+
+        // Subtracting 1 will set the range to -1 - 1
+        // 0 0 0     -1 -1 -1
+        // 1 1 1  =>  0  0  0
+        // 2 2 2      1  1  1
+
+        // With 0 marking the middle, we can use these values to determine the neighbouring values
+        var nRow = currentLocation.Row    + (direction / 3 - 1);
+        var nCol = currentLocation.Column + (direction % 3 - 1);
+
+        // Check the bounds:
+        if (nRow >= 0 && nRow < (int) worldSize && nCol >= 0 && nCol < (int) worldSize)
+        {
+            var neighbour = new Point(nRow, nCol);
+            if (!pitLocations.Contains(neighbour))
+            {
+                continue;
+            }
+
+            // We found a pit - no need to iterate through the remaining neighbours
+            return true;
+        }
+    }
+
+    return false;
 }
 
 // Determine whether the player can move in this direction
