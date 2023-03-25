@@ -7,10 +7,12 @@ const string entranceText    = "You see light coming from the cavern entrance.";
 const string winText         = "The Fountain of Objects has been reactivated, and you have escaped with your life!\nYou win!";
 const string fountainArrival = "You hear water dripping in this room. The Fountain of Objects is here!";
 const string fountainActive  = "You hear the rushing waters from the Fountain of Objects. It has been reactivated!";
+const string pitWarning      = "You feel a draft. There is a pit in a nearby room.";
 const string status          = "You are in the room at";
 Point        fountainLocation;
 Point        entranceLocation;
 Point        currentLocation;
+List<Point>  pitLocations;
 var          narrativeItem       = new ColouredItem<string>(string.Empty,               ConsoleColor.Magenta);
 var          descriptiveText     = new ColouredItem<string>(string.Empty,               ConsoleColor.White);
 var          prompt              = new ColouredItem<string>("What do you want to do? ", ConsoleColor.White);
@@ -63,6 +65,7 @@ void ConfigureWorld()
 {
     SetEntranceLocation();
     SetFountainLocation();
+    SetPitLocations();
 }
 
 void SetEntranceLocation()
@@ -75,6 +78,17 @@ void SetEntranceLocation()
         _                => new Point(0,   0)
     };
     currentLocation = entranceLocation;
+}
+
+void SetPitLocations()
+{
+    pitLocations = worldSize switch
+    {
+        WorldSize.Large  => new List<Point> {new (1, 1), new (3, 5), new (4, 3), new (6, 0)},
+        WorldSize.Medium => new List<Point> {new (1, 3), new (5, 5)},
+        WorldSize.Small  => new List<Point> {new Point(2, 1)},
+        _                => new List<Point> {new Point(2, 1)}
+    };
 }
 
 void SetFountainLocation()
@@ -160,11 +174,6 @@ void DisplayStatus()
 // Move in the specified direction
 string Move(Direction direction)
 {
-    if (currentLocation == null)
-    {
-        return "I don't know what your current location is!";
-    }
-
     // Is this a valid move?
     if (!CanMove(direction))
     {
