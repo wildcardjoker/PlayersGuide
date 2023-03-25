@@ -38,7 +38,6 @@ Console.ResetColor();
 void CreateWorld()
 {
     // Get enum values and convert to a List - remove WorldSize.None or the loop will exit immediately
-    //var sizes  = ((int[]) Enum.GetValues(typeof(WorldSize))).Where(x => x != 0).ToList();
     var worlds = Enum.GetNames(typeof(WorldSize)).Where(world => !world.Equals("None")).ToList();
     Console.WriteLine("The following game sizes are available:");
     foreach (var world in worlds)
