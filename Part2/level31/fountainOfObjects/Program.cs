@@ -43,6 +43,7 @@ while (!(AtEntrance() && fountainIsActive))
     if (PLayerEncounteredAmarok())
     {
         DisplayEndGame(amarokEndGame);
+        return;
     }
 }
 
@@ -54,8 +55,9 @@ Console.ResetColor();
 // End of main program. The remaining code contains supporting methods
 void DisplayEndGame(string ending)
 {
-    error.SetItem($"{ending}  The game is over.");
+    error.SetItem($"{ending} The game is over.");
     error.Display();
+    Console.ResetColor();
 }
 
 void CreateWorld()
@@ -214,6 +216,11 @@ void DisplayStatus()
     if (NearSpecialLocation(maelstromLocations))
     {
         DisplayDescriptiveText(maelstromWarning);
+    }
+
+    if (NearSpecialLocation(amarokLocations))
+    {
+        DisplayDescriptiveText(amarokWarning);
     }
 
     if (AtFountainLocation())
