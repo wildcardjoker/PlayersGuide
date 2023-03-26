@@ -110,3 +110,24 @@ The player brings a bow and several arrows with them into the Caverns. The playe
 
 - Add the following commands that allow a player to shoot in any of the four directions: *shoot north*, *shoot east*, *shoot south*, and *shoot west*. When the player shoots in one of the four directions, an arrow is fired into the room in that direction. If a monster is in that room, it is killed and should not affect the game anymore. They can no longer sense it, and it should not affect the player.
 - The player only has five arrows and cannot shoot when they are out of arrows. Display the number of arrows the player has when displaying the games status before asking for their action.
+
+### Boss Battle: Getting help
+
+The player should not be guessing about how to play the game. This challenge requires adding two key elements that make playing the Fountain of Objects easier: introductory text that explains the game and a `help` command that list all available commands and what they each do.
+
+#### Objectives
+
+- When the game starts, display text that describes the game shown below
+
+````none
+You enter the Cavern of Objects, a maze of rooms filled with dangerous pits in search of the Fountain of Objects.
+Light is visible in the entrance, and no other light is seen anywhere in the caverns.
+You must navigate the Caverns with your other senses.
+Find the Fountain of Objects, activate it, and return to the entrance.
+````
+
+- If you chose to do the *Pits* challenge, add the following to the description: "Look out for pits. You will feel a breeze if a pit is in an adjacent room. if you enter a room with a pit, you will die."
+- If you chose to do the *Maelstroms* challenge, add the following to the description: "Maelstroms are violent forces of sentient wind. Entering a room with one could transport you to any other location in the caverns. You will be able to hear their growling and groaning in nearby rooms."
+- If you chose to do the *Amaroks* challenge, add the following to the description: "Amaroks roam the caverns. Encountering one is certain death, but you can smell their rotten stench in nearby rooms."
+- If you chose to do the *Getting Armed* challenge, add the following to the description: "You carry with you a bow and a quiver of arrows. You can use them to shoot monsters in the caverns, but be warned: you have a limited supply."
+- When the player types the command `help`, display all available commands and a short description of what each command does. The complete list of commands will depend on what challenges you complete.
