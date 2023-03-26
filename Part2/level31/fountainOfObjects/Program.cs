@@ -31,6 +31,8 @@ var          fountainIsActive    = false;
 Console.Title = "The Fountain of Objects";
 CreateWorld();
 
+DisplayIntroduction();
+
 while (!(AtEntrance() && fountainIsActive))
 {
     DisplayStatus();
@@ -54,6 +56,19 @@ narrativeItem.Display();
 Console.ResetColor();
 
 // End of main program. The remaining code contains supporting methods
+void DisplayIntroduction()
+{
+    Console.WriteLine("You enter the Cavern of Objects, a maze of rooms filled with dangerous pits in search of the Fountain of Objects.");
+    Console.WriteLine("Light is visible in the entrance, and no other light is seen anywhere in the caverns.");
+    Console.WriteLine("You must navigate the Caverns with your other senses.");
+    Console.WriteLine("Find the Fountain of Objects, activate it, and return to the entrance.");
+    Console.WriteLine("Look out for pits. You will feel a breeze if a pit is in an adjacent room. if you enter a room with a pit, you will die.");
+    Console.WriteLine(
+        "Maelstroms are violent forces of sentient wind. Entering a room with one could transport you to any other location in the caverns. You will be able to hear their growling and groaning in nearby rooms.");
+    Console.WriteLine("Amaroks roam the caverns. Encountering one is certain death, but you can smell their rotten stench in nearby rooms.");
+    Console.WriteLine("You carry with you a bow and a quiver of arrows. You can use them to shoot monsters in the caverns, but be warned: you have a limited supply.");
+}
+
 void DisplayEndGame(string ending)
 {
     error.SetItem($"{ending} The game is over.");
@@ -173,6 +188,7 @@ void ParseCommand()
         "shoot east"      => Shoot(Direction.East),
         "shoot west"      => Shoot(Direction.West),
         "enable fountain" => EnableFountain(),
+        "help"            => DisplayHelp(),
         _                 => "invalid command"
     };
 
@@ -184,6 +200,17 @@ void ParseCommand()
     // There was a problem processing the command - display an error message.
     error?.SetItem(result);
     error?.Display();
+}
+
+string DisplayHelp()
+{
+    Console.ResetColor();
+    Console.WriteLine("The following commands are available:");
+    Console.WriteLine("move north/south/east/west  - Move in the specified direction.");
+    Console.WriteLine("shoot north/south/east/west - Shoot an arrow in the specified direction into the next room. If a monster is in that room, they will be killed.");
+    Console.WriteLine("enable fountain             - Activate the Fountain of Objects. Only available in the Fountain Room");
+    Console.WriteLine("help                        - Display this help text");
+    return string.Empty;
 }
 
 // Activate the fountain if the player is at the Fountain's location.
