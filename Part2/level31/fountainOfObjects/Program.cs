@@ -1,6 +1,8 @@
 ﻿const int    min = 0;
 int          max;
 var          worldSize            = WorldSize.None;
+const string amarokEndGame        = "You have been torn apart by an amarok and died.";
+const string amarokWarning        = "You can smell the rotten stench of an amarok in a nearby room.";
 const string entranceText         = "You see light coming from the cavern entrance.";
 const string winText              = "The Fountain of Objects has been reactivated, and you have escaped with your life!\nYou win!";
 const string fountainArrival      = "You hear water dripping in this room. The Fountain of Objects is here!";
@@ -8,11 +10,12 @@ const string fountainActive       = "You hear the rushing waters from the Founta
 const string maelstromPlayerMoved = "You encountered a maelstrom! You have been blown 1 space North and 2 spaces East";
 const string maelstromWarning     = "You hear the growling and groaning of a maelstrom nearby.";
 const string pitWarning           = "You feel a draft. There is a pit in a nearby room.";
-const string pitEndGame           = "You have fallen into a pit and died. The game is over.";
+const string pitEndGame           = "You have fallen into a pit and died.";
 const string status               = "You are in the room at";
 Point        fountainLocation;
 Point        entranceLocation;
 Point        currentLocation;
+List<Point>  amarokLocations;
 List<Point>  pitLocations;
 List<Point>  maelstromLocations;
 var          narrativeItem       = new ColouredItem<string>(string.Empty,               ConsoleColor.Magenta);
@@ -33,8 +36,13 @@ while (!(AtEntrance() && fountainIsActive))
     ParseCommand();
     if (PlayerIsInPit())
     {
-        error.SetItem(pitEndGame);
-        error.Display();
+        DisplayEndGame(pitEndGame);
+        return;
+    }
+
+    if (PLayerEncounteredAmarok())
+    {
+        DisplayEndGame(amarokEndGame);
         return;
     }
 }
@@ -45,6 +53,13 @@ narrativeItem.Display();
 Console.ResetColor();
 
 // End of main program. The remaining code contains supporting methods
+void DisplayEndGame(string ending)
+{
+    error.SetItem($"{ending} The game is over.");
+    error.Display();
+    Console.ResetColor();
+}
+
 void CreateWorld()
 {
     // Get enum values and convert to a List - remove WorldSize.None or the loop will exit immediately
@@ -75,6 +90,7 @@ void ConfigureWorld()
     SetFountainLocation();
     SetPitLocations();
     SetMaelstromLocations();
+    SetAmarokLocations();
 }
 
 void SetEntranceLocation()
@@ -97,6 +113,17 @@ void SetPitLocations()
         WorldSize.Medium => new List<Point> {new (1, 3), new (5, 5)},
         WorldSize.Small  => new List<Point> {new (2, 1)},
         _                => new List<Point> {new (2, 1)}
+    };
+}
+
+void SetAmarokLocations()
+{
+    amarokLocations = worldSize switch
+    {
+        WorldSize.Large  => new List<Point> {new (1, 3), new (3, 1), new (6, 5)},
+        WorldSize.Medium => new List<Point> {new (0, 1), new (3, 3)},
+        WorldSize.Small  => new List<Point> {new (1, 0)},
+        _                => new List<Point> {new (1, 0)}
     };
 }
 
@@ -191,6 +218,11 @@ void DisplayStatus()
         DisplayDescriptiveText(maelstromWarning);
     }
 
+    if (NearSpecialLocation(amarokLocations))
+    {
+        DisplayDescriptiveText(amarokWarning);
+    }
+
     if (AtFountainLocation())
     {
         waterText.Display();
@@ -233,6 +265,8 @@ string Move(Direction direction)
 }
 
 bool PlayerIsInPit() => pitLocations.Contains(currentLocation);
+
+bool PLayerEncounteredAmarok() => amarokLocations.Contains(currentLocation);
 
 bool PlayerEncounteredMaelstrom() => maelstromLocations.Contains(currentLocation);
 

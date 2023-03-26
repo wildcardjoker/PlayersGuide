@@ -86,3 +86,16 @@ Modify the basic Fountain of Objects game in the ways below to add maelstroms to
 - The player can sense maelstroms by hearing them in adjacent rooms. ("You hear the growling and groaning of a maelstrom nearby.")
 - If a player enters a room with a maelstrom, the player moves one space north and two spaces east, while the maelstrom moves one space south and two spaces west. When the player is moved like this, tell them so. If this would move the player or maelstrom beyond the map's edge, ensure they stay on the map. (Clamp them to the map, wrap around to the other side, or any other strategy).
 - **Note**: When combined with the *Small, Medium, or Large* challenge, place one maelstrom into the medium-sized game and two into the large-sized game.
+
+### Boss Battle: Amaroks
+
+The Uncoded One has also placed amaroks in the cavern to protect the fountain from people like you. Amaroks are giant, rotting, wolf-like creatures that stalk the caverns. When players enter a room with an amarok, they are instantly killed, and the game is over. Players can smell an amarok in any adjacent room (all eight directions), which tells them that an amarok is nearby.
+
+Modify the basic Fountain of Objects game as described below.
+
+#### Objectives
+
+- Amarok locations are up to you. Pick a room to place an amarok aside from the entrance or fountain room in the small 4x4 world.
+- When a player is in one of the eight spaces adjacent to an amarok, a message should be displayed when sensing surroundings that indicate that the player can smell the amarok nearby. For example, "You can smell the rotten stench of an amarok in a nearby room."
+- When a player enters a room with an amarok, the player dies and loses the game.
+- **Note**: When combined with the *Small, Medium, or Large* challenge, place two amaroks in the medium leve and three in the large level in locations of your choosing.
