@@ -188,6 +188,7 @@ void ParseCommand()
         "shoot east"      => Shoot(Direction.East),
         "shoot west"      => Shoot(Direction.West),
         "enable fountain" => EnableFountain(),
+        "help"            => DisplayHelp(),
         _                 => "invalid command"
     };
 
@@ -199,6 +200,17 @@ void ParseCommand()
     // There was a problem processing the command - display an error message.
     error?.SetItem(result);
     error?.Display();
+}
+
+string DisplayHelp()
+{
+    Console.ResetColor();
+    Console.WriteLine("The following commands are available:");
+    Console.WriteLine("move north/south/east/west  - Move in the specified direction.");
+    Console.WriteLine("shoot north/south/east/west - Shoot an arrow in the specified direction into the next room. If a monster is in that room, they will be killed.");
+    Console.WriteLine("enable fountain             - Activate the Fountain of Objects. Only available in the Fountain Room");
+    Console.WriteLine("help                        - Display this help text");
+    return string.Empty;
 }
 
 // Activate the fountain if the player is at the Fountain's location.
