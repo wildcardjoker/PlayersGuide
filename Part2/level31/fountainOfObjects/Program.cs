@@ -1,6 +1,7 @@
 ﻿const int    min = 0;
 int          max;
 var          worldSize            = WorldSize.None;
+const string amarokWarning        = "You can smell the rotten stench of an amarok in a nearby room.";
 const string entranceText         = "You see light coming from the cavern entrance.";
 const string winText              = "The Fountain of Objects has been reactivated, and you have escaped with your life!\nYou win!";
 const string fountainArrival      = "You hear water dripping in this room. The Fountain of Objects is here!";
@@ -13,6 +14,7 @@ const string status               = "You are in the room at";
 Point        fountainLocation;
 Point        entranceLocation;
 Point        currentLocation;
+List<Point>  amarokLocations;
 List<Point>  pitLocations;
 List<Point>  maelstromLocations;
 var          narrativeItem       = new ColouredItem<string>(string.Empty,               ConsoleColor.Magenta);
@@ -75,6 +77,7 @@ void ConfigureWorld()
     SetFountainLocation();
     SetPitLocations();
     SetMaelstromLocations();
+    SetAmarokLocations();
 }
 
 void SetEntranceLocation()
@@ -97,6 +100,17 @@ void SetPitLocations()
         WorldSize.Medium => new List<Point> {new (1, 3), new (5, 5)},
         WorldSize.Small  => new List<Point> {new (2, 1)},
         _                => new List<Point> {new (2, 1)}
+    };
+}
+
+void SetAmarokLocations()
+{
+    amarokLocations = worldSize switch
+    {
+        WorldSize.Large  => new List<Point> {new (1, 3), new (3, 1), new Point(6, 5)},
+        WorldSize.Medium => new List<Point> {new (0, 1), new (3, 3)},
+        WorldSize.Small  => new List<Point> {new (1, 0)},
+        _                => new List<Point> {new (1, 0)}
     };
 }
 
