@@ -168,6 +168,10 @@ void ParseCommand()
         "move south"      => Move(Direction.South),
         "move east"       => Move(Direction.East),
         "move west"       => Move(Direction.West),
+        "shoot north"     => Shoot(Direction.North),
+        "shoot south"     => Shoot(Direction.South),
+        "shoot east"      => Shoot(Direction.East),
+        "shoot west"      => Shoot(Direction.West),
         "enable fountain" => EnableFountain(),
         _                 => "invalid command"
     };
@@ -264,6 +268,24 @@ string Move(Direction direction)
         TriggerMaelstromBattle();
     }
 
+    return string.Empty;
+}
+
+// Shot an arrow in the specified direction
+string Shoot(Direction direction)
+{
+    var targetLocation = direction switch
+    {
+        Direction.North   => currentLocation with {Row = Math.Clamp(currentLocation.Row       - 1, 0, max)},
+        Direction.South   => currentLocation with {Row = Math.Clamp(currentLocation.Row       + 1, 0, max)},
+        Direction.East    => currentLocation with {Column = Math.Clamp(currentLocation.Column + 1, 0, max)},
+        Direction.West    => currentLocation with {Column = Math.Clamp(currentLocation.Column - 1, 0, max)},
+        Direction.Unknown => throw new ArgumentOutOfRangeException(nameof(direction), direction, null),
+        _                 => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
+    };
+    maelstromLocations.Remove(targetLocation);
+    amarokLocations.Remove(targetLocation);
+    numberOfArrows--;
     return string.Empty;
 }
 
