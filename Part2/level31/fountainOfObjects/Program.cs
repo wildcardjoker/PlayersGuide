@@ -1,5 +1,6 @@
 ﻿const int    min = 0;
 int          max;
+var          numberOfArrows       = 5;
 var          worldSize            = WorldSize.None;
 const string amarokEndGame        = "You have been torn apart by an amarok and died.";
 const string amarokWarning        = "You can smell the rotten stench of an amarok in a nearby room.";
@@ -201,6 +202,8 @@ void DisplayStatus()
     Console.ResetColor();
     Console.WriteLine("--------------------------------------------------------------------------------------");
     narrativeItem?.SetItem($"{status} {currentLocation}");
+    narrativeItem?.Display();
+    narrativeItem?.SetItem($"You have {numberOfArrows} arrow{(numberOfArrows == 1 ? string.Empty : "s")} left");
     narrativeItem?.Display();
 
     if (AtEntrance())
