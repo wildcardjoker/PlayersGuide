@@ -1,5 +1,6 @@
 ﻿const int    min = 0;
 int          max;
+var          numberOfArrows       = 5;
 var          worldSize            = WorldSize.None;
 const string amarokEndGame        = "You have been torn apart by an amarok and died.";
 const string amarokWarning        = "You can smell the rotten stench of an amarok in a nearby room.";
@@ -167,6 +168,10 @@ void ParseCommand()
         "move south"      => Move(Direction.South),
         "move east"       => Move(Direction.East),
         "move west"       => Move(Direction.West),
+        "shoot north"     => Shoot(Direction.North),
+        "shoot south"     => Shoot(Direction.South),
+        "shoot east"      => Shoot(Direction.East),
+        "shoot west"      => Shoot(Direction.West),
         "enable fountain" => EnableFountain(),
         _                 => "invalid command"
     };
@@ -201,6 +206,8 @@ void DisplayStatus()
     Console.ResetColor();
     Console.WriteLine("--------------------------------------------------------------------------------------");
     narrativeItem?.SetItem($"{status} {currentLocation}");
+    narrativeItem?.Display();
+    narrativeItem?.SetItem($"You have {numberOfArrows} arrow{(numberOfArrows == 1 ? string.Empty : "s")} left");
     narrativeItem?.Display();
 
     if (AtEntrance())
@@ -261,6 +268,31 @@ string Move(Direction direction)
         TriggerMaelstromBattle();
     }
 
+    return string.Empty;
+}
+
+// Shot an arrow in the specified direction
+string Shoot(Direction direction)
+{
+    if (numberOfArrows == 0)
+    {
+        error.SetItem("You don't have any more arrows.");
+        error.Display();
+        return string.Empty;
+    }
+
+    var targetLocation = direction switch
+    {
+        Direction.North   => currentLocation with {Row = Math.Clamp(currentLocation.Row       - 1, 0, max)},
+        Direction.South   => currentLocation with {Row = Math.Clamp(currentLocation.Row       + 1, 0, max)},
+        Direction.East    => currentLocation with {Column = Math.Clamp(currentLocation.Column + 1, 0, max)},
+        Direction.West    => currentLocation with {Column = Math.Clamp(currentLocation.Column - 1, 0, max)},
+        Direction.Unknown => throw new ArgumentOutOfRangeException(nameof(direction), direction, null),
+        _                 => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
+    };
+    maelstromLocations.Remove(targetLocation);
+    amarokLocations.Remove(targetLocation);
+    numberOfArrows--;
     return string.Empty;
 }
 

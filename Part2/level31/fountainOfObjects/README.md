@@ -99,3 +99,14 @@ Modify the basic Fountain of Objects game as described below.
 - When a player is in one of the eight spaces adjacent to an amarok, a message should be displayed when sensing surroundings that indicate that the player can smell the amarok nearby. For example, "You can smell the rotten stench of an amarok in a nearby room."
 - When a player enters a room with an amarok, the player dies and loses the game.
 - **Note**: When combined with the *Small, Medium, or Large* challenge, place two amaroks in the medium leve and three in the large level in locations of your choosing.
+
+### Boss Battle: Getting Armed
+
+Note: Requires doing the *Maelstroms* or *Amaroks* challenge first.
+
+The player brings a bow and several arrows with them into the Caverns. The player can shoot arrows into the rooms around them, and if they hit a monster, they kill it, and it should no longer impact the game.
+
+#### Objectives
+
+- Add the following commands that allow a player to shoot in any of the four directions: *shoot north*, *shoot east*, *shoot south*, and *shoot west*. When the player shoots in one of the four directions, an arrow is fired into the room in that direction. If a monster is in that room, it is killed and should not affect the game anymore. They can no longer sense it, and it should not affect the player.
+- The player only has five arrows and cannot shoot when they are out of arrows. Display the number of arrows the player has when displaying the games status before asking for their action.
