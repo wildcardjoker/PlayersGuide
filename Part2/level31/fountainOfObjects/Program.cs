@@ -274,6 +274,13 @@ string Move(Direction direction)
 // Shot an arrow in the specified direction
 string Shoot(Direction direction)
 {
+    if (numberOfArrows == 0)
+    {
+        error.SetItem("You don't have any more arrows.");
+        error.Display();
+        return string.Empty;
+    }
+
     var targetLocation = direction switch
     {
         Direction.North   => currentLocation with {Row = Math.Clamp(currentLocation.Row       - 1, 0, max)},
