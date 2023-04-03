@@ -17,16 +17,25 @@ const int maxRange           = 100;
 var       currentRound       = 1;
 var       manticoreHealth    = maxManticoreHealth;
 var       cityHealth         = maxCityHealth;
-var       random             = new Random();
 
-// The computer decides the Manticore's location
-var manticoreLocation = random.Next(0, 101); // Random.Next includes the minimum number, but excludes the maximum. Return a value between 0 and 100.
+// Human or computer player?
+var response = ConsoleKey.NoName;
+while (!response.Equals(ConsoleKey.S) && !response.Equals(ConsoleKey.M))
+{
+    Console.Write("Do you want to play (S)ingle player or (M)ultiplayer? ");
+    response = Console.ReadKey().Key;
+    Console.WriteLine();
+}
+
+// Set up Player 2
+IPlayer player            = response.Equals(ConsoleKey.S) ? new ComputerPlayer() : new HumanPlayer();
+var     manticoreLocation = player.GetLocation(minRange, maxRange);
 
 // Run the game in a loop until either the Manticore's or city's health reaches `0`.
 do
 {
     DisplayStatus();
-    var manticoreLocationEstimate = AskForManticoreLocation("Enter desired cannon range");
+    var manticoreLocationEstimate = Helper.AskForManticoreLocation("Enter desired cannon range", minRange, maxRange);
     ShootCannon(manticoreLocationEstimate);
     currentRound++;
 }
@@ -45,30 +54,6 @@ Console.ResetColor();
 // End of application
 
 // Methods
-
-// Accept input from the console and convert it to an integer.
-// Still no error handling
-int AskForNumber(string text)
-{
-    Console.Write($"{text}? ");
-    return Convert.ToInt32(Console.ReadLine());
-}
-
-// Prompt user for a number within the specified range until a valid input is provided
-int AskForNumberInRange(string text, int min, int max)
-{
-    int number;
-    do
-    {
-        number = AskForNumber(text);
-    }
-    while (number < min || number > max);
-
-    return number;
-}
-
-// Ask for the location of the Manticore
-int AskForManticoreLocation(string text) => AskForNumberInRange($"{text} ({minRange} - {maxRange})", minRange, maxRange);
 
 // Display the status for the current round
 void DisplayStatus()
@@ -128,5 +113,95 @@ void ShootCannon(int location)
     if (manticoreHealth > minManticoreHealth)
     {
         cityHealth--;
+    }
+}
+
+// Answer this question: How might you use inheritance, polymorphism, or interfaces to allow the game to be single player or two players?
+// Answer: I've created a Player interface, which has a single method and is implemented by two classes:
+// ComputerPlayer: The GetLocation() method uses a random number generator to determine the Manticore's location.
+// HumanPlayer: The GetLocation() method uses the console to ask the player for the Manticore's location.
+// Using these classes, the application can allow the player to choose a single or multi player game, and generate a starting location for the Manticore.
+// As both the main application and the HumanPlayer use the AskForManticoreLocation() method, I've also moved those methods into a static class which can be accessed by both the main application and the HumanPlayer class.
+
+// Interface for Player 2
+internal interface IPlayer
+{
+    int GetLocation(int min, int max);
+}
+
+/// <summary>
+///     A Computer player - the Manticore's location is determined by the Random Number Generator.
+/// </summary>
+public class ComputerPlayer : IPlayer
+{
+    #region IPlayer Members
+    /// <summary>
+    ///     Gets the location of the Manticore.
+    /// </summary>
+    /// <param name="min">The minimum range.</param>
+    /// <param name="max">The maximum range.</param>
+    /// <returns></returns>
+    public int GetLocation(int min, int max)
+    {
+        var random = new Random();
+        return random.Next(min, max + 1);
+    }
+    #endregion
+}
+
+/// <summary>
+///     A Human player - the Manticore's location is determined by the user inputting a range.
+///     The console is then cleared so that the game can begin.
+/// </summary>
+public class HumanPlayer : IPlayer
+{
+    #region IPlayer Members
+    #region Implementation of IPlayer
+    /// <inheritdoc />
+    public int GetLocation(int min, int max)
+    {
+        // Ask the first player to choose the Manticore's distance from the city (0 to 100). Clear the screen afterward.
+        var manticoreLocation = Helper.AskForManticoreLocation("Player 1, how far away from the city to you want to station the Manticore", min, max);
+        Console.Clear();
+        return manticoreLocation;
+    }
+    #endregion
+    #endregion
+}
+
+/// <summary>
+///     Helper functions
+/// </summary>
+public static class Helper
+{
+    // Ask for the location of the Manticore
+    /// <summary>
+    ///     Asks for the Manticore's location.
+    /// </summary>
+    /// <param name="text">The text to be displayed.</param>
+    /// <param name="minRange">The minimum range.</param>
+    /// <param name="maxRange">The maximum range.</param>
+    /// <returns></returns>
+    public static int AskForManticoreLocation(string text, int minRange, int maxRange) => AskForNumberInRange($"{text} ({minRange} - {maxRange})", minRange, maxRange);
+
+    // Accept input from the console and convert it to an integer.
+    // Still no error handling
+    private static int AskForNumber(string text)
+    {
+        Console.Write($"{text}? ");
+        return Convert.ToInt32(Console.ReadLine());
+    }
+
+    // Prompt user for a number within the specified range until a valid input is provided
+    private static int AskForNumberInRange(string text, int min, int max)
+    {
+        int number;
+        do
+        {
+            number = AskForNumber(text);
+        }
+        while (number < min || number > max);
+
+        return number;
     }
 }
