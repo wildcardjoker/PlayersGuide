@@ -10,9 +10,11 @@ var robot = new Robot();
 DisplayValidCommands();
 
 // Enter the commands for the robot, as determined by the user
-for (var i = 0; i < numCommands; i++)
+var command = GetCommand();
+while (command != null)
 {
-    robot.Commands[i] = GetCommand();
+    robot.Commands.Add(command);
+    command = GetCommand();
 }
 
 Console.WriteLine();
@@ -20,7 +22,7 @@ Console.WriteLine();
 // Initiate the Robot's command list.
 robot.Run();
 
-IRobotCommand GetCommand()
+IRobotCommand? GetCommand()
 {
     // Assume that the user has entered a valid command.
     // We should include validation and error handling here, but it's just an exercise.
@@ -49,10 +51,10 @@ void DisplayValidCommands()
 public class Robot
 {
     #region Properties
-    public List<IRobotCommand> Commands  {get;} = new List<IRobotCommand>();
-    public bool                IsPowered {get; set;}
-    public int                 X         {get; set;}
-    public int                 Y         {get; set;}
+    public List<IRobotCommand?> Commands  {get;} = new List<IRobotCommand?>();
+    public bool                 IsPowered {get; set;}
+    public int                  X         {get; set;}
+    public int                  Y         {get; set;}
     #endregion
 
     public void Run()
@@ -145,18 +147,5 @@ public class WestCommand : IRobotCommand
             robot.X--;
         }
     }
-    #endregion
-}
-
-public class StopCommand : IRobotCommand
-{
-    #region IRobotCommand Members
-    #region Implementation of IRobotCommand
-    /// <inheritdoc />
-    public void Run(Robot robot)
-    {
-        throw new NotImplementedException();
-    }
-    #endregion
     #endregion
 }
