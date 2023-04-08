@@ -1,6 +1,6 @@
 # Lists of Commands
 
-In [Level 27](/../level27), we encountered a robot with an array to hold commands to run. But we could make the robot have as many commands as we want by turning the array into a list. Revisit that challenge to make the robot use a list instead of an array, and add commands to run until the user says to stop.
+In Level 27, we encountered a robot with an array to hold commands to run. But we could make the robot have as many commands as we want by turning the array into a list. Revisit that challenge to make the robot use a list instead of an array, and add commands to run until the user says to stop.
 
 ## Objectives
 
