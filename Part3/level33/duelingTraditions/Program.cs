@@ -422,17 +422,7 @@ internal static class DuelingTraditions
     }
 
     #region Internal declarations
-    // Create a simple object to hold the player's location
-
     // Compass Directions
-    internal enum Direction
-    {
-        North,
-        South,
-        East,
-        West,
-        Unknown
-    }
 
     internal enum WorldSize
     {
