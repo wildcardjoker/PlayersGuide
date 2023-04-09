@@ -423,13 +423,5 @@ internal static class DuelingTraditions
 
     #region Internal declarations
     // Compass Directions
-
-    internal enum WorldSize
-    {
-        None   = 0,
-        Small  = 4,
-        Medium = 6,
-        Large  = 8
-    }
 }
 #endregion
