@@ -153,6 +153,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "level33", "level33", "{160E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "theFeud", "Part3\level33\theFeud\theFeud.csproj", "{4A4C37AD-2E28-41ED-AC80-6C2796FA16B7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "duelingTraditions", "Part3\level33\duelingTraditions\duelingTraditions.csproj", "{464FC291-7CCF-4CF3-88B4-BE43744A3261}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -331,6 +333,10 @@ Global
 		{4A4C37AD-2E28-41ED-AC80-6C2796FA16B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A4C37AD-2E28-41ED-AC80-6C2796FA16B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A4C37AD-2E28-41ED-AC80-6C2796FA16B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{464FC291-7CCF-4CF3-88B4-BE43744A3261}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{464FC291-7CCF-4CF3-88B4-BE43744A3261}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{464FC291-7CCF-4CF3-88B4-BE43744A3261}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{464FC291-7CCF-4CF3-88B4-BE43744A3261}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -408,6 +414,7 @@ Global
 		{C2426B2E-39E3-4DD9-A295-AB8BE88C0700} = {B694407C-B146-430D-B2E9-48830DF00082}
 		{160E0723-C5F2-4FB3-B385-57C6DC1CBDF3} = {E6060E96-147A-4BB1-8673-1ACA721842E7}
 		{4A4C37AD-2E28-41ED-AC80-6C2796FA16B7} = {160E0723-C5F2-4FB3-B385-57C6DC1CBDF3}
+		{464FC291-7CCF-4CF3-88B4-BE43744A3261} = {160E0723-C5F2-4FB3-B385-57C6DC1CBDF3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F9CE9BD2-E80F-4C81-B512-F1FA1D48E5FC}
