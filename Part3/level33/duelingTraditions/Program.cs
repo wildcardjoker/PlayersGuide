@@ -2,6 +2,42 @@
 
 internal static class DuelingTraditions
 {
+    #region Constants
+    private const int    Min                  = 0;
+    private const string AmarokEndGame        = "You have been torn apart by an amarok and died.";
+    private const string AmarokWarning        = "You can smell the rotten stench of an amarok in a nearby room.";
+    private const string EntranceText         = "You see light coming from the cavern entrance.";
+    private const string FountainActive       = "You hear the rushing waters from the Fountain of Objects. It has been reactivated!";
+    private const string FountainArrival      = "You hear water dripping in this room. The Fountain of Objects is here!";
+    private const string MaelstromPlayerMoved = "You encountered a maelstrom! You have been blown 1 space North and 2 spaces East";
+    private const string MaelstromWarning     = "You hear the growling and groaning of a maelstrom nearby.";
+    private const string PitEndGame           = "You have fallen into a pit and died.";
+    private const string PitWarning           = "You feel a draft. There is a pit in a nearby room.";
+    private const string Status               = "You are in the room at";
+    private const string WinText              = "The Fountain of Objects has been reactivated, and you have escaped with your life!\nYou win!";
+    #endregion
+
+    #region Fields
+    private static readonly ColouredItem<string> Command             = new (string.Empty, ConsoleColor.Cyan);
+    private static readonly ColouredItem<string> DescriptiveText     = new (string.Empty, ConsoleColor.White);
+    private static readonly ColouredItem<string> EntranceDescription = new (EntranceText, ConsoleColor.Yellow);
+    private static readonly ColouredItem<string> Error               = new (string.Empty, ConsoleColor.Red);
+    private static readonly ColouredItem<string> NarrativeItem       = new (string.Empty, ConsoleColor.Magenta);
+    private static readonly ColouredItem<string> Prompt              = new ("What do you want to do? ", ConsoleColor.White);
+    private static readonly ColouredItem<string> WaterText           = new (FountainArrival, ConsoleColor.Blue);
+
+    private static bool        _fountainIsActive;
+    private static int         _max;
+    private static int         _numberOfArrows = 5;
+    private static List<Point> _amarokLocations;
+    private static List<Point> _maelstromLocations;
+    private static List<Point> _pitLocations;
+    private static Point       _currentLocation;
+    private static Point       _entranceLocation;
+    private static Point       _fountainLocation;
+    private static WorldSize   _worldSize = WorldSize.None;
+    #endregion
+
     #region Nested type: ColouredItem
     /// <summary>
     ///     Assign a colour to any item type.
@@ -65,62 +101,32 @@ internal static class DuelingTraditions
 
     public static void Main(string[] args)
     {
-        const int    min = 0;
-        int          max;
-        var          numberOfArrows       = 5;
-        var          worldSize            = WorldSize.None;
-        const string amarokEndGame        = "You have been torn apart by an amarok and died.";
-        const string amarokWarning        = "You can smell the rotten stench of an amarok in a nearby room.";
-        const string entranceText         = "You see light coming from the cavern entrance.";
-        const string winText              = "The Fountain of Objects has been reactivated, and you have escaped with your life!\nYou win!";
-        const string fountainArrival      = "You hear water dripping in this room. The Fountain of Objects is here!";
-        const string fountainActive       = "You hear the rushing waters from the Fountain of Objects. It has been reactivated!";
-        const string maelstromPlayerMoved = "You encountered a maelstrom! You have been blown 1 space North and 2 spaces East";
-        const string maelstromWarning     = "You hear the growling and groaning of a maelstrom nearby.";
-        const string pitWarning           = "You feel a draft. There is a pit in a nearby room.";
-        const string pitEndGame           = "You have fallen into a pit and died.";
-        const string status               = "You are in the room at";
-        Point        fountainLocation;
-        Point        entranceLocation;
-        Point        currentLocation;
-        List<Point>  amarokLocations;
-        List<Point>  pitLocations;
-        List<Point>  maelstromLocations;
-        var          narrativeItem       = new ColouredItem<string>(string.Empty,               ConsoleColor.Magenta);
-        var          descriptiveText     = new ColouredItem<string>(string.Empty,               ConsoleColor.White);
-        var          prompt              = new ColouredItem<string>("What do you want to do? ", ConsoleColor.White);
-        var          entranceDescription = new ColouredItem<string>(entranceText,               ConsoleColor.Yellow);
-        var          waterText           = new ColouredItem<string>(fountainArrival,            ConsoleColor.Blue);
-        var          command             = new ColouredItem<string>(string.Empty,               ConsoleColor.Cyan);
-        var          error               = new ColouredItem<string>(string.Empty,               ConsoleColor.Red);
-        var          fountainIsActive    = false;
-
         Console.Title = "The Fountain of Objects (Dueling Traditions)";
         CreateWorld();
 
         var startTime = DateTime.Now;
         DisplayIntroduction();
 
-        while (!(AtEntrance() && fountainIsActive))
+        while (!(AtEntrance() && _fountainIsActive))
         {
             DisplayStatus();
             ParseCommand();
             if (PlayerIsInPit())
             {
-                DisplayEndGame(pitEndGame);
+                DisplayEndGame(PitEndGame);
                 return;
             }
 
             if (PLayerEncounteredAmarok())
             {
-                DisplayEndGame(amarokEndGame);
+                DisplayEndGame(AmarokEndGame);
                 return;
             }
         }
 
         // The player has escaped!
-        narrativeItem.SetItem(winText);
-        narrativeItem.Display();
+        NarrativeItem.SetItem(WinText);
+        NarrativeItem.Display();
         Console.ResetColor();
         DisplayPlayTime();
 
@@ -128,8 +134,8 @@ internal static class DuelingTraditions
 
         void DisplayEndGame(string ending)
         {
-            error.SetItem($"{ending} The game is over.");
-            error.Display();
+            Error.SetItem($"{ending} The game is over.");
+            Error.Display();
             Console.ResetColor();
             DisplayPlayTime();
         }
@@ -151,17 +157,17 @@ internal static class DuelingTraditions
                 Console.WriteLine(world);
             }
 
-            while (worldSize == WorldSize.None)
+            while (_worldSize == WorldSize.None)
             {
                 Console.Write("What size would you like to use? (Use Capitalisation) ");
                 Enum.TryParse(typeof(WorldSize), Console.ReadLine(), out var desiredWorldSize);
-                worldSize = (WorldSize) (desiredWorldSize ?? WorldSize.None);
+                _worldSize = (WorldSize) (desiredWorldSize ?? WorldSize.None);
             }
 
-            Console.WriteLine($"Using a {worldSize} world.\n");
+            Console.WriteLine($"Using a {_worldSize} world.\n");
 
             // Because the world grid uses a 0-based index, we need to subtract 1 from the World Size.
-            max = (int) worldSize - 1;
+            _max = (int) _worldSize - 1;
             ConfigureWorld();
         }
 
@@ -176,19 +182,19 @@ internal static class DuelingTraditions
 
         void SetEntranceLocation()
         {
-            entranceLocation = worldSize switch
+            _entranceLocation = _worldSize switch
             {
-                WorldSize.Large  => new Point(2,   max),
-                WorldSize.Medium => new Point(max, 1),
-                WorldSize.Small  => new Point(0,   0),
-                _                => new Point(0,   0)
+                WorldSize.Large  => new Point(2,    _max),
+                WorldSize.Medium => new Point(_max, 1),
+                WorldSize.Small  => new Point(0,    0),
+                _                => new Point(0,    0)
             };
-            currentLocation = entranceLocation;
+            _currentLocation = _entranceLocation;
         }
 
         void SetPitLocations()
         {
-            pitLocations = worldSize switch
+            _pitLocations = _worldSize switch
             {
                 WorldSize.Large  => new List<Point> {new (1, 1), new (3, 5), new (4, 3), new (6, 0)},
                 WorldSize.Medium => new List<Point> {new (1, 3), new (5, 5)},
@@ -199,7 +205,7 @@ internal static class DuelingTraditions
 
         void SetAmarokLocations()
         {
-            amarokLocations = worldSize switch
+            _amarokLocations = _worldSize switch
             {
                 WorldSize.Large  => new List<Point> {new (1, 3), new (3, 1), new (6, 5)},
                 WorldSize.Medium => new List<Point> {new (0, 1), new (3, 3)},
@@ -210,7 +216,7 @@ internal static class DuelingTraditions
 
         void SetMaelstromLocations()
         {
-            maelstromLocations = worldSize switch
+            _maelstromLocations = _worldSize switch
             {
                 WorldSize.Large  => new List<Point> {new (1, 5), new (4, 2)},
                 WorldSize.Medium => new List<Point> {new (2, 1)},
@@ -221,7 +227,7 @@ internal static class DuelingTraditions
 
         void SetFountainLocation()
         {
-            fountainLocation = worldSize switch
+            _fountainLocation = _worldSize switch
             {
                 WorldSize.Large  => new Point(5, 2),
                 WorldSize.Medium => new Point(2, 0),
@@ -231,17 +237,17 @@ internal static class DuelingTraditions
         }
 
         // Is the player at the entrance?
-        bool AtEntrance() => currentLocation == entranceLocation;
+        bool AtEntrance() => _currentLocation == _entranceLocation;
 
         // Is the player at the Fountain's location?
-        bool AtFountainLocation() => currentLocation == fountainLocation;
+        bool AtFountainLocation() => _currentLocation == _fountainLocation;
 
         // After receiving the player's command, process it and display an error if the command input isn't valid or can't be performed.
         void ParseCommand()
         {
-            descriptiveText.SetItem(string.Empty);
-            prompt?.Display(false);
-            var input = command.GetInput();
+            DescriptiveText.SetItem(string.Empty);
+            Prompt?.Display(false);
+            var input = Command.GetInput();
             var result = input?.ToLower() switch
             {
                 "move north"      => Move(Direction.North),
@@ -263,8 +269,8 @@ internal static class DuelingTraditions
             }
 
             // There was a problem processing the command - display an error message.
-            error?.SetItem(result);
-            error?.Display();
+            Error?.SetItem(result);
+            Error?.Display();
         }
 
         string DisplayHelp()
@@ -288,8 +294,8 @@ internal static class DuelingTraditions
             }
 
             // Activate the Fountain
-            fountainIsActive = true;
-            waterText.SetItem(fountainActive);
+            _fountainIsActive = true;
+            WaterText.SetItem(FountainActive);
             return string.Empty;
         }
 
@@ -298,41 +304,41 @@ internal static class DuelingTraditions
         {
             Console.ResetColor();
             Console.WriteLine("--------------------------------------------------------------------------------------");
-            narrativeItem?.SetItem($"{status} {currentLocation}");
-            narrativeItem?.Display();
-            narrativeItem?.SetItem($"You have {numberOfArrows} arrow{(numberOfArrows == 1 ? string.Empty : "s")} left");
-            narrativeItem?.Display();
+            NarrativeItem?.SetItem($"{Status} {_currentLocation}");
+            NarrativeItem?.Display();
+            NarrativeItem?.SetItem($"You have {_numberOfArrows} arrow{(_numberOfArrows == 1 ? string.Empty : "s")} left");
+            NarrativeItem?.Display();
 
             if (AtEntrance())
             {
-                entranceDescription.Display();
+                EntranceDescription.Display();
             }
 
-            if (NearSpecialLocation(pitLocations))
+            if (NearSpecialLocation(_pitLocations))
             {
-                DisplayDescriptiveText(pitWarning);
+                DisplayDescriptiveText(PitWarning);
             }
 
-            if (NearSpecialLocation(maelstromLocations))
+            if (NearSpecialLocation(_maelstromLocations))
             {
-                DisplayDescriptiveText(maelstromWarning);
+                DisplayDescriptiveText(MaelstromWarning);
             }
 
-            if (NearSpecialLocation(amarokLocations))
+            if (NearSpecialLocation(_amarokLocations))
             {
-                DisplayDescriptiveText(amarokWarning);
+                DisplayDescriptiveText(AmarokWarning);
             }
 
             if (AtFountainLocation())
             {
-                waterText.Display();
+                WaterText.Display();
             }
         }
 
         void DisplayDescriptiveText(string text)
         {
-            descriptiveText.SetItem(text);
-            descriptiveText.Display();
+            DescriptiveText.SetItem(text);
+            DescriptiveText.Display();
         }
 
         // Move in the specified direction
@@ -345,12 +351,12 @@ internal static class DuelingTraditions
             }
 
             // Update the current location based on the desired direction.
-            currentLocation = direction switch
+            _currentLocation = direction switch
             {
-                Direction.North   => currentLocation with {Row = currentLocation.Row       - 1},
-                Direction.South   => currentLocation with {Row = currentLocation.Row       + 1},
-                Direction.East    => currentLocation with {Column = currentLocation.Column + 1},
-                Direction.West    => currentLocation with {Column = currentLocation.Column - 1},
+                Direction.North   => _currentLocation with {Row = _currentLocation.Row       - 1},
+                Direction.South   => _currentLocation with {Row = _currentLocation.Row       + 1},
+                Direction.East    => _currentLocation with {Column = _currentLocation.Column + 1},
+                Direction.West    => _currentLocation with {Column = _currentLocation.Column - 1},
                 Direction.Unknown => throw new ArgumentOutOfRangeException(nameof(direction), direction, null),
                 _                 => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
             };
@@ -367,33 +373,33 @@ internal static class DuelingTraditions
         // Shot an arrow in the specified direction
         string Shoot(Direction direction)
         {
-            if (numberOfArrows == 0)
+            if (_numberOfArrows == 0)
             {
-                error.SetItem("You don't have any more arrows.");
-                error.Display();
+                Error.SetItem("You don't have any more arrows.");
+                Error.Display();
                 return string.Empty;
             }
 
             var targetLocation = direction switch
             {
-                Direction.North   => currentLocation with {Row = Math.Clamp(currentLocation.Row       - 1, 0, max)},
-                Direction.South   => currentLocation with {Row = Math.Clamp(currentLocation.Row       + 1, 0, max)},
-                Direction.East    => currentLocation with {Column = Math.Clamp(currentLocation.Column + 1, 0, max)},
-                Direction.West    => currentLocation with {Column = Math.Clamp(currentLocation.Column - 1, 0, max)},
+                Direction.North   => _currentLocation with {Row = Math.Clamp(_currentLocation.Row       - 1, 0, _max)},
+                Direction.South   => _currentLocation with {Row = Math.Clamp(_currentLocation.Row       + 1, 0, _max)},
+                Direction.East    => _currentLocation with {Column = Math.Clamp(_currentLocation.Column + 1, 0, _max)},
+                Direction.West    => _currentLocation with {Column = Math.Clamp(_currentLocation.Column - 1, 0, _max)},
                 Direction.Unknown => throw new ArgumentOutOfRangeException(nameof(direction), direction, null),
                 _                 => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
             };
-            maelstromLocations.Remove(targetLocation);
-            amarokLocations.Remove(targetLocation);
-            numberOfArrows--;
+            _maelstromLocations.Remove(targetLocation);
+            _amarokLocations.Remove(targetLocation);
+            _numberOfArrows--;
             return string.Empty;
         }
 
-        bool PlayerIsInPit() => pitLocations.Contains(currentLocation);
+        bool PlayerIsInPit() => _pitLocations.Contains(_currentLocation);
 
-        bool PLayerEncounteredAmarok() => amarokLocations.Contains(currentLocation);
+        bool PLayerEncounteredAmarok() => _amarokLocations.Contains(_currentLocation);
 
-        bool PlayerEncounteredMaelstrom() => maelstromLocations.Contains(currentLocation);
+        bool PlayerEncounteredMaelstrom() => _maelstromLocations.Contains(_currentLocation);
 
         bool NearSpecialLocation(ICollection<Point> specialLocations)
         {
@@ -421,11 +427,11 @@ internal static class DuelingTraditions
                 // 2 2 2      1  1  1
 
                 // With 0 marking the middle, we can use these values to determine the neighbouring values
-                var nRow = currentLocation.Row    + (direction / 3 - 1);
-                var nCol = currentLocation.Column + (direction % 3 - 1);
+                var nRow = _currentLocation.Row    + (direction / 3 - 1);
+                var nCol = _currentLocation.Column + (direction % 3 - 1);
 
                 // Check the bounds:
-                if (nRow >= 0 && nRow < (int) worldSize && nCol >= 0 && nCol < (int) worldSize)
+                if (nRow >= 0 && nRow < (int) _worldSize && nCol >= 0 && nCol < (int) _worldSize)
                 {
                     var neighbour = new Point(nRow, nCol);
                     if (!specialLocations.Contains(neighbour))
@@ -442,24 +448,24 @@ internal static class DuelingTraditions
         }
 
         // Determine whether the player can move in this direction
-        bool CanMove(Direction direction) => (direction    == Direction.North && currentLocation.Row    != min)
-                                             || (direction == Direction.South && currentLocation.Row    != max)
-                                             || (direction == Direction.West  && currentLocation.Column != min)
-                                             || (direction == Direction.East  && currentLocation.Column != max);
+        bool CanMove(Direction direction) => (direction    == Direction.North && _currentLocation.Row    != Min)
+                                             || (direction == Direction.South && _currentLocation.Row    != _max)
+                                             || (direction == Direction.West  && _currentLocation.Column != Min)
+                                             || (direction == Direction.East  && _currentLocation.Column != _max);
 
         void TriggerMaelstromBattle()
         {
             // Move maelstrom 1 South, 2 West
-            maelstromLocations.Remove(currentLocation);
-            var row = Math.Clamp(currentLocation.Row    + 1, 0, max);
-            var col = Math.Clamp(currentLocation.Column - 2, 0, max);
-            maelstromLocations.Add(new Point(row, col));
+            _maelstromLocations.Remove(_currentLocation);
+            var row = Math.Clamp(_currentLocation.Row    + 1, 0, _max);
+            var col = Math.Clamp(_currentLocation.Column - 2, 0, _max);
+            _maelstromLocations.Add(new Point(row, col));
 
             // Move player 1 North, 2 East
-            row             = Math.Clamp(currentLocation.Row    - 1, 0, max);
-            col             = Math.Clamp(currentLocation.Column + 2, 0, max);
-            currentLocation = new Point(row, col);
-            DisplayDescriptiveText(maelstromPlayerMoved);
+            row              = Math.Clamp(_currentLocation.Row    - 1, 0, _max);
+            col              = Math.Clamp(_currentLocation.Column + 2, 0, _max);
+            _currentLocation = new Point(row, col);
+            DisplayDescriptiveText(MaelstromPlayerMoved);
         }
     }
 
