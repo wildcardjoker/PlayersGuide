@@ -27,6 +27,7 @@ internal static class DuelingTraditions
     private static readonly ColouredItem<string> WaterText           = new (FountainArrival, ConsoleColor.Blue);
 
     private static bool        _fountainIsActive;
+    private static DateTime    _startTime;
     private static int         _max;
     private static int         _numberOfArrows = 5;
     private static List<Point> _amarokLocations;
@@ -43,7 +44,7 @@ internal static class DuelingTraditions
         Console.Title = "The Fountain of Objects (Dueling Traditions)";
         CreateWorld();
 
-        var startTime = DateTime.Now;
+        _startTime = DateTime.Now;
         DisplayIntroduction();
 
         while (!(AtEntrance() && _fountainIsActive))
@@ -70,342 +71,76 @@ internal static class DuelingTraditions
         DisplayPlayTime();
 
         // End of main program. The remaining code contains supporting methods
+    }
 
-        void DisplayEndGame(string ending)
+    // Is the player at the entrance?
+    private static bool AtEntrance() => _currentLocation == _entranceLocation;
+
+    // Is the player at the Fountain's location?
+    private static bool AtFountainLocation() => _currentLocation == _fountainLocation;
+
+    // Determine whether the player can move in this direction
+    private static bool CanMove(Direction direction) => (direction    == Direction.North && _currentLocation.Row    != Min)
+                                                        || (direction == Direction.South && _currentLocation.Row    != _max)
+                                                        || (direction == Direction.West  && _currentLocation.Column != Min)
+                                                        || (direction == Direction.East  && _currentLocation.Column != _max);
+
+    private static void ConfigureWorld()
+    {
+        SetEntranceLocation();
+        SetFountainLocation();
+        SetPitLocations();
+        SetMaelstromLocations();
+        SetAmarokLocations();
+    }
+
+    private static void CreateWorld()
+    {
+        // Get enum values and convert to a List - remove WorldSize.None or the loop will exit immediately
+        var worlds = Enum.GetNames(typeof(WorldSize)).Where(world => !world.Equals("None")).ToList();
+        Console.WriteLine("The following game sizes are available:");
+        foreach (var world in worlds)
         {
-            Error.SetItem($"{ending} The game is over.");
-            Error.Display();
-            Console.ResetColor();
-            DisplayPlayTime();
+            Console.WriteLine(world);
         }
 
-        void DisplayPlayTime()
+        while (_worldSize == WorldSize.None)
         {
-            var endTime  = DateTime.Now;
-            var playTime = endTime - startTime;
-            Console.WriteLine($"Your adventure took {playTime.Days}d, {playTime.Hours}h, {playTime.Minutes}m, {playTime.Seconds}s.");
+            Console.Write("What size would you like to use? (Use Capitalisation) ");
+            Enum.TryParse(typeof(WorldSize), Console.ReadLine(), out var desiredWorldSize);
+            _worldSize = (WorldSize) (desiredWorldSize ?? WorldSize.None);
         }
 
-        void CreateWorld()
-        {
-            // Get enum values and convert to a List - remove WorldSize.None or the loop will exit immediately
-            var worlds = Enum.GetNames(typeof(WorldSize)).Where(world => !world.Equals("None")).ToList();
-            Console.WriteLine("The following game sizes are available:");
-            foreach (var world in worlds)
-            {
-                Console.WriteLine(world);
-            }
+        Console.WriteLine($"Using a {_worldSize} world.\n");
 
-            while (_worldSize == WorldSize.None)
-            {
-                Console.Write("What size would you like to use? (Use Capitalisation) ");
-                Enum.TryParse(typeof(WorldSize), Console.ReadLine(), out var desiredWorldSize);
-                _worldSize = (WorldSize) (desiredWorldSize ?? WorldSize.None);
-            }
+        // Because the world grid uses a 0-based index, we need to subtract 1 from the World Size.
+        _max = (int) _worldSize - 1;
+        ConfigureWorld();
+    }
 
-            Console.WriteLine($"Using a {_worldSize} world.\n");
+    private static void DisplayDescriptiveText(string text)
+    {
+        DescriptiveText.SetItem(text);
+        DescriptiveText.Display();
+    }
 
-            // Because the world grid uses a 0-based index, we need to subtract 1 from the World Size.
-            _max = (int) _worldSize - 1;
-            ConfigureWorld();
-        }
+    private static void DisplayEndGame(string ending)
+    {
+        Error.SetItem($"{ending} The game is over.");
+        Error.Display();
+        Console.ResetColor();
+        DisplayPlayTime();
+    }
 
-        void ConfigureWorld()
-        {
-            SetEntranceLocation();
-            SetFountainLocation();
-            SetPitLocations();
-            SetMaelstromLocations();
-            SetAmarokLocations();
-        }
-
-        void SetEntranceLocation()
-        {
-            _entranceLocation = _worldSize switch
-            {
-                WorldSize.Large  => new Point(2,    _max),
-                WorldSize.Medium => new Point(_max, 1),
-                WorldSize.Small  => new Point(0,    0),
-                _                => new Point(0,    0)
-            };
-            _currentLocation = _entranceLocation;
-        }
-
-        void SetPitLocations()
-        {
-            _pitLocations = _worldSize switch
-            {
-                WorldSize.Large  => new List<Point> {new (1, 1), new (3, 5), new (4, 3), new (6, 0)},
-                WorldSize.Medium => new List<Point> {new (1, 3), new (5, 5)},
-                WorldSize.Small  => new List<Point> {new (2, 1)},
-                _                => new List<Point> {new (2, 1)}
-            };
-        }
-
-        void SetAmarokLocations()
-        {
-            _amarokLocations = _worldSize switch
-            {
-                WorldSize.Large  => new List<Point> {new (1, 3), new (3, 1), new (6, 5)},
-                WorldSize.Medium => new List<Point> {new (0, 1), new (3, 3)},
-                WorldSize.Small  => new List<Point> {new (1, 0)},
-                _                => new List<Point> {new (1, 0)}
-            };
-        }
-
-        void SetMaelstromLocations()
-        {
-            _maelstromLocations = _worldSize switch
-            {
-                WorldSize.Large  => new List<Point> {new (1, 5), new (4, 2)},
-                WorldSize.Medium => new List<Point> {new (2, 1)},
-                WorldSize.Small  => new List<Point> {new (1, 2)},
-                _                => new List<Point> {new (1, 2)}
-            };
-        }
-
-        void SetFountainLocation()
-        {
-            _fountainLocation = _worldSize switch
-            {
-                WorldSize.Large  => new Point(5, 2),
-                WorldSize.Medium => new Point(2, 0),
-                WorldSize.Small  => new Point(0, 2),
-                _                => new Point(0, 2)
-            };
-        }
-
-        // Is the player at the entrance?
-        bool AtEntrance() => _currentLocation == _entranceLocation;
-
-        // Is the player at the Fountain's location?
-        bool AtFountainLocation() => _currentLocation == _fountainLocation;
-
-        // After receiving the player's command, process it and display an error if the command input isn't valid or can't be performed.
-        void ParseCommand()
-        {
-            DescriptiveText.SetItem(string.Empty);
-            Prompt?.Display(false);
-            var input = Command.GetInput();
-            var result = input?.ToLower() switch
-            {
-                "move north"      => Move(Direction.North),
-                "move south"      => Move(Direction.South),
-                "move east"       => Move(Direction.East),
-                "move west"       => Move(Direction.West),
-                "shoot north"     => Shoot(Direction.North),
-                "shoot south"     => Shoot(Direction.South),
-                "shoot east"      => Shoot(Direction.East),
-                "shoot west"      => Shoot(Direction.West),
-                "enable fountain" => EnableFountain(),
-                "help"            => DisplayHelp(),
-                _                 => "invalid command"
-            };
-
-            if (string.IsNullOrWhiteSpace(result))
-            {
-                return;
-            }
-
-            // There was a problem processing the command - display an error message.
-            Error?.SetItem(result);
-            Error?.Display();
-        }
-
-        string DisplayHelp()
-        {
-            Console.ResetColor();
-            Console.WriteLine("The following commands are available:");
-            Console.WriteLine("move north/south/east/west  - Move in the specified direction.");
-            Console.WriteLine(
-                "shoot north/south/east/west - Shoot an arrow in the specified direction into the next room. If a monster is in that room, they will be killed.");
-            Console.WriteLine("enable fountain             - Activate the Fountain of Objects. Only available in the Fountain Room");
-            Console.WriteLine("help                        - Display this help text");
-            return string.Empty;
-        }
-
-        // Activate the fountain if the player is at the Fountain's location.
-        string? EnableFountain()
-        {
-            if (!AtFountainLocation())
-            {
-                return "You cannot touch the fountain. Your command has no effect.";
-            }
-
-            // Activate the Fountain
-            _fountainIsActive = true;
-            WaterText.SetItem(FountainActive);
-            return string.Empty;
-        }
-
-        // Inform the player of their location, any descriptive text for this room, and whether they are in the presence of the Fountain.
-        void DisplayStatus()
-        {
-            Console.ResetColor();
-            Console.WriteLine("--------------------------------------------------------------------------------------");
-            NarrativeItem?.SetItem($"{Status} {_currentLocation}");
-            NarrativeItem?.Display();
-            NarrativeItem?.SetItem($"You have {_numberOfArrows} arrow{(_numberOfArrows == 1 ? string.Empty : "s")} left");
-            NarrativeItem?.Display();
-
-            if (AtEntrance())
-            {
-                EntranceDescription.Display();
-            }
-
-            if (NearSpecialLocation(_pitLocations))
-            {
-                DisplayDescriptiveText(PitWarning);
-            }
-
-            if (NearSpecialLocation(_maelstromLocations))
-            {
-                DisplayDescriptiveText(MaelstromWarning);
-            }
-
-            if (NearSpecialLocation(_amarokLocations))
-            {
-                DisplayDescriptiveText(AmarokWarning);
-            }
-
-            if (AtFountainLocation())
-            {
-                WaterText.Display();
-            }
-        }
-
-        void DisplayDescriptiveText(string text)
-        {
-            DescriptiveText.SetItem(text);
-            DescriptiveText.Display();
-        }
-
-        // Move in the specified direction
-        string Move(Direction direction)
-        {
-            // Is this a valid move?
-            if (!CanMove(direction))
-            {
-                return "A wall blocks your path. You cannot move in that direction.";
-            }
-
-            // Update the current location based on the desired direction.
-            _currentLocation = direction switch
-            {
-                Direction.North   => _currentLocation with {Row = _currentLocation.Row       - 1},
-                Direction.South   => _currentLocation with {Row = _currentLocation.Row       + 1},
-                Direction.East    => _currentLocation with {Column = _currentLocation.Column + 1},
-                Direction.West    => _currentLocation with {Column = _currentLocation.Column - 1},
-                Direction.Unknown => throw new ArgumentOutOfRangeException(nameof(direction), direction, null),
-                _                 => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
-            };
-
-            // If this location contains a maelstrom, move the player and maelstrom
-            if (PlayerEncounteredMaelstrom())
-            {
-                TriggerMaelstromBattle();
-            }
-
-            return string.Empty;
-        }
-
-        // Shot an arrow in the specified direction
-        string Shoot(Direction direction)
-        {
-            if (_numberOfArrows == 0)
-            {
-                Error.SetItem("You don't have any more arrows.");
-                Error.Display();
-                return string.Empty;
-            }
-
-            var targetLocation = direction switch
-            {
-                Direction.North   => _currentLocation with {Row = Math.Clamp(_currentLocation.Row       - 1, 0, _max)},
-                Direction.South   => _currentLocation with {Row = Math.Clamp(_currentLocation.Row       + 1, 0, _max)},
-                Direction.East    => _currentLocation with {Column = Math.Clamp(_currentLocation.Column + 1, 0, _max)},
-                Direction.West    => _currentLocation with {Column = Math.Clamp(_currentLocation.Column - 1, 0, _max)},
-                Direction.Unknown => throw new ArgumentOutOfRangeException(nameof(direction), direction, null),
-                _                 => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
-            };
-            _maelstromLocations.Remove(targetLocation);
-            _amarokLocations.Remove(targetLocation);
-            _numberOfArrows--;
-            return string.Empty;
-        }
-
-        bool PlayerIsInPit() => _pitLocations.Contains(_currentLocation);
-
-        bool PLayerEncounteredAmarok() => _amarokLocations.Contains(_currentLocation);
-
-        bool PlayerEncounteredMaelstrom() => _maelstromLocations.Contains(_currentLocation);
-
-        bool NearSpecialLocation(ICollection<Point> specialLocations)
-        {
-            // Modified from https://www.royvanrijn.com/blog/2019/01/longest-path/
-            // TODO: Incorporate into a Function library - this is a really useful method!
-            // Create a 3x3 grid
-            // 0 1 2
-            // 3 4 5
-            // 6 7 8
-            for (var direction = 0; direction < 9; direction++)
-            {
-                if (direction == 4)
-                {
-                    continue; // Skip 4, this is the middle (our location).
-                }
-
-                // Using mod 3 will convert the row/column values to between 0-2
-                // 0 1 2     -1 0 1
-                // 0 1 2  => -1 0 1
-                // 0 1 2     -1 0 1
-
-                // Subtracting 1 will set the range to -1 - 1
-                // 0 0 0     -1 -1 -1
-                // 1 1 1  =>  0  0  0
-                // 2 2 2      1  1  1
-
-                // With 0 marking the middle, we can use these values to determine the neighbouring values
-                var nRow = _currentLocation.Row    + (direction / 3 - 1);
-                var nCol = _currentLocation.Column + (direction % 3 - 1);
-
-                // Check the bounds:
-                if (nRow >= 0 && nRow < (int) _worldSize && nCol >= 0 && nCol < (int) _worldSize)
-                {
-                    var neighbour = new Point(nRow, nCol);
-                    if (!specialLocations.Contains(neighbour))
-                    {
-                        continue;
-                    }
-
-                    // We found a pit - no need to iterate through the remaining neighbours
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        // Determine whether the player can move in this direction
-        bool CanMove(Direction direction) => (direction    == Direction.North && _currentLocation.Row    != Min)
-                                             || (direction == Direction.South && _currentLocation.Row    != _max)
-                                             || (direction == Direction.West  && _currentLocation.Column != Min)
-                                             || (direction == Direction.East  && _currentLocation.Column != _max);
-
-        void TriggerMaelstromBattle()
-        {
-            // Move maelstrom 1 South, 2 West
-            _maelstromLocations.Remove(_currentLocation);
-            var row = Math.Clamp(_currentLocation.Row    + 1, 0, _max);
-            var col = Math.Clamp(_currentLocation.Column - 2, 0, _max);
-            _maelstromLocations.Add(new Point(row, col));
-
-            // Move player 1 North, 2 East
-            row              = Math.Clamp(_currentLocation.Row    - 1, 0, _max);
-            col              = Math.Clamp(_currentLocation.Column + 2, 0, _max);
-            _currentLocation = new Point(row, col);
-            DisplayDescriptiveText(MaelstromPlayerMoved);
-        }
+    private static string DisplayHelp()
+    {
+        Console.ResetColor();
+        Console.WriteLine("The following commands are available:");
+        Console.WriteLine("move north/south/east/west  - Move in the specified direction.");
+        Console.WriteLine("shoot north/south/east/west - Shoot an arrow in the specified direction into the next room. If a monster is in that room, they will be killed.");
+        Console.WriteLine("enable fountain             - Activate the Fountain of Objects. Only available in the Fountain Room");
+        Console.WriteLine("help                        - Display this help text");
+        return string.Empty;
     }
 
     private static void DisplayIntroduction()
@@ -421,7 +156,268 @@ internal static class DuelingTraditions
         Console.WriteLine("You carry with you a bow and a quiver of arrows. You can use them to shoot monsters in the caverns, but be warned: you have a limited supply.");
     }
 
-    #region Internal declarations
-    // Compass Directions
+    private static void DisplayPlayTime()
+    {
+        var endTime  = DateTime.Now;
+        var playTime = endTime - _startTime;
+        Console.WriteLine($"Your adventure took {playTime.Days}d, {playTime.Hours}h, {playTime.Minutes}m, {playTime.Seconds}s.");
+    }
+
+    // Inform the player of their location, any descriptive text for this room, and whether they are in the presence of the Fountain.
+    private static void DisplayStatus()
+    {
+        Console.ResetColor();
+        Console.WriteLine("--------------------------------------------------------------------------------------");
+        NarrativeItem?.SetItem($"{Status} {_currentLocation}");
+        NarrativeItem?.Display();
+        NarrativeItem?.SetItem($"You have {_numberOfArrows} arrow{(_numberOfArrows == 1 ? string.Empty : "s")} left");
+        NarrativeItem?.Display();
+
+        if (AtEntrance())
+        {
+            EntranceDescription.Display();
+        }
+
+        if (NearSpecialLocation(_pitLocations))
+        {
+            DisplayDescriptiveText(PitWarning);
+        }
+
+        if (NearSpecialLocation(_maelstromLocations))
+        {
+            DisplayDescriptiveText(MaelstromWarning);
+        }
+
+        if (NearSpecialLocation(_amarokLocations))
+        {
+            DisplayDescriptiveText(AmarokWarning);
+        }
+
+        if (AtFountainLocation())
+        {
+            WaterText.Display();
+        }
+    }
+
+    // Activate the fountain if the player is at the Fountain's location.
+    private static string? EnableFountain()
+    {
+        if (!AtFountainLocation())
+        {
+            return "You cannot touch the fountain. Your command has no effect.";
+        }
+
+        // Activate the Fountain
+        _fountainIsActive = true;
+        WaterText.SetItem(FountainActive);
+        return string.Empty;
+    }
+
+    // Move in the specified direction
+    private static string Move(Direction direction)
+    {
+        // Is this a valid move?
+        if (!CanMove(direction))
+        {
+            return "A wall blocks your path. You cannot move in that direction.";
+        }
+
+        // Update the current location based on the desired direction.
+        _currentLocation = direction switch
+        {
+            Direction.North   => _currentLocation with {Row = _currentLocation.Row       - 1},
+            Direction.South   => _currentLocation with {Row = _currentLocation.Row       + 1},
+            Direction.East    => _currentLocation with {Column = _currentLocation.Column + 1},
+            Direction.West    => _currentLocation with {Column = _currentLocation.Column - 1},
+            Direction.Unknown => throw new ArgumentOutOfRangeException(nameof(direction), direction, null),
+            _                 => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
+        };
+
+        // If this location contains a maelstrom, move the player and maelstrom
+        if (PlayerEncounteredMaelstrom())
+        {
+            TriggerMaelstromBattle();
+        }
+
+        return string.Empty;
+    }
+
+    private static bool NearSpecialLocation(ICollection<Point> specialLocations)
+    {
+        // Modified from https://www.royvanrijn.com/blog/2019/01/longest-path/
+        // TODO: Incorporate into a Function library - this is a really useful method!
+        // Create a 3x3 grid
+        // 0 1 2
+        // 3 4 5
+        // 6 7 8
+        for (var direction = 0; direction < 9; direction++)
+        {
+            if (direction == 4)
+            {
+                continue; // Skip 4, this is the middle (our location).
+            }
+
+            // Using mod 3 will convert the row/column values to between 0-2
+            // 0 1 2     -1 0 1
+            // 0 1 2  => -1 0 1
+            // 0 1 2     -1 0 1
+
+            // Subtracting 1 will set the range to -1 - 1
+            // 0 0 0     -1 -1 -1
+            // 1 1 1  =>  0  0  0
+            // 2 2 2      1  1  1
+
+            // With 0 marking the middle, we can use these values to determine the neighbouring values
+            var nRow = _currentLocation.Row    + (direction / 3 - 1);
+            var nCol = _currentLocation.Column + (direction % 3 - 1);
+
+            // Check the bounds:
+            if (nRow >= 0 && nRow < (int) _worldSize && nCol >= 0 && nCol < (int) _worldSize)
+            {
+                var neighbour = new Point(nRow, nCol);
+                if (!specialLocations.Contains(neighbour))
+                {
+                    continue;
+                }
+
+                // We found a pit - no need to iterate through the remaining neighbours
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    // After receiving the player's command, process it and display an error if the command input isn't valid or can't be performed.
+    private static void ParseCommand()
+    {
+        DescriptiveText.SetItem(string.Empty);
+        Prompt?.Display(false);
+        var input = Command.GetInput();
+        var result = input?.ToLower() switch
+        {
+            "move north"      => Move(Direction.North),
+            "move south"      => Move(Direction.South),
+            "move east"       => Move(Direction.East),
+            "move west"       => Move(Direction.West),
+            "shoot north"     => Shoot(Direction.North),
+            "shoot south"     => Shoot(Direction.South),
+            "shoot east"      => Shoot(Direction.East),
+            "shoot west"      => Shoot(Direction.West),
+            "enable fountain" => EnableFountain(),
+            "help"            => DisplayHelp(),
+            _                 => "invalid command"
+        };
+
+        if (string.IsNullOrWhiteSpace(result))
+        {
+            return;
+        }
+
+        // There was a problem processing the command - display an error message.
+        Error?.SetItem(result);
+        Error?.Display();
+    }
+
+    private static bool PLayerEncounteredAmarok() => _amarokLocations.Contains(_currentLocation);
+
+    private static bool PlayerEncounteredMaelstrom() => _maelstromLocations.Contains(_currentLocation);
+
+    private static bool PlayerIsInPit() => _pitLocations.Contains(_currentLocation);
+
+    private static void SetAmarokLocations()
+    {
+        _amarokLocations = _worldSize switch
+        {
+            WorldSize.Large  => new List<Point> {new (1, 3), new (3, 1), new (6, 5)},
+            WorldSize.Medium => new List<Point> {new (0, 1), new (3, 3)},
+            WorldSize.Small  => new List<Point> {new (1, 0)},
+            _                => new List<Point> {new (1, 0)}
+        };
+    }
+
+    private static void SetEntranceLocation()
+    {
+        _entranceLocation = _worldSize switch
+        {
+            WorldSize.Large  => new Point(2,    _max),
+            WorldSize.Medium => new Point(_max, 1),
+            WorldSize.Small  => new Point(0,    0),
+            _                => new Point(0,    0)
+        };
+        _currentLocation = _entranceLocation;
+    }
+
+    private static void SetFountainLocation()
+    {
+        _fountainLocation = _worldSize switch
+        {
+            WorldSize.Large  => new Point(5, 2),
+            WorldSize.Medium => new Point(2, 0),
+            WorldSize.Small  => new Point(0, 2),
+            _                => new Point(0, 2)
+        };
+    }
+
+    private static void SetMaelstromLocations()
+    {
+        _maelstromLocations = _worldSize switch
+        {
+            WorldSize.Large  => new List<Point> {new (1, 5), new (4, 2)},
+            WorldSize.Medium => new List<Point> {new (2, 1)},
+            WorldSize.Small  => new List<Point> {new (1, 2)},
+            _                => new List<Point> {new (1, 2)}
+        };
+    }
+
+    private static void SetPitLocations()
+    {
+        _pitLocations = _worldSize switch
+        {
+            WorldSize.Large  => new List<Point> {new (1, 1), new (3, 5), new (4, 3), new (6, 0)},
+            WorldSize.Medium => new List<Point> {new (1, 3), new (5, 5)},
+            WorldSize.Small  => new List<Point> {new (2, 1)},
+            _                => new List<Point> {new (2, 1)}
+        };
+    }
+
+    // Shot an arrow in the specified direction
+    private static string Shoot(Direction direction)
+    {
+        if (_numberOfArrows == 0)
+        {
+            Error.SetItem("You don't have any more arrows.");
+            Error.Display();
+            return string.Empty;
+        }
+
+        var targetLocation = direction switch
+        {
+            Direction.North   => _currentLocation with {Row = Math.Clamp(_currentLocation.Row       - 1, 0, _max)},
+            Direction.South   => _currentLocation with {Row = Math.Clamp(_currentLocation.Row       + 1, 0, _max)},
+            Direction.East    => _currentLocation with {Column = Math.Clamp(_currentLocation.Column + 1, 0, _max)},
+            Direction.West    => _currentLocation with {Column = Math.Clamp(_currentLocation.Column - 1, 0, _max)},
+            Direction.Unknown => throw new ArgumentOutOfRangeException(nameof(direction), direction, null),
+            _                 => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
+        };
+        _maelstromLocations.Remove(targetLocation);
+        _amarokLocations.Remove(targetLocation);
+        _numberOfArrows--;
+        return string.Empty;
+    }
+
+    private static void TriggerMaelstromBattle()
+    {
+        // Move maelstrom 1 South, 2 West
+        _maelstromLocations.Remove(_currentLocation);
+        var row = Math.Clamp(_currentLocation.Row    + 1, 0, _max);
+        var col = Math.Clamp(_currentLocation.Column - 2, 0, _max);
+        _maelstromLocations.Add(new Point(row, col));
+
+        // Move player 1 North, 2 East
+        row              = Math.Clamp(_currentLocation.Row    - 1, 0, _max);
+        col              = Math.Clamp(_currentLocation.Column + 2, 0, _max);
+        _currentLocation = new Point(row, col);
+        DisplayDescriptiveText(MaelstromPlayerMoved);
+    }
 }
-#endregion
