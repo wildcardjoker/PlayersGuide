@@ -12,3 +12,4 @@ She spits on the ground and demands you leave, but you know you know how to use 
 - Place every type in a namespace.
 - Place each type in its own file. (Small types like enumerations or records can be an exception).
 - **Answer this question**: Having used both top-level statements and a traditional entry point, which do you prefer and why?
+    - Both have advantages and disadvantages, hower I prefer Top-level statements as they are more concise, which allows me to concentrate on the code.
