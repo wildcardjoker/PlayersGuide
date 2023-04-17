@@ -14,3 +14,6 @@ The villagers of Randetherin often use the `Random` class but struggle with its 
 - Add a `CoinFlip` method that randomly picks a `bool` value. It should have an optional parameter that indicates the frequency of heads coming up, which should default to 0.5, or 50% of the time.
 - **Answer this question**: In you opinion, would it be better to make a derived `AdvancedRandom` class that adds these methods or use extension methods and why?
 
+### Answer
+
+Extension methods are better in my opinion, as it makes the code cleaner, and a derived class would need to be instantiated, as opposed to a static class with extension methods.
