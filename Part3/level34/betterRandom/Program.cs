@@ -5,11 +5,17 @@ using betterRandom;
 var strings = new[] {"up", "down", "left", "right"};
 var random  = new Random();
 
-var numberOfDoubles = GetNumberOfRandomDoubles();
-var doubleMaximum   = GetDoubleMaximum();
-WriteDoubles(numberOfDoubles, doubleMaximum);
+ProcessDoubles();
 Console.WriteLine($"Next String: {random.NextString(strings)}");
 Console.WriteLine($"Coin Flip  : {(random.CoinFlip() ? "Heads" : "Tails")}");
+
+#region Double
+void ProcessDoubles()
+{
+    var numberOfDoubles = GetNumberOfRandomDoubles();
+    var doubleMaximum   = GetDoubleMaximum();
+    WriteDoubles(numberOfDoubles, doubleMaximum);
+}
 
 void WriteDoubles(int cycles, double maximum)
 {
@@ -36,3 +42,4 @@ double GetDoubleMaximum()
     double.TryParse(Console.ReadLine(), out var result);
     return result;
 }
+#endregion
