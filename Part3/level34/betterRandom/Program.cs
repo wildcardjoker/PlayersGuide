@@ -6,14 +6,14 @@ var strings = new[] {"up", "down", "left", "right"};
 var random  = new Random();
 
 ProcessDoubles();
+ProcessStrings();
 
-Console.WriteLine($"Next String: {random.NextString(strings)}");
 Console.WriteLine($"Coin Flip  : {(random.CoinFlip() ? "Heads" : "Tails")}");
 
 #region Double
 void ProcessDoubles()
 {
-    var numberOfDoubles = GetNumberOfRandomObjects("double", 10);
+    var numberOfDoubles = GetNumberOfRandomObjects("double");
     var doubleMaximum   = GetDoubleMaximum();
     WriteDoubles(numberOfDoubles, doubleMaximum);
 }
@@ -34,9 +34,9 @@ double GetDoubleMaximum()
 }
 #endregion
 
-int GetNumberOfRandomObjects(string objectDescription, int defaultNumber)
+int GetNumberOfRandomObjects(string objectDescription, int defaultNumber = 10)
 {
-    Console.Write($"How many {objectDescription} objects? (default: {defaultNumber})? ");
+    Console.Write($"\nHow many {objectDescription} objects? (default: {defaultNumber})? ");
     if (!int.TryParse(Console.ReadLine(), out var result))
     {
         result = defaultNumber;
@@ -44,3 +44,15 @@ int GetNumberOfRandomObjects(string objectDescription, int defaultNumber)
 
     return result;
 }
+
+#region Strings
+void ProcessStrings() => WriteStrings(GetNumberOfRandomObjects("string"));
+
+void WriteStrings(int cycles)
+{
+    for (var i = 0; i < cycles; i++)
+    {
+        Console.WriteLine($"Next string: {random.NextString(strings)}");
+    }
+}
+#endregion
