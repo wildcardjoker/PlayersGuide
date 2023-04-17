@@ -1,12 +1,18 @@
-﻿string? s;
-int? value=null;
-while (value==null)
+﻿int?    intValue    = null;
+double? doubleValue = null;
+while (intValue == null && doubleValue == null)
 {
     Console.Write("Please enter a number: ");
-    s = Console.ReadLine();
-    if (int.TryParse(s,out int result))
+    var s = Console.ReadLine();
+    if (int.TryParse(s, out var intResult))
     {
-        value = result;
+        intValue = intResult;
+    }
+
+    if (double.TryParse(s, out var doubleResult))
+    {
+        doubleValue = doubleResult;
     }
 }
-Console.WriteLine(value);
+
+Console.WriteLine(intValue ?? doubleValue);
