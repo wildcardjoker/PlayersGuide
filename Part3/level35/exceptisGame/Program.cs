@@ -15,20 +15,24 @@ try
         SwitchPlayer();
     }
 
-    Console.WriteLine("Oatmeal cookie found!");
+    throw new OatmealCookieFoundException("Oatmeal cookie found!");
 }
 catch (Exception e)
 {
-    Console.WriteLine(e);
-    throw;
+    Console.WriteLine(e.Message);
 }
 finally
 {
     Console.WriteLine($"Player {playerNumber} wins!");
 }
 
-// Answer this question: Would you use an exception?
-// No. Exceptions should only be thrown as a result of an error that can't be resolved. In this instance, the code is more readable and maintainable by using a simple conditional check:
+// Answer this question: Did you make a custom exception type or use an existing one, and why did you choose what you did?
+// I created a custom Exception because it is more descriptive. Plus, given the exercise at hand, it's a good idea to have sample code of a custom Exception.
+
+//Answer this question: You could write this program without exceptions, but the requirements demanded an exception for learning purposes.
+//If you didn't have that requirement, would you have used an exception? Why or why not?
+// No. Exceptions should only be thrown as a result of an error that can't be resolved.
+// In this instance, the code is more readable and maintainable by using a simple conditional check:
 
 //while (cookieChoice != oatmealCookie)
 //{
