@@ -48,7 +48,7 @@ void CheckNumber()
         Console.Write("\nPlease enter a number to check (q to quit): ");
         var input = Console.ReadLine();
         quit = input?.ToUpper().Equals("Q") ?? false;
-        int.TryParse(input, out var number);
+        _    = int.TryParse(input, out var number); // Discard success check.
         if (number != 0)
         {
             Console.WriteLine($"{number} is {sieve.IsGood(number)}");
