@@ -51,8 +51,10 @@ void CheckNumber()
         _    = int.TryParse(input, out var number); // Discard success check.
         if (number != 0)
         {
-            Console.WriteLine($"{number} is {sieve.IsGood(number)}");
+            Console.WriteLine($"{number} is {GetNumberStatus(sieve.IsGood(number))}");
         }
     }
     while (!quit);
 }
+
+string GetNumberStatus(bool result) => result ? "Good" : "Bad";
