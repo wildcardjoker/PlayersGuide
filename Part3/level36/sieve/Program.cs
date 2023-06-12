@@ -7,14 +7,13 @@ bool PositiveDelegate(int number) => number      > 0;
 bool DenaryDelegate(int   number) => number % 10 == 0;
 var validChoices = new[] {ConsoleKey.D1, ConsoleKey.NumPad1, ConsoleKey.D2, ConsoleKey.NumPad2, ConsoleKey.D3, ConsoleKey.NumPad3};
 
-Func<int, bool>? compareFunction = null;
 Console.Title = "The Sieve";
 Console.WriteLine("Please select your filter:");
 Console.WriteLine("1) Even Numbers");
 Console.WriteLine("2) Positive Numbers");
 Console.WriteLine("3) Denary Numbers (multiple of 10)");
 var selection = GetValidInput();
-compareFunction = selection switch
+Func<int, bool>? compareFunction = selection switch
 {
     ConsoleKey.D1 or ConsoleKey.NumPad1 => EvenDelegate,
     ConsoleKey.D2 or ConsoleKey.NumPad2 => PositiveDelegate,
