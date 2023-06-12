@@ -24,6 +24,20 @@ NumeromechanicalDelegate? compareFunction = selection switch
 var sieve = new Sieve(compareFunction!); // Never null - GetValidInput() ensures that.
 CheckNumber();
 
+// End of main method.
+
+// Note: A delegate for the method bool MyDelegate(int number) can be declared in the following ways:
+// Custom:    delegate bool MyDelegate(int number)
+// Func:      Func<int, bool> MyDelegate(int number)
+// Predicate: Predicate<int> MyDelegate(int number)
+// If parameters are not required, use Func<TResult> to return a value.
+// If a return value is not required, use Action<T> where T is your value type.
+
+// Answer this question: Describe how you could have also solved this problem with inheritance and polymorphism. Which solution seems more straightforward to you, and why?
+// Using inheritance, the base class would include a virtual method for 'IsGood', and be implemented by three distinct classes.
+// If another filter was to be added, a new class would need to be added and supported.
+// Using a delegate allows for a single class to be created, which can accept a limitless variety of methods as a parameter. This greatly simplifies the code, and makes debugging much easier.
+
 ConsoleKey GetValidInput()
 {
     // Take the next keystroke from the console and attempt to locate the desired filter.
