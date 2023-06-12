@@ -3,11 +3,11 @@
     internal class Sieve
     {
         #region Constructors
-        public Sieve(Predicate<int> compareFunction) => CompareFunction = compareFunction;
+        public Sieve(NumeromechanicalDelegate compareFunction) => CompareFunction = compareFunction;
         #endregion
 
         #region Properties
-        private Predicate<int> CompareFunction {get;}
+        private NumeromechanicalDelegate CompareFunction {get;}
         #endregion
 
         public bool IsGood(int number) => CompareFunction(number);

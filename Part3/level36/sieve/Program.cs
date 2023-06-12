@@ -13,7 +13,7 @@ Console.WriteLine("1) Even Numbers");
 Console.WriteLine("2) Positive Numbers");
 Console.WriteLine("3) Denary Numbers (multiple of 10)");
 var selection = GetValidInput();
-Predicate<int>? compareFunction = selection switch
+NumeromechanicalDelegate? compareFunction = selection switch
 {
     ConsoleKey.D1 or ConsoleKey.NumPad1 => EvenDelegate,
     ConsoleKey.D2 or ConsoleKey.NumPad2 => PositiveDelegate,
