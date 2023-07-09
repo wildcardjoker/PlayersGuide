@@ -1,5 +1,8 @@
 ﻿namespace charberryTree
 {
+    /// <summary>
+    ///     A Tree whose fruit ripens randomly.
+    /// </summary>
     public class CharberryTree
     {
         #region Fields
@@ -7,9 +10,18 @@
         #endregion
 
         #region Properties
+        /// <summary>
+        ///     Gets or sets a value indicating whether this <see cref="CharberryTree" /> fruit is ripe.
+        /// </summary>
+        /// <value>
+        ///     <c>true</c> if ripe; otherwise, <c>false</c>.
+        /// </value>
         public bool Ripe {get; set;}
         #endregion
 
+        /// <summary>
+        ///     Randomly ripens the fruit.
+        /// </summary>
         public void MaybeGrow()
         {
             // Only a tiny chance of ripening each time, but we try a lot!
