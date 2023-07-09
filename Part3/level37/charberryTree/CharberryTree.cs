@@ -9,6 +9,13 @@
         private readonly Random _random = new ();
         #endregion
 
+        #region Events
+        /// <summary>
+        ///     Occurs when a fruit has ripened.
+        /// </summary>
+        public event Action? Ripened;
+        #endregion
+
         #region Properties
         /// <summary>
         ///     Gets or sets a value indicating whether this <see cref="CharberryTree" /> fruit is ripe.
@@ -28,6 +35,7 @@
             if (_random.NextDouble() < 0.00000001 && !Ripe)
             {
                 Ripe = true;
+                Ripened?.Invoke();
             }
         }
     }
