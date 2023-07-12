@@ -25,8 +25,11 @@ var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Comm
 // Ensure that the directory is created, otherwise a DirectoryNotFound exception is thrown.
 Directory.CreateDirectory(path);
 
+// Replace invalid file characters in username with _
+var userFileName = string.Join("_", username.Split(Path.GetInvalidFileNameChars()));
+
 // Generate full path to file name.
-var fileName = Path.Combine(path, $"{username}.txt");
+var fileName = Path.Combine(path, $"{userFileName}.txt");
 
 // Save the score.
 File.WriteAllText(fileName, score.ToString());
