@@ -11,7 +11,7 @@ while (string.IsNullOrWhiteSpace(username))
     username = Console.ReadLine();
 }
 
-while (Console.ReadKey().Key != ConsoleKey.Enter)
+while (Console.ReadKey(true).Key != ConsoleKey.Enter) // Capture keypresses but do not display the pressed key to the console. Break if ENTER key is pressed.
 {
     score++;
     Console.WriteLine(score);
