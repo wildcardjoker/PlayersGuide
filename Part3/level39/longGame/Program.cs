@@ -11,6 +11,7 @@ while (string.IsNullOrWhiteSpace(username))
     username = Console.ReadLine();
 }
 
+var fileName = GetScorePath();
 Console.Clear();
 Console.WriteLine(title);
 Console.WriteLine($"Begin typing.\n\nYour score: {score}");
@@ -24,17 +25,21 @@ while (Console.ReadKey(true).Key != ConsoleKey.Enter) // Capture keypresses but 
 
 // User pressed the ENTER key - save the score to a file.
 
-// Find the Common AppData directory, and add "playersGuide\longGame" to that path. We'll use that location to store our scores.
-var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "playersGuide", "longGame");
-
-// Ensure that the directory is created, otherwise a DirectoryNotFound exception is thrown.
-Directory.CreateDirectory(path);
-
-// Replace invalid file characters in username with _
-var userFileName = string.Join("_", username.Split(Path.GetInvalidFileNameChars()));
-
-// Generate full path to file name.
-var fileName = Path.Combine(path, $"{userFileName}.txt");
-
 // Save the score.
 File.WriteAllText(fileName, score.ToString());
+Console.WriteLine($"Your score has been saved to {fileName}");
+
+string GetScorePath()
+{
+    // Find the Common AppData directory, and add "playersGuide\longGame" to that path. We'll use that location to store our scores.
+    var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "playersGuide", "longGame");
+
+    // Ensure that the directory is created, otherwise a DirectoryNotFound exception is thrown.
+    Directory.CreateDirectory(path);
+
+    // Replace invalid file characters in username with _
+    var userFileName = string.Join("_", username!.Split(Path.GetInvalidFileNameChars())); // Username will never be null here. Use ! to indicate non-null string.
+
+    // Generate full path to file name.
+    return Path.Combine(path, $"{userFileName}.txt");
+}
