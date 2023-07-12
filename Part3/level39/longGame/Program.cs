@@ -9,11 +9,13 @@ while (string.IsNullOrWhiteSpace(username))
 {
     Console.Write("Please enter your username: ");
     username = Console.ReadLine();
+    Console.WriteLine($"Begin typing.\nYour score: {score}");
 }
 
 while (Console.ReadKey(true).Key != ConsoleKey.Enter) // Capture keypresses but do not display the pressed key to the console. Break if ENTER key is pressed.
 {
     score++;
+    Console.SetCursorPosition(12, 3);
     Console.WriteLine(score);
 }
 
