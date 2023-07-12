@@ -12,6 +12,13 @@ while (string.IsNullOrWhiteSpace(username))
 }
 
 var fileName = GetScorePath();
+
+// Does this user have a score history?
+if (File.Exists(fileName))
+{
+    _ = int.TryParse(File.ReadAllText(fileName), out score);
+}
+
 Console.Clear();
 Console.WriteLine(title);
 Console.WriteLine($"Begin typing.\n\nYour score: {score}");
