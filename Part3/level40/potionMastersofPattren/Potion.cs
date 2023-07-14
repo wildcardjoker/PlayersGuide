@@ -4,12 +4,13 @@ namespace potionMastersOfPattren;
 
 public enum Potion
 {
-    Water,
+    CloudyBrew,
     Elixir,
     FlyingPotion,
     InvisibilityPotion,
     NightSightPotion,
-    CloudyBrew,
-    WraithPotion,
-    Ruined
+    PoisionPotion,
+    Ruined,
+    Water,
+    WraithPotion
 }

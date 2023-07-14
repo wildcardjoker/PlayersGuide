@@ -2,10 +2,10 @@
 
 public enum Ingredient
 {
-    Water,
-    Stardust,
-    SnakeVenom,
     DragonBreath,
+    EyeShine,
     ShadowGlass,
-    EyeShine
+    SnakeVenom,
+    Stardust,
+    Water
 }
