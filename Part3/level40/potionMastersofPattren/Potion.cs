@@ -9,7 +9,7 @@ public enum Potion
     FlyingPotion,
     InvisibilityPotion,
     NightSightPotion,
-    PoisionPotion,
+    PoisonPotion,
     Ruined,
     Water,
     WraithPotion
