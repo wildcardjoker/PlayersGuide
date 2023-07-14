@@ -183,6 +183,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "longGame", "part3\level39\l
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "level40", "level40", "{FE2121D4-B4AA-4B1C-82EE-66829F5CEF86}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "potionMastersOfPattren", "part3\level40\potionMastersofPattren\potionMastersOfPattren.csproj", "{5AA6054A-88AB-4DF2-BDF4-7FCECD6A029F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -393,6 +395,10 @@ Global
 		{80F36D61-5916-4CF7-896F-3EC8B8041CF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80F36D61-5916-4CF7-896F-3EC8B8041CF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80F36D61-5916-4CF7-896F-3EC8B8041CF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AA6054A-88AB-4DF2-BDF4-7FCECD6A029F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AA6054A-88AB-4DF2-BDF4-7FCECD6A029F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AA6054A-88AB-4DF2-BDF4-7FCECD6A029F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AA6054A-88AB-4DF2-BDF4-7FCECD6A029F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -485,6 +491,7 @@ Global
 		{685DB218-B1FE-4A2B-8D26-EFF5FBF7E80F} = {E6060E96-147A-4BB1-8673-1ACA721842E7}
 		{80F36D61-5916-4CF7-896F-3EC8B8041CF7} = {685DB218-B1FE-4A2B-8D26-EFF5FBF7E80F}
 		{FE2121D4-B4AA-4B1C-82EE-66829F5CEF86} = {E6060E96-147A-4BB1-8673-1ACA721842E7}
+		{5AA6054A-88AB-4DF2-BDF4-7FCECD6A029F} = {FE2121D4-B4AA-4B1C-82EE-66829F5CEF86}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F9CE9BD2-E80F-4C81-B512-F1FA1D48E5FC}
