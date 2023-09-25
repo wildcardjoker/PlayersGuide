@@ -1,9 +1,20 @@
-﻿var block  = new BlockCoordinate(4, 3);
+﻿var block  = CreateStartingBlock();
 var offset = new BlockOffset(2, 0);
 Console.WriteLine($"I'm standing at {block}");
 Console.WriteLine($"I'm moving with an offset of {offset}");
 block += offset;
-Console.WriteLine($"Now I'm standing at {block}");
+Console.WriteLine($"Now I'm standing at {block}.\n\nMoving back to my original block");
+block = CreateStartingBlock();
+Console.WriteLine($"I'm standing at {block}");
+var directions = new[] {Direction.North, Direction.East, Direction.South, Direction.West};
+foreach (var direction in directions)
+{
+    Console.WriteLine($"Moving {direction}");
+    block += direction;
+    Console.WriteLine($"Standing at {block}.");
+}
+
+BlockCoordinate CreateStartingBlock() => new (4, 3);
 
 /// <summary>
 ///     The Block's location
