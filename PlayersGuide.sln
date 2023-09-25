@@ -187,7 +187,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "potionMastersOfPattren", "p
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "level41", "level41", "{2FF23887-83C5-4C75-B6A5-FD9341A8772A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "navigatingOperandCity", "part3\level41\navigatingOperandCity\navigatingOperandCity.csproj", "{A80F2F87-5475-49EB-8EA3-15A9A574DAD1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "navigatingOperandCity", "part3\level41\navigatingOperandCity\navigatingOperandCity.csproj", "{A80F2F87-5475-49EB-8EA3-15A9A574DAD1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "level42", "level42", "{6754AC62-164C-4114-9B2E-13A925A4437A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "threeLenses", "part3\level42\threeLenses\threeLenses.csproj", "{128B1E28-3652-4C0C-A49C-CAD9CFF5520C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -407,6 +411,10 @@ Global
 		{A80F2F87-5475-49EB-8EA3-15A9A574DAD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A80F2F87-5475-49EB-8EA3-15A9A574DAD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A80F2F87-5475-49EB-8EA3-15A9A574DAD1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{128B1E28-3652-4C0C-A49C-CAD9CFF5520C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{128B1E28-3652-4C0C-A49C-CAD9CFF5520C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{128B1E28-3652-4C0C-A49C-CAD9CFF5520C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{128B1E28-3652-4C0C-A49C-CAD9CFF5520C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -502,6 +510,8 @@ Global
 		{5AA6054A-88AB-4DF2-BDF4-7FCECD6A029F} = {FE2121D4-B4AA-4B1C-82EE-66829F5CEF86}
 		{2FF23887-83C5-4C75-B6A5-FD9341A8772A} = {E6060E96-147A-4BB1-8673-1ACA721842E7}
 		{A80F2F87-5475-49EB-8EA3-15A9A574DAD1} = {2FF23887-83C5-4C75-B6A5-FD9341A8772A}
+		{6754AC62-164C-4114-9B2E-13A925A4437A} = {E6060E96-147A-4BB1-8673-1ACA721842E7}
+		{128B1E28-3652-4C0C-A49C-CAD9CFF5520C} = {6754AC62-164C-4114-9B2E-13A925A4437A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F9CE9BD2-E80F-4C81-B512-F1FA1D48E5FC}
