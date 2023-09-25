@@ -21,6 +21,25 @@ public record BlockCoordinate(int Row, int Column)
     public static BlockCoordinate operator +(BlockCoordinate coordinate, BlockOffset offset) =>
         new (coordinate.Row + offset.RowOffset, coordinate.Column + offset.ColumnOffset);
 
+    /// <summary>
+    ///     Implements the operator +.
+    /// </summary>
+    /// <param name="coordinate">The coordinate.</param>
+    /// <param name="direction">The direction.</param>
+    /// <returns>
+    ///     A <c>BlockCoordinate</c> with the coordinates matching the original coordinates after moving in the specified
+    ///     direction.
+    /// </returns>
+    public static BlockCoordinate operator +(BlockCoordinate coordinate, Direction direction) =>
+        direction switch
+        {
+            Direction.North => coordinate with {Row = coordinate.Row       - 1},
+            Direction.East  => coordinate with {Column = coordinate.Column + 1},
+            Direction.South => coordinate with {Row = coordinate.Row       + 1},
+            Direction.West  => coordinate with {Column = coordinate.Column - 1},
+            _               => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
+        };
+
     #region Overrides of Object
     /// <inheritdoc />
     public override string ToString() => $"Row {Row}, Col {Column}";
