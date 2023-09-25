@@ -2,14 +2,37 @@
 using System.Diagnostics;
 #endregion
 
-var input = new[] {1, 9, 2, 8, 3, 7, 4, 6, 5};
+var input            = new[] {1, 9, 2, 8, 3, 7, 4, 6, 5};
+var procCodeTime     = SolveWithProceduralCode(input);
+var keywordQueryTime = SolveWithKeywordQuery(input);
+var methodQueryTime  = SolveWithMethodQuery(input);
 
-SolveWithProceduralCode(input);
-SolveWithKeywordQuery(input);
-
+Console.WriteLine($"Procedural Code:     {procCodeTime} ms");
+Console.WriteLine($"Keyword-based query: {keywordQueryTime} ms");
+Console.WriteLine($"Method-based query:  {methodQueryTime} ms");
 return;
 
-void SolveWithKeywordQuery(IEnumerable<int> data)
+double SolveWithMethodQuery(IEnumerable<int> data)
+{
+    Console.WriteLine("Solving using method query");
+    var sw = Stopwatch.StartNew();
+
+    // Find all even numbers.
+    var output = data.Where(IsEven).ToList(); // Avoid multiple enumeration
+    ShowOutput("Even numbers", output);
+
+    // Sort the numbers
+    output.Sort();
+    ShowOutput("Sorted numbers", output);
+
+    // Double each number
+    output = output.Select(i => i * 2).ToList();
+    ShowOutput("Doubled numbers", output);
+    sw.Stop();
+    return sw.Elapsed.TotalMilliseconds;
+}
+
+double SolveWithKeywordQuery(IEnumerable<int> data)
 {
     Console.WriteLine("Solving using keyword query");
     var sw = Stopwatch.StartNew();
@@ -26,10 +49,10 @@ void SolveWithKeywordQuery(IEnumerable<int> data)
     output = (from i in output select i * 2).ToList();
     ShowOutput("Doubled numbers", output);
     sw.Stop();
-    Console.WriteLine($"Time: {sw.Elapsed.TotalMilliseconds} ms");
+    return sw.Elapsed.TotalMilliseconds;
 }
 
-void SolveWithProceduralCode(IEnumerable<int> data)
+double SolveWithProceduralCode(IEnumerable<int> data)
 {
     Console.WriteLine("Solving using procedural code");
     var sw     = Stopwatch.StartNew();
@@ -59,8 +82,9 @@ void SolveWithProceduralCode(IEnumerable<int> data)
 
     ShowOutput("Doubled numbers", output);
     sw.Stop();
-    Console.WriteLine($"Time: {sw.Elapsed.TotalMilliseconds} ms");
+    return sw.Elapsed.TotalMilliseconds;
 }
 
 void ShowOutput(string step, IEnumerable<int> data) => Console.WriteLine($"{step}: {string.Join(", ", data)}");
-bool IsEven(int        i) => i % 2 == 0;
+
+bool IsEven(int i) => i % 2 == 0;

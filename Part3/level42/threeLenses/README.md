@@ -15,4 +15,8 @@ For example, with the array above, the odd/even filter should result in `2,8,4,6
 - Write a method that will take an `int[]` as input and produce an `IEnumerable<int>` that meets the three above conditions *using a method-call-based query expression* (`x.Select(n => n+1)`, `x.Where(n => n<0)`, etc.)
 - Run all three methods and display the results to ensure they all produce good answers.
 - **Answer this question**: Compare the size and understandability of these three approaches. Do any stand out as being particularly good or particularly bad?
+
+  Answer: All three variations were understandable, with the query-based methods being shorter. No variation is bad or good, per se.
 - **Answer this question**: Of the three approaches, which is your personal favourite, and why?
+
+  Answer: I prefer the method-call based version. It's clean and simple to understand. It's also the fastest at around 0.1ms compared to 0.8ms for the procedural call, and a massive **3.3ms** for the keyword-based query.
