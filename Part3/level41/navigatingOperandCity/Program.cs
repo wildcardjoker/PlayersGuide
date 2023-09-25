@@ -1,4 +1,9 @@
-﻿namespace navigatingOperandCity;
+﻿var block  = new BlockCoordinate(4, 3);
+var offset = new BlockOffset(2, 0);
+Console.WriteLine($"I'm standing at {block}");
+Console.WriteLine($"I'm moving with an offset of {offset}");
+block += offset;
+Console.WriteLine($"Now I'm standing at {block}");
 
 /// <summary>
 ///     The Block's location
@@ -15,12 +20,21 @@ public record BlockCoordinate(int Row, int Column)
     /// </returns>
     public static BlockCoordinate operator +(BlockCoordinate coordinate, BlockOffset offset) =>
         new (coordinate.Row + offset.RowOffset, coordinate.Column + offset.ColumnOffset);
+
+    #region Overrides of Object
+    /// <inheritdoc />
+    public override string ToString() => $"Row {Row}, Col {Column}";
+    #endregion
 }
 
 /// <summary>
 ///     The relative distance between two blocks
 /// </summary>
-public record BlockOffset(int RowOffset, int ColumnOffset);
+public record BlockOffset(int RowOffset, int ColumnOffset)
+{
+    /// <inheritdoc />
+    public override string ToString() => $"Row {RowOffset}, Col {ColumnOffset}";
+}
 
 /// <summary>
 ///     The direction to move
