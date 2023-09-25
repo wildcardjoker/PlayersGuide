@@ -31,3 +31,14 @@ In exchange for the Medallion of Indexers, the city asks for the ability to inde
 - **Answer this question**: Does an indexer provide many benefits over just referring to the `Row` and `Column` properties in this case? Explain your reasoning.
 
 Answer: An indexer does not provide any benefits in this case, and actually makes the code harder to read. However, indexers could come in handy when you have a class with multiple properties where you commonly refer to the same properties.
+
+# Converting Directions to Offsets
+
+Operanders often use both the `Direction` and the `BlockOffset` in casual communication: "go north" or "go two blocks west and one block south". However, it would be convenient to convert a direction to a `BlockOffset`. For example, the direction `North` could become an offset of `(-1, 0)`. Operanders offer you their final medallion, the Medallion of Conversions, if you can add a custom conversion in `BlockOffset` that converts a `Direction` to a `BlockOffset`.
+
+## Objectives
+
+- Add a custom conversion to `BlockOffset` that converts from `Direction` to `BlockOffset`.
+- **Answer this question**: This challenge didn't call out whether to make the conversion explicit or implicit. Which did you choose, and why?
+
+Answer: I used an implicit cast because it makes the code cleaner and there's no data loss, which would imply that an explicit cast should be used.

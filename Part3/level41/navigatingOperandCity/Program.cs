@@ -15,6 +15,14 @@ foreach (var direction in directions)
 }
 
 Console.WriteLine($"\nUsing index.\nMy current location is {block[0]}, {block[1]}");
+Console.WriteLine("\nBlock offsets using directions:");
+foreach (var direction in directions)
+{
+    offset = direction; // Implicit cast from Direction to BlockOffset.
+    Console.WriteLine($"moving using offset {offset}, converted from {direction}");
+    block += offset;
+    Console.WriteLine($"Arrived at {block}");
+}
 
 BlockCoordinate CreateStartingBlock() => new (4, 3);
 
@@ -76,6 +84,22 @@ public record BlockCoordinate(int Row, int Column)
 /// </summary>
 public record BlockOffset(int RowOffset, int ColumnOffset)
 {
+    /// <summary>
+    ///     Performs an implicit conversion from <see cref="Direction" /> to <see cref="BlockOffset" />.
+    /// </summary>
+    /// <param name="direction">The direction.</param>
+    /// <returns>
+    ///     The result of the conversion.
+    /// </returns>
+    public static implicit operator BlockOffset(Direction direction) => direction switch
+    {
+        Direction.North => new BlockOffset(-1, 0),
+        Direction.East  => new BlockOffset(0,  1),
+        Direction.South => new BlockOffset(1,  0),
+        Direction.West  => new BlockOffset(0,  -1),
+        _               => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
+    };
+
     /// <inheritdoc />
     public override string ToString() => $"Row {RowOffset}, Col {ColumnOffset}";
 }
