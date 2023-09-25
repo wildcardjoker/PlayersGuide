@@ -5,7 +5,29 @@ using System.Diagnostics;
 var input = new[] {1, 9, 2, 8, 3, 7, 4, 6, 5};
 
 SolveWithProceduralCode(input);
+SolveWithKeywordQuery(input);
+
 return;
+
+void SolveWithKeywordQuery(IEnumerable<int> data)
+{
+    Console.WriteLine("Solving using keyword query");
+    var sw = Stopwatch.StartNew();
+
+    // Find all even numbers.
+    var output = (from i in data where IsEven(i) select i).ToList(); // Avoid multiple enumeration
+    ShowOutput("Even numbers", output);
+
+    // Sort the numbers
+    output.Sort();
+    ShowOutput("Sorted numbers", output);
+
+    // Double each number
+    output = (from i in output select i * 2).ToList();
+    ShowOutput("Doubled numbers", output);
+    sw.Stop();
+    Console.WriteLine($"Time: {sw.Elapsed.TotalMilliseconds} ms");
+}
 
 void SolveWithProceduralCode(IEnumerable<int> data)
 {
