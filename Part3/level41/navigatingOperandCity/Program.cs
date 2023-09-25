@@ -14,6 +14,8 @@ foreach (var direction in directions)
     Console.WriteLine($"Standing at {block}.");
 }
 
+Console.WriteLine($"\nUsing index.\nMy current location is {block[0]}, {block[1]}");
+
 BlockCoordinate CreateStartingBlock() => new (4, 3);
 
 /// <summary>
@@ -21,6 +23,18 @@ BlockCoordinate CreateStartingBlock() => new (4, 3);
 /// </summary>
 public record BlockCoordinate(int Row, int Column)
 {
+    #region Properties
+    /// <summary>
+    ///     Gets the <see cref="System.Int32" /> at the specified index.
+    /// </summary>
+    /// <value>
+    ///     The <see cref="System.Int32" />.
+    /// </value>
+    /// <param name="index">The index.</param>
+    /// <returns></returns>
+    public int this[int index] => index == 0 ? Row : Column;
+    #endregion
+
     /// <summary>
     ///     Implements the operator +.
     /// </summary>

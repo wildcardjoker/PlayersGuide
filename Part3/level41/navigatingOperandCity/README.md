@@ -20,3 +20,14 @@ In exchange for the Medallion of Operators, they ask you to make it easy to add 
 - Add an addition (`+`) operator to `BlockCoordinate` that takes a `BlockCoordinate` and a  `BlockOffset` as arguments and produces a new `BlockCoordinate` that refers to the one you would arrive at by starting at the original coordinate and moving by teh offset. That is, if we started at `(4, 3)` and had an offset of `(2, 0)`, we should end up at `(6, 3)`.
 - Add another addition (`+`) operator to `BlockCoordinate` that takes a `BlockCoordinate` and a `Direction` as arguments and produces a new `BlockCoordinate` that is a block in the direction indicated. If we started at `(4, 3)` and went east, we should end up at `(4, 4)`.
 - Write code to ensure that both operators work correctly.
+
+# Indexing Operand City
+
+In exchange for the Medallion of Indexers, the city asks for the ability to index a `BlockCoordinate` by a number: `block[0]` for the block's row and `block[1]` for the block's column. Help them in this quest by adding a get-only indexer to the `BlockCoordinate` class.
+
+## Objectives
+
+- Add a get-only indexer to `BlockCoordinate` to access items by an index: index `0` is the row, and index `1` is the column.
+- **Answer this question**: Does an indexer provide many benefits over just referring to the `Row` and `Column` properties in this case? Explain your reasoning.
+
+Answer: An indexer does not provide any benefits in this case, and actually makes the code harder to read. However, indexers could come in handy when you have a class with multiple properties where you commonly refer to the same properties.
