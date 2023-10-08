@@ -23,13 +23,16 @@ public class RecentNumbers
     #endregion
 
     /// <summary>
-    ///     Generate random numbers infinitely.
+    ///     Generates random numbers indefinitely.
     /// </summary>
     public void GenerateInfiniteNumbers()
     {
         while (true)
         {
-            GenerateNumber();
+            var number = _random.Next(0, 10); // 0 - 9
+            AddNumber(number);
+            Console.WriteLine(number);
+            Thread.Sleep(1000); // Sleep one second.
         }
     }
 
@@ -51,16 +54,5 @@ public class RecentNumbers
 
         // Add the number to the queue.
         _numbers.Enqueue(number);
-    }
-
-    /// <summary>
-    ///     Generates a random number.
-    /// </summary>
-    private void GenerateNumber()
-    {
-        var number = _random.Next(0, 10); // 0 - 9
-        AddNumber(number);
-        Console.WriteLine(number);
-        Thread.Sleep(1000); // Sleep one second.
     }
 }
