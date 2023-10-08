@@ -2,20 +2,41 @@
 
 namespace repeatingStream;
 
+/// <summary>
+///     Class for holding and managing the recent numbers.
+/// </summary>
 public class RecentNumbers
 {
     #region Fields
-    public Queue<int> Numbers = new ();
+    /// <summary>
+    ///     The most recent numbers
+    /// </summary>
+    /// <remarks>
+    ///     A <c>Queue</c> stores and retrieves numbers in the order they were added.
+    ///     The first number added to the queue is also the first number read/removed from the queue.
+    ///     We'll use this object to store the most recent 2 numbers.
+    ///     If the queue already contains 2 numbers, we'll remove the first number, thus storing only the 2 most recent.
+    /// </remarks>
+    private readonly Queue<int> _numbers = new ();
     #endregion
 
+    /// <summary>
+    ///     Adds the number to the queue.
+    /// </summary>
+    /// <param name="number">The number.</param>
+    /// <remarks>
+    ///     If 2 numbers are already stored, the oldest number is removed before adding the next number.
+    ///     This ensures that a maximum of 2 numbers are stored at any given time.
+    /// </remarks>
     public void AddNumber(int number)
     {
-        if (Numbers.Count == 2)
+        if (_numbers.Count == 2)
         {
             // Remove the first number, keep the most recent.
-            Numbers.Dequeue();
+            _numbers.Dequeue();
         }
 
-        Numbers.Enqueue(number);
+        // Add the number to the queue.
+        _numbers.Enqueue(number);
     }
 }
