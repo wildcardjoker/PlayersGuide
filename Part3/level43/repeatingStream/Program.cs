@@ -11,5 +11,5 @@ thread.Start();
 while (true)
 {
     Console.ReadKey();
-    Console.WriteLine("Key pressed. Check duplicates");
+    Console.WriteLine(mostRecentNumbers.RepeatNumberDetected() ? "Repeat number detected!" : "Not a repeating number, sorry");
 }
