@@ -8,6 +8,8 @@ namespace repeatingStream;
 public class RecentNumbers
 {
     #region Fields
+    private readonly object _lock = new ();
+
     /// <summary>
     ///     The most recent numbers
     /// </summary>
@@ -44,7 +46,13 @@ public class RecentNumbers
     ///     The .Peek() method returns the first item in the queue, without removing it.
     ///     We then use the .All() method to check that all items in the queue equal the first item.
     /// </remarks>
-    public bool RepeatNumberDetected() => _numbers.All(number => number.Equals(_numbers.Peek()));
+    public bool RepeatNumberDetected()
+    {
+        lock (_lock)
+        {
+            return _numbers.All(number => number.Equals(_numbers.Peek()));
+        }
+    }
 
     /// <summary>
     ///     Adds the number to the queue.
@@ -56,13 +64,16 @@ public class RecentNumbers
     /// </remarks>
     private void AddNumber(int number)
     {
-        if (_numbers.Count == 2)
+        lock (_lock)
         {
-            // Remove the first number, keep the most recent.
-            _numbers.Dequeue();
-        }
+            if (_numbers.Count == 2)
+            {
+                // Remove the first number, keep the most recent.
+                _numbers.Dequeue();
+            }
 
-        // Add the number to the queue.
-        _numbers.Enqueue(number);
+            // Add the number to the queue.
+            _numbers.Enqueue(number);
+        }
     }
 }
