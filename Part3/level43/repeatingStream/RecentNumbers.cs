@@ -18,7 +18,20 @@ public class RecentNumbers
     ///     If the queue already contains 2 numbers, we'll remove the first number, thus storing only the 2 most recent.
     /// </remarks>
     private readonly Queue<int> _numbers = new ();
+
+    private readonly Random _random = new ();
     #endregion
+
+    /// <summary>
+    ///     Generate random numbers infinitely.
+    /// </summary>
+    public void GenerateInfiniteNumbers()
+    {
+        while (true)
+        {
+            GenerateNumber();
+        }
+    }
 
     /// <summary>
     ///     Adds the number to the queue.
@@ -28,7 +41,7 @@ public class RecentNumbers
     ///     If 2 numbers are already stored, the oldest number is removed before adding the next number.
     ///     This ensures that a maximum of 2 numbers are stored at any given time.
     /// </remarks>
-    public void AddNumber(int number)
+    private void AddNumber(int number)
     {
         if (_numbers.Count == 2)
         {
@@ -38,5 +51,16 @@ public class RecentNumbers
 
         // Add the number to the queue.
         _numbers.Enqueue(number);
+    }
+
+    /// <summary>
+    ///     Generates a random number.
+    /// </summary>
+    private void GenerateNumber()
+    {
+        var number = _random.Next(0, 10); // 0 - 9
+        AddNumber(number);
+        Console.WriteLine(number);
+        Thread.Sleep(1000); // Sleep one second.
     }
 }
