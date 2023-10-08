@@ -37,6 +37,16 @@ public class RecentNumbers
     }
 
     /// <summary>
+    ///     Checks whether both numbers are equal.
+    /// </summary>
+    /// <returns><c>true</c> if both numbers are equal.</returns>
+    /// <remarks>
+    ///     The .Peek() method returns the first item in the queue, without removing it.
+    ///     We then use the .All() method to check that all items in the queue equal the first item.
+    /// </remarks>
+    public bool RepeatNumberDetected() => _numbers.All(number => number.Equals(_numbers.Peek()));
+
+    /// <summary>
     ///     Adds the number to the queue.
     /// </summary>
     /// <param name="number">The number.</param>
