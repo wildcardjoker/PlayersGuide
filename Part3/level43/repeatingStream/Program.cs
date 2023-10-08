@@ -5,4 +5,11 @@ using repeatingStream;
 #endregion
 
 var mostRecentNumbers = new RecentNumbers();
-mostRecentNumbers.GenerateInfiniteNumbers();
+var thread            = new Thread(mostRecentNumbers.GenerateInfiniteNumbers);
+
+thread.Start();
+while (true)
+{
+    Console.ReadKey();
+    Console.WriteLine("Key pressed. Check duplicates");
+}
