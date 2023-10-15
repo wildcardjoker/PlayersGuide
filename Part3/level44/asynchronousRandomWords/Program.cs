@@ -1,7 +1,4 @@
-﻿#region Using Directives
-#endregion
-
-Console.Write("Please enter a word to generate: ");
+﻿Console.Write("Please enter a word to generate: ");
 var requestedWord    = Console.ReadLine();
 var startTime        = DateTime.Now;                                // We're better off using a StopWatch object, but the objective says use DateTime.Now ¯\_(ツ)_/¯
 var numberOfAttempts = await RandomlyRecreateAsync(requestedWord!); // Assume for this project that the user always enters at least one character.
