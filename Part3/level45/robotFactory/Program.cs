@@ -15,6 +15,15 @@ if (GetYesNoResponse("Do you want to name this robot") == ConsoleKey.Y)
     }
 }
 
+if (GetYesNoResponse("Does this robot have a specific size") == ConsoleKey.Y)
+{
+    var width = GetValueResponse("What is its width");
+    if (!string.IsNullOrWhiteSpace(width))
+    {
+        robot.Width = width;
+    }
+}
+
 Console.WriteLine();
 foreach (var property in (IDictionary<string, object>) robot)
 {
@@ -26,7 +35,9 @@ return;
 ConsoleKey GetYesNoResponse(string question)
 {
     Console.Write(WriteQuestion(question));
-    return Console.ReadKey().Key;
+    var response = Console.ReadKey().Key;
+    Console.WriteLine();
+    return response;
 }
 
 string? GetValueResponse(string question)
