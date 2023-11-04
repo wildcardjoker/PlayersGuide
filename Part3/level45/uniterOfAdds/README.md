@@ -19,3 +19,7 @@ public static class Adds
 - Make a single `Add` method that can replace all four of the above methods using `dynamic`.
 - Add code to your main method to call the new method with two `int`s, two `double`s, two `sting`s, and a `DateTime` and a `TimeSpan`, and display the results.
 - **Answer this question**: What downside do you see with using `dynamic` here?
+
+### Answer
+
+Using dymanic types can create instances where the compiler will not warn of possible issues. For instance, the `Add()` method will throw an exception when attempting to add an `int` to a `string` as there isn't a `+` operation that supports those two types. Runtime errors would be impossible to detect.
