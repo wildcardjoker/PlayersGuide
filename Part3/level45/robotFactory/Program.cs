@@ -32,6 +32,15 @@ while (true)
         }
     }
 
+    if (GetYesNoResponse("Does this robot need to be a specific colour") == ConsoleKey.Y)
+    {
+        var colour = GetValueResponse("What colour");
+        if (!string.IsNullOrWhiteSpace(colour))
+        {
+            robot.Colour = colour;
+        }
+    }
+
     Console.WriteLine();
     foreach (var property in (IDictionary<string, object>) robot)
     {
