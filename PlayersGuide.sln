@@ -207,6 +207,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "level45", "level45", "{1763
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "uniterOfAdds", "part3\level45\uniterOfAdds\uniterOfAdds.csproj", "{77FF0E10-80C6-4302-A6BF-32BD1457976A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "robotFactory", "part3\level45\robotFactory\robotFactory.csproj", "{E86E59C2-085C-43ED-8399-7C727845343E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -445,6 +447,10 @@ Global
 		{77FF0E10-80C6-4302-A6BF-32BD1457976A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77FF0E10-80C6-4302-A6BF-32BD1457976A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77FF0E10-80C6-4302-A6BF-32BD1457976A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E86E59C2-085C-43ED-8399-7C727845343E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E86E59C2-085C-43ED-8399-7C727845343E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E86E59C2-085C-43ED-8399-7C727845343E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E86E59C2-085C-43ED-8399-7C727845343E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -549,6 +555,7 @@ Global
 		{FA3BA0DE-0F9E-48BA-8FF5-54DF8515EDF2} = {D20F179B-A423-47EE-B70F-04A1C1871324}
 		{17634B5E-6B41-4A76-AC3F-8B35B85F793E} = {E6060E96-147A-4BB1-8673-1ACA721842E7}
 		{77FF0E10-80C6-4302-A6BF-32BD1457976A} = {17634B5E-6B41-4A76-AC3F-8B35B85F793E}
+		{E86E59C2-085C-43ED-8399-7C727845343E} = {17634B5E-6B41-4A76-AC3F-8B35B85F793E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F9CE9BD2-E80F-4C81-B512-F1FA1D48E5FC}
