@@ -2,35 +2,42 @@
 using System.Dynamic;
 #endregion
 
-var     robotNumber = 0;
-dynamic robot       = new ExpandoObject();
-robot.Id = ++robotNumber;
-Console.WriteLine($"You are producing robot #{robot.Id}");
-if (GetYesNoResponse("Do you want to name this robot") == ConsoleKey.Y)
+var robotNumber = 0;
+while (true)
 {
-    var name = GetValueResponse("What is its name");
-    if (!string.IsNullOrWhiteSpace(name))
+    dynamic robot = new ExpandoObject();
+    robot.Id = ++robotNumber;
+    Console.WriteLine($"You are producing robot #{robot.Id}");
+    if (GetYesNoResponse("Do you want to name this robot") == ConsoleKey.Y)
     {
-        robot.Name = name;
+        var name = GetValueResponse("What is its name");
+        if (!string.IsNullOrWhiteSpace(name))
+        {
+            robot.Name = name;
+        }
+    }
+
+    if (GetYesNoResponse("Does this robot have a specific size") == ConsoleKey.Y)
+    {
+        var height = GetValueResponse("What is its height");
+        if (!string.IsNullOrWhiteSpace(height))
+        {
+            robot.Height = height;
+        }
+
+        var width = GetValueResponse("What is its width");
+        if (!string.IsNullOrWhiteSpace(width))
+        {
+            robot.Width = width;
+        }
+    }
+
+    Console.WriteLine();
+    foreach (var property in (IDictionary<string, object>) robot)
+    {
+        Console.WriteLine($"{property.Key}: {property.Value}");
     }
 }
-
-if (GetYesNoResponse("Does this robot have a specific size") == ConsoleKey.Y)
-{
-    var width = GetValueResponse("What is its width");
-    if (!string.IsNullOrWhiteSpace(width))
-    {
-        robot.Width = width;
-    }
-}
-
-Console.WriteLine();
-foreach (var property in (IDictionary<string, object>) robot)
-{
-    Console.WriteLine($"{property.Key}: {property.Value}");
-}
-
-return;
 
 ConsoleKey GetYesNoResponse(string question)
 {
