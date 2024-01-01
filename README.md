@@ -15,3 +15,21 @@ You'll notice that some levels don't have a matching code sample. The :blue_book
 - :bookmark: Level 15: Object-oriented Concepts.
 - :bookmark: Level 22: Null handling.
 - :bookmark: Level 23: A primer on object-oriented design concepts.
+- :bookmark: Level 46: A primer on unsafe code; the book references https://www.pinvoke.net, however you may be better off using [CsWin32](https://github.com/microsoft/CsWin32) instead.
+- :bookmark: Level 47: A Primer on other language features
+  - Iterators and the `yield` keyword
+  - `Async` enumerables
+  - Constants
+  - Attributes
+  - Reflection
+  - The `nameof` operator
+  - Nested Types
+  - Accessibility modifiers
+  - Bit manipulation
+  - `using` statements and the `IDisposable` interface
+  - Preprocessor directives
+  - Command-line arguments
+  - Partial classes
+  - Generic covariance and contravariance
+  - `checked` and `unchecked` contexts
+  - Volatile fields 
