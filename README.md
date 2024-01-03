@@ -32,4 +32,5 @@ You'll notice that some levels don't have a matching code sample. The :blue_book
   - Partial classes
   - Generic covariance and contravariance
   - `checked` and `unchecked` contexts
-  - Volatile fields 
+  - Volatile fields
+- :bookmark: Level 49: An advanced Primer on compilers, and the C# virtual machine/instruction set in particular
