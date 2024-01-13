@@ -33,4 +33,5 @@ You'll notice that some levels don't have a matching code sample. The :blue_book
   - Generic covariance and contravariance
   - `checked` and `unchecked` contexts
   - Volatile fields
-- :bookmark: Level 49: An advanced Primer on compilers, and the C# virtual machine/instruction set in particular
+- :bookmark: Level 49: An advanced Primer on compilers, and the C# virtual machine/instruction set in particular.
+- :bookmark: Level 50: a Primer on .NET, the Common Intermediate Language, the Base Class Library, and app models.
