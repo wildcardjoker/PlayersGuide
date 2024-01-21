@@ -13,6 +13,6 @@ public class TrueProgrammer : Character
 {
     #region Constructors
     /// <inheritdoc />
-    public TrueProgrammer(string name) : base(name, new[] {new Punch()}, 50) {}
+    public TrueProgrammer(string name) : base(name, new[] {new Punch()}, 25) {}
     #endregion
 }
