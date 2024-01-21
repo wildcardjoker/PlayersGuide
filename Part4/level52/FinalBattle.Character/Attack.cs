@@ -30,7 +30,7 @@ public abstract class Attack
     /// <value>
     ///     The name.
     /// </value>
-    public string Name {get; private set;}
+    public string Name {get;}
     #endregion
 
     /// <summary>
@@ -38,4 +38,9 @@ public abstract class Attack
     /// </summary>
     /// <returns>The amount of damage inflicted by the character.</returns>
     public abstract int CalculateDamage();
+
+    #region Overrides of Object
+    /// <inheritdoc />
+    public override string ToString() => Name;
+    #endregion
 }

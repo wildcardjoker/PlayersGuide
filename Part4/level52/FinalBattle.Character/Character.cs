@@ -33,6 +33,14 @@
         public List<Attack> Attacks {get;}
 
         /// <summary>
+        ///     Gets the current health.
+        /// </summary>
+        /// <value>
+        ///     The current health.
+        /// </value>
+        public string CurrentHealth => $"{HitPoints}/{MaxHitPoints} HP";
+
+        /// <summary>
         ///     Gets the hit points.
         /// </summary>
         /// <value>
@@ -62,6 +70,11 @@
         /// </summary>
         /// <param name="points">The points.</param>
         /// <remarks>Negative values inflict damage, positive values restore health.</remarks>
-        public void ModifyHitPoints(int points) => Math.Clamp(HitPoints += points, 0, MaxHitPoints);
+        public void ModifyHitPoints(int points) => HitPoints = Math.Clamp(HitPoints + points, 0, MaxHitPoints);
+
+        #region Overrides of Object
+        /// <inheritdoc />
+        public override string ToString() => Name;
+        #endregion
     }
 }
