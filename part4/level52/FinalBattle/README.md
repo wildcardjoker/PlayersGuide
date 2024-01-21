@@ -6,7 +6,7 @@ The final battle has arrived. On a volcanic island, enshrouded in a cloud of ash
 
 This challenge is deceptively complex: it will require building out enough of the game's foundation to get two characters taking turns in a loop. (Sure, they'll be doing *nothing*, but that's still a big step forward!)
 
-### Objectives
+### Building Character Objectives
 
 - The game needs to be able to represent characters with a name and able to take a turn. (We'll change this a little in another challenge.)
 - The game should be able to have skeleton characters with the name `SKELETON`.
@@ -27,3 +27,22 @@ SKELETON did NOTHING.
 
 - **Optional**: Put a blank line between each character's turn to differentiate one turn from another.
 - **Optional**: At this point, the game will run automatically. Consider adding a `Thread.Sleep(500);` to slow the game down enough to allow the user to see what is happening over time.
+
+## Core Game: The True Programmer
+
+Our skeletons need a hero to fight. We'll do that by adding in the focal character of the game, the player character; which represents the player directly, called the `True Programmer` by in-game role. The player will choose the `True Programmer`'s name.
+
+### The True Programmer Objectives
+
+- The game must represent a *True Programmer* character with a name supplied by the user.
+- Before getting started, ask the user for a name for this character.
+- The game should run a battle with the `True Programmer` in the `hero` party vs. a skeleton in the `monster` party. The game might look like the following:
+
+````console
+It is TOG's turn ...
+TOG did NOTHING.
+
+It is SKELETON's turn ...
+SKELETON did NOTHING.
+...
+````
