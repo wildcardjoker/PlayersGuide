@@ -16,7 +16,7 @@
         /// <param name="hitPoints">The hit points.</param>
         public Character(string name, IEnumerable<Attack>? attacks, int hitPoints = 10)
         {
-            Name         = name;
+            Name         = name.ToUpper();
             Attacks      = attacks?.ToList() ?? new List<Attack>();
             HitPoints    = hitPoints;
             MaxHitPoints = hitPoints;
