@@ -2,9 +2,6 @@
 
 namespace FinalBattle.Character.Player;
 
-#region Using Directives
-#endregion
-
 /// <summary>
 ///     Interface for all players.
 /// </summary>
