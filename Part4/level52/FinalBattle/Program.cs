@@ -7,17 +7,17 @@
 
 #region Using Directives
 using FinalBattle.Character;
+using FinalBattle.Character.Characters;
 using FinalBattle.Character.Player;
-using Humanizer;
 using Action = FinalBattle.Character.Action;
 #endregion
 
 var trueProgrammerName = GetResponseFromConsole("What is your name, hero?");
-var trueProgrammer     = new Character(trueProgrammerName);
+var trueProgrammer     = new TrueProgrammer(trueProgrammerName);
 var heroes             = new Party(new ComputerPlayer(), new[] {trueProgrammer});
 
 // TODO: use default SKELETON class
-var monsters = new Party(new ComputerPlayer(), new[] {new Character("Skeleton")});
+var monsters = new Party(new ComputerPlayer(), new[] {new Skeleton()});
 
 // Create a collection of all parties; this will assist with looping through the parties
 var parties = new[] {heroes, monsters};
@@ -29,12 +29,18 @@ while (true)
     // ReSharper disable once LoopCanBePartlyConvertedToQuery
     foreach (var party in parties)
     {
+        party.IsCurrentParty = true;
         foreach (var character in party.Characters)
         {
-            Console.WriteLine($"It's {character.UpperName}'s turn ...");
+            Console.WriteLine($"It's {character.Name.ToUpper()}'s turn ...");
             var action = party.Player.SelectAction();
-            DisplayCharacterAction(character, action);
+
+            // TODO: Select target
+            var target = parties.First(x => !x.IsCurrentParty).Characters.FirstOrDefault();
+            DisplayCharacterAction(character, action, target);
         }
+
+        party.IsCurrentParty = false;
     }
 }
 
@@ -52,8 +58,9 @@ static string GetResponseFromConsole(string message)
     return response;
 }
 
-static void DisplayCharacterAction(Character character, Action action)
+static void DisplayCharacterAction(Character character, Action action, Character? target)
 {
-    Console.WriteLine($"{character.UpperName} {action.GetActionAdjective()} {action.Humanize()}.\n");
+    Console.WriteLine(character.PerformAction(action, target));
+    Console.WriteLine();
     Thread.Sleep(500);
 }

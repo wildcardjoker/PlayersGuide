@@ -64,3 +64,23 @@ This challenge does not demand that you add new externally visible capabilities 
 - The game must know which player controls each party to ask the correct player to pick each character's action. Set up the game to ask the player to select an action for each of their characters and then run the chosen action.
 - Put a simple computer player in charge of each party.
 - **Note**: To somebody watching, the end result of this challenge may look identical to before this challenge.
+
+## Core game: Attacks
+
+In this challenge, we will extend our game by giving characters attacks and allowing players to pick an attack instead of doing nothing. We won't address tracking or dealing out damage yet.
+
+### Attacks Objectives
+
+- The game needs to be able to represent specific types of attacks. Attacks all have a name (and will have other capabilities later).
+- Each character has a standard attack, but this varies from character to character. The True Programmer's (the player character's) attack is called *punch*. The skeleton's attack is called *bone crunch*.
+- The program must be capable of representing an *attack* action, our second action type. An attack action must represent which attack is being used and the target of the attack. When this action runs, it should state the attacker, the attack, and the target. For example: `TOG used PUNCH on SKELETON.`
+- Our computer player should pick an attack action instead of a do-nothing action. The attack action can be simple for now: always use the character's standard attach and always target the other guy's first character. (If you want to choose a random target of some other logic, you can).
+- The game should now run like this:
+
+````console
+It is TOG's turn ...
+TOG used PUNCH on SKELETON.
+
+It is SKELETON's turn ...
+SKELETON used BONE CRUNCH on TOG.
+````

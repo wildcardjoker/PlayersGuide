@@ -6,15 +6,19 @@
     /// <seealso cref="IPlayer" />
     public class ComputerPlayer : IPlayer
     {
+        #region Fields
+        private readonly Random rng = new Random();
+        #endregion
+
         #region IPlayer Members
         #region Implementation of IPlayer
         /// <inheritdoc />
         public Action SelectAction()
         {
             Thread.Sleep(500); // simulate decision
-            return Action.Nothing;
-
-            // TODO: Replace with method to select from a range of Actions.
+            var availableActions = Enum.GetNames(typeof(Action));
+            var selectedAction   = rng.Next(0, availableActions.Length);
+            return (Action) selectedAction;
         }
         #endregion
         #endregion

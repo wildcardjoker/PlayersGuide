@@ -32,6 +32,14 @@
         public List<Character> Characters {get;}
 
         /// <summary>
+        ///     Gets or sets a value indicating whether this party is currently playing.
+        /// </summary>
+        /// <value>
+        ///     <c>true</c> if this party is currently playing; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsCurrentParty {get; set;}
+
+        /// <summary>
         ///     Gets the player.
         /// </summary>
         /// <value>

@@ -8,5 +8,10 @@ public enum Action
     /// <summary>
     ///     Do Nothing.
     /// </summary>
-    Nothing
+    Nothing,
+
+    /// <summary>
+    ///     Attack the player
+    /// </summary>
+    Attack
 }
