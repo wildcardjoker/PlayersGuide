@@ -1,8 +1,5 @@
 ﻿namespace FinalBattle.Character.Player
 {
-    #region Using Directives
-    #endregion
-
     /// <summary>
     ///     A computer/AI player. All decisions are made by the computer.
     /// </summary>
@@ -12,7 +9,13 @@
         #region IPlayer Members
         #region Implementation of IPlayer
         /// <inheritdoc />
-        public Action SelectAction() => Action.DoNothing; // TODO: Replace with method to select from a range of Actions.
+        public Action SelectAction()
+        {
+            Thread.Sleep(500); // simulate decision
+            return Action.Nothing;
+
+            // TODO: Replace with method to select from a range of Actions.
+        }
         #endregion
         #endregion
     }

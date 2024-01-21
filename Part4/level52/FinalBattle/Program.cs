@@ -8,6 +8,8 @@
 #region Using Directives
 using FinalBattle.Character;
 using FinalBattle.Character.Player;
+using Humanizer;
+using Action = FinalBattle.Character.Action;
 #endregion
 
 var trueProgrammerName = GetResponseFromConsole("What is your name, hero?");
@@ -15,7 +17,7 @@ var trueProgrammer     = new Character(trueProgrammerName);
 var heroes             = new Party(new ComputerPlayer(), new[] {trueProgrammer});
 
 // TODO: use default SKELETON class
-var monsters = new Party(new ComputerPlayer(), new[] {new Character("Skeleton")}); //new List<Character> {new ("Skeleton")};
+var monsters = new Party(new ComputerPlayer(), new[] {new Character("Skeleton")});
 
 // Create a collection of all parties; this will assist with looping through the parties
 var parties = new[] {heroes, monsters};
@@ -29,8 +31,9 @@ while (true)
     {
         foreach (var character in party.Characters)
         {
-            // TODO: use variable action.
-            DisplayCharacterAction(character, "nothing");
+            Console.WriteLine($"It's {character.UpperName}'s turn ...");
+            var action = party.Player.SelectAction();
+            DisplayCharacterAction(character, action);
         }
     }
 }
@@ -49,9 +52,8 @@ static string GetResponseFromConsole(string message)
     return response;
 }
 
-static void DisplayCharacterAction(Character character, string action)
+static void DisplayCharacterAction(Character character, Action action)
 {
-    Console.WriteLine($"It's {character.UpperName}'s turn ...");
-    Console.WriteLine($"{character.UpperName} did {action.ToUpper()}.\n");
+    Console.WriteLine($"{character.UpperName} {action.GetActionAdjective()} {action.Humanize()}.\n");
     Thread.Sleep(500);
 }

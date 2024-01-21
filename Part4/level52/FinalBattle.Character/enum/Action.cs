@@ -8,5 +8,5 @@ public enum Action
     /// <summary>
     ///     Do Nothing.
     /// </summary>
-    DoNothing
+    Nothing
 }

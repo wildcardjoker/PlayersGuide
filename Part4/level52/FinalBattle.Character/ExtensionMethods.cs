@@ -16,8 +16,8 @@ public static class ExtensionMethods
     {
         var adjective = action switch
         {
-            Action.DoNothing => "did",
-            _                => "used"
+            Action.Nothing => "did",
+            _              => "used"
         };
         return adjective;
     }
