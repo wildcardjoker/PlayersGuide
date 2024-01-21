@@ -7,14 +7,15 @@
 
 #region Using Directives
 using FinalBattle.Character;
+using FinalBattle.Character.Player;
 #endregion
 
 var trueProgrammerName = GetResponseFromConsole("What is your name, hero?");
 var trueProgrammer     = new Character(trueProgrammerName);
-var heroes             = new List<Character> {trueProgrammer};
+var heroes             = new Party(new ComputerPlayer(), new[] {trueProgrammer});
 
 // TODO: use default SKELETON class
-var monsters = new List<Character> {new ("Skeleton")};
+var monsters = new Party(new ComputerPlayer(), new[] {new Character("Skeleton")}); //new List<Character> {new ("Skeleton")};
 
 // Create a collection of all parties; this will assist with looping through the parties
 var parties = new[] {heroes, monsters};
@@ -26,7 +27,7 @@ while (true)
     // ReSharper disable once LoopCanBePartlyConvertedToQuery
     foreach (var party in parties)
     {
-        foreach (var character in party)
+        foreach (var character in party.Characters)
         {
             // TODO: use variable action.
             DisplayCharacterAction(character, "nothing");
