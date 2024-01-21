@@ -12,7 +12,7 @@ public abstract class Attack
     ///     Initializes a new instance of the <see cref="Attack" /> class.
     /// </summary>
     /// <param name="name">The name.</param>
-    protected Attack(string name) => Name = name;
+    protected Attack(string name) => Name = name.ToUpper();
     #endregion
 
     #region Properties
