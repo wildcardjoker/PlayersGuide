@@ -84,3 +84,29 @@ TOG used PUNCH on SKELETON.
 It is SKELETON's turn ...
 SKELETON used BONE CRUNCH on TOG.
 ````
+
+## Core Game: Damage and HP
+
+Now that our characters are attacking each other, it is time to let those attacks matter. In this challenge, we will enhance the game to give characters hit points (HP). Attacking should reduce the HP of the target down to 0 but not past it. Reaching `0 HP` means death, which we will deal with in the next challenge.
+
+### Damage and HP Objectives
+
+- Characters should be able to track both their initial/maximum HP and their current HP. The True Programmer should have 25 HP, while skeletons should have 5.
+- Attacks should be able to produce `attack data` for a specific use of the attack. For now, this is simple the amount of damage that they will deal this time, though keep in mind that other challenges will add more data to this, including things like the frequency of hitting or missing and damage types.
+- The *punch* attack should deliver `1 point` of damage every time, while the `bone crunch` attack should randomly deal 0 or 1. **Hint**: Remember that `Random` can be used to generate random numbers. `random.Next(2)` will generate a 0 or 1 with equal probability.
+- The attack action should ask the attack to determine how much damage it caused this time and then reduce the target's HP by that amount. A character's HP should not be lowered below 0.
+- The attack action should report how much damage the attack did and what the target's HP is now at. For example, `PUNCH dealt 1 damage to SKELETON.` `SKELETON is not at 4/5 HP`.
+- When the game runs after this challenge, the output might look something like this:
+
+````console
+It is TOG's turn ...
+TOG used PUNCH on SKELETON.
+PUNCH dealt 1 damage to SKELETON.
+SKELETON is now at 4/5 HP.
+
+It is SKELETON's turn ...
+SKELETON used BONE CRUNCH on TOG.
+BONE CRUNCH dealt 0 damage to TOG.
+TOG is now at 25/25 HP.
+...
+````

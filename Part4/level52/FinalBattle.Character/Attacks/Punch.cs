@@ -10,5 +10,10 @@
         /// <inheritdoc />
         public Punch() : base("punch") {}
         #endregion
+
+        #region Implementation of IAttack
+        /// <inheritdoc />
+        public override int CalculateDamage() => Damage = 1;
+        #endregion
     }
 }

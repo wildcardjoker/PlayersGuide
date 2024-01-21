@@ -7,7 +7,7 @@
     public class ComputerPlayer : IPlayer
     {
         #region Fields
-        private readonly Random rng = new Random();
+        private readonly Random _random = new Random();
         #endregion
 
         #region IPlayer Members
@@ -17,7 +17,7 @@
         {
             Thread.Sleep(500); // simulate decision
             var availableActions = Enum.GetNames(typeof(Action));
-            var selectedAction   = rng.Next(0, availableActions.Length);
+            var selectedAction   = _random.Next(availableActions.Length);
             return (Action) selectedAction;
         }
         #endregion

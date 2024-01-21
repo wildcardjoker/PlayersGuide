@@ -15,9 +15,7 @@ using Action = FinalBattle.Character.Action;
 var trueProgrammerName = GetResponseFromConsole("What is your name, hero?");
 var trueProgrammer     = new TrueProgrammer(trueProgrammerName);
 var heroes             = new Party(new ComputerPlayer(), new[] {trueProgrammer});
-
-// TODO: use default SKELETON class
-var monsters = new Party(new ComputerPlayer(), new[] {new Skeleton()});
+var monsters           = new Party(new ComputerPlayer(), new[] {new Skeleton()});
 
 // Create a collection of all parties; this will assist with looping through the parties
 var parties = new[] {heroes, monsters};
@@ -32,7 +30,7 @@ while (true)
         party.IsCurrentParty = true;
         foreach (var character in party.Characters)
         {
-            Console.WriteLine($"It's {character.Name.ToUpper()}'s turn ...");
+            Console.WriteLine($"It's {character.Name}'s turn ...");
             var action = party.Player.SelectAction();
 
             // TODO: Select target
@@ -60,7 +58,15 @@ static string GetResponseFromConsole(string message)
 
 static void DisplayCharacterAction(Character character, Action action, Character? target)
 {
-    Console.WriteLine(character.PerformAction(action, target));
+    var result = character.PerformAction(action, target);
+    Console.WriteLine(result.Description);
+    if (result.Attack != null)
+    {
+        target!.ModifyHitPoints(-result.Damage);
+        Console.WriteLine($"{result.Attack} dealt {result.Damage} to {target}");
+        Console.WriteLine($"{target} is now at {target.CurrentHealth}");
+    }
+
     Console.WriteLine();
     Thread.Sleep(500);
 }

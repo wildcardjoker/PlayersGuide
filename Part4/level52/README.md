@@ -11,3 +11,4 @@ The final battle has arrived. On a volcanic island, enshrouded in a cloud of ash
 - **Core Game**: Building Character (PR #58)
 - **Core Game**: The True Programmer (PR #59)
 - **Core Game**: Actions and Players (PR #60)
+- **Core Game**: Attacks (PR #62)
