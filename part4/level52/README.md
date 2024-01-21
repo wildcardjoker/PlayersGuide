@@ -8,4 +8,4 @@ The final battle has arrived. On a volcanic island, enshrouded in a cloud of ash
 
 ## Boss battles
 
-- **Core Game**: Building Character #58
+- **Core Game**: Building Character
