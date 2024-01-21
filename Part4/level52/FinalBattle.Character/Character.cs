@@ -16,9 +16,10 @@
         /// <param name="hitPoints">The hit points.</param>
         public Character(string name, IEnumerable<Attack>? attacks, int hitPoints = 10)
         {
-            Name      = name;
-            Attacks   = attacks?.ToList() ?? new List<Attack>();
-            HitPoints = hitPoints;
+            Name         = name;
+            Attacks      = attacks?.ToList() ?? new List<Attack>();
+            HitPoints    = hitPoints;
+            MaxHitPoints = hitPoints;
         }
         #endregion
 
@@ -40,6 +41,14 @@
         public int HitPoints {get; private set;}
 
         /// <summary>
+        ///     Gets the maximum hit points.
+        /// </summary>
+        /// <value>
+        ///     The maximum hit points.
+        /// </value>
+        public int MaxHitPoints {get;}
+
+        /// <summary>
         ///     Gets the name.
         /// </summary>
         /// <value>
@@ -47,5 +56,12 @@
         /// </value>
         public string Name {get;}
         #endregion
+
+        /// <summary>
+        ///     Modifies the hit points by the specified amount.
+        /// </summary>
+        /// <param name="points">The points.</param>
+        /// <remarks>Negative values inflict damage, positive values restore health.</remarks>
+        public void ModifyHitPoints(int points) => Math.Clamp(HitPoints += points, 0, MaxHitPoints);
     }
 }
