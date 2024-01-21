@@ -13,7 +13,7 @@
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="hitPoints">The hit points.</param>
-        public Character(string name, int hitPoints)
+        public Character(string name, int hitPoints = 10)
         {
             Name      = name;
             HitPoints = hitPoints;

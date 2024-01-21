@@ -9,9 +9,12 @@
 using FinalBattle.Character;
 #endregion
 
+var trueProgrammerName = GetResponseFromConsole("What is your name, hero?");
+var trueProgrammer     = new Character(trueProgrammerName);
+var heroes             = new List<Character> {trueProgrammer};
+
 // TODO: use default SKELETON class
-var heroes   = new List<Character> {new ("Skeleton", 10)};
-var monsters = new List<Character> {new ("Skeleton", 10)};
+var monsters = new List<Character> {new ("Skeleton")};
 
 // Create a collection of all parties; this will assist with looping through the parties
 var parties = new[] {heroes, monsters};
@@ -32,6 +35,18 @@ while (true)
 }
 
 return;
+
+static string GetResponseFromConsole(string message)
+{
+    var response = string.Empty;
+    while (string.IsNullOrWhiteSpace(response))
+    {
+        Console.Write($"{message} ");
+        response = Console.ReadLine();
+    }
+
+    return response;
+}
 
 static void DisplayCharacterAction(Character character, string action)
 {
