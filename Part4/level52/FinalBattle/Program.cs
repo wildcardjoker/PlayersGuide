@@ -20,8 +20,8 @@ var monsters           = new Party(new ComputerPlayer(), new[] {new Skeleton()})
 // Create a collection of all parties; this will assist with looping through the parties
 var parties = new[] {heroes, monsters};
 
-// TODO: check if a party has been defeated
-while (true)
+var gameOver = false;
+while (!gameOver)
 {
     // Loop through each party
     // ReSharper disable once LoopCanBePartlyConvertedToQuery
@@ -31,17 +31,36 @@ while (true)
         foreach (var character in party.Characters)
         {
             Console.WriteLine($"It's {character.Name}'s turn ...");
+
             var action = party.Player.SelectAction();
 
-            // TODO: Select target
-            var target = parties.First(x => !x.IsCurrentParty).Characters.FirstOrDefault();
-            DisplayCharacterAction(character, action, target);
-        }
+            // DEBUG: Hero party does nothing, monsters attack.
+            //var action = character.Name.Equals(trueProgrammerName, StringComparison.CurrentCultureIgnoreCase) ? Action.Nothing : Action.Attack;
 
-        party.IsCurrentParty = false;
+            // TODO: Select target
+            var targetParty = parties.First(x => !x.IsCurrentParty);
+            var target      = targetParty.Characters.First();
+            DisplayCharacterAction(character, action, target);
+            if (target.HitPoints == 0)
+            {
+                targetParty.Characters.Remove(target);
+                Console.WriteLine($"{target.Name} has been defeated!");
+                if (!targetParty.Characters.Any())
+                {
+                    gameOver = true;
+                }
+            }
+            else
+            {
+                Thread.Sleep(500);
+                party.IsCurrentParty = false;
+            }
+        }
     }
 }
 
+Console.WriteLine(
+    heroes.Characters.Any() ? "The heroes have won, and the Uncoded One has been defeated!" : "The heroes have lost, and the Uncoded One's forces have prevailed...");
 return;
 
 static string GetResponseFromConsole(string message)
@@ -68,5 +87,4 @@ static void DisplayCharacterAction(Character character, Action action, Character
     }
 
     Console.WriteLine();
-    Thread.Sleep(500);
 }
