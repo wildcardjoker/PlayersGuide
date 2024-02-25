@@ -65,7 +65,7 @@ This challenge does not demand that you add new externally visible capabilities 
 - Put a simple computer player in charge of each party.
 - **Note**: To somebody watching, the end result of this challenge may look identical to before this challenge.
 
-## Core game: Attacks
+## Core Game: Attacks
 
 In this challenge, we will extend our game by giving characters attacks and allowing players to pick an attack instead of doing nothing. We won't address tracking or dealing out damage yet.
 
@@ -111,7 +111,7 @@ TOG is now at 25/25 HP.
 ...
 ````
 
-## Core game: Death
+## Core Game: Death
 
 When a character's HP reaches 0, it has been defeated and should be removed from its party. If a party has no characters left, the battle is over.
 
@@ -122,7 +122,7 @@ When a character's HP reaches 0, it has been defeated and should be removed from
 - Between rounds (or between character turns), the game should see if a party has no more living characters. If so, the battle (and the game) should end.
 After the battle is over, if the heroes won (there are still surviving characters in the hero party), then display a message stating that the heroes won, and the Uncoded One was defeated. If the monsters won, then display a message saying that the heroes lost and the Uncoded One's forces have prevailed.
 
-## Core game: Battle Series
+## Core Game: Battle Series
 
 The game runs as a series of battles, not just one. The heroes do not win until every battle has been won, while the monsters win if they can stop the heroes in any battle.
 
@@ -130,3 +130,12 @@ The game runs as a series of battles, not just one. The heroes do not win until 
 
 - There is one part of heroes but multiple parties of monsters. For now, build two monster parties: The first should have one skeleton. The second has two skeletons.
 - Start a battle with the heroes and the first party of monsters. When the heroes win, advance to the next party of monsters. If the heroes lose a battle, end the game. If the monsters lose a battle, move to the next battle unless it is the last.
+
+## Core Game: The Uncoded One
+
+It is time to put the final boss nto the game: The Uncoded One itself. We will add this in as a third battle.
+
+### The Uncoded One Objectives
+
+- Define a new type of monster: *The Uncoded One*. It should have `15 HP` and an *unrevalling* attack that randomly deals between 0 and 2 damage when used. (The Uncoded One ought to have more HP than the True Programmer, but much more than 15 HP means the Uncoded One wins everytime. We can adjust these numbers later.)
+- Add a third battle to the series that contains The Uncoded One.
