@@ -110,3 +110,14 @@ BONE CRUNCH dealt 0 damage to TOG.
 TOG is now at 25/25 HP.
 ...
 ````
+
+## Core game: Death
+
+When a character's HP reaches 0, it has been defeated and should be removed from its party. If a party has no characters left, the battle is over.
+
+### Death Objectives
+
+- After an attack deals damage, if the target's HP has reached 0, remove them from the game.
+- When you remove a character from the game, display text to illustrate this. For example, `SKELETON has been defected!`
+- Between rounds (or between character turns), the game should see if a party has no more living characters. If so, the battle (and the game) should end.
+After the battle is over, if the heroes won (there are still surviving characters in the hero party), then display a message stating that the heroes won, and the Uncoded One was defeated. If the monsters won, then display a message saying that the heroes lost and the Uncoded One's forces have prevailed.
