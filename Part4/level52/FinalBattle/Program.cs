@@ -18,7 +18,12 @@ var trueProgrammer     = new TrueProgrammer(trueProgrammerName);
 var heroes             = new Party(new ComputerPlayer(), new[] {trueProgrammer}, true);
 
 // Create a collection of enemy parties
-var enemies = new List<Party> {new (new ComputerPlayer(), new[] {new Skeleton()}), new (new ComputerPlayer(), new[] {new Skeleton(), new Skeleton()})};
+var enemies = new List<Party>
+{
+    new (new ComputerPlayer(), new[] {new Skeleton()}),
+    new (new ComputerPlayer(), new[] {new Skeleton(), new Skeleton()}),
+    new (new ComputerPlayer(), new[] {new UncodedOne()})
+};
 
 do
 {
