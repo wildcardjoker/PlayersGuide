@@ -121,3 +121,12 @@ When a character's HP reaches 0, it has been defeated and should be removed from
 - When you remove a character from the game, display text to illustrate this. For example, `SKELETON has been defected!`
 - Between rounds (or between character turns), the game should see if a party has no more living characters. If so, the battle (and the game) should end.
 After the battle is over, if the heroes won (there are still surviving characters in the hero party), then display a message stating that the heroes won, and the Uncoded One was defeated. If the monsters won, then display a message saying that the heroes lost and the Uncoded One's forces have prevailed.
+
+## Core game: Battle Series
+
+The game runs as a series of battles, not just one. The heroes do not win until every battle has been won, while the monsters win if they can stop the heroes in any battle.
+
+### Battle Series Objectives
+
+- There is one part of heroes but multiple parties of monsters. For now, build two monster parties: The first should have one skeleton. The second has two skeletons.
+- Start a battle with the heroes and the first party of monsters. When the heroes win, advance to the next party of monsters. If the heroes lose a battle, end the game. If the monsters lose a battle, move to the next battle unless it is the last.

@@ -15,10 +15,12 @@
         /// </summary>
         /// <param name="player">The player.</param>
         /// <param name="characters">The characters.</param>
-        public Party(IPlayer player, IEnumerable<Character>? characters)
+        /// <param name="isHeroParty">Indicates whether this is the Hero party</param>
+        public Party(IPlayer player, IEnumerable<Character>? characters, bool isHeroParty = false)
         {
-            Player     = player;
-            Characters = characters?.ToList() ?? new List<Character>();
+            Player      = player;
+            IsHeroParty = isHeroParty;
+            Characters  = characters?.ToList() ?? new List<Character>();
         }
         #endregion
 
@@ -38,6 +40,11 @@
         ///     <c>true</c> if this party is currently playing; otherwise, <c>false</c>.
         /// </value>
         public bool IsCurrentParty {get; set;}
+
+        /// <summary>
+        ///     Indicates if this is the Hero party
+        /// </summary>
+        public bool IsHeroParty {get;}
 
         /// <summary>
         ///     Gets the player.
