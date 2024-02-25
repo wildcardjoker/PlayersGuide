@@ -12,56 +12,81 @@ using FinalBattle.Character.Player;
 using Action = FinalBattle.Character.Action;
 #endregion
 
+Console.ForegroundColor = ConsoleColor.White;
 var trueProgrammerName = GetResponseFromConsole("What is your name, hero?");
 var trueProgrammer     = new TrueProgrammer(trueProgrammerName);
-var heroes             = new Party(new ComputerPlayer(), new[] {trueProgrammer});
-var monsters           = new Party(new ComputerPlayer(), new[] {new Skeleton()});
+var heroes             = new Party(new ComputerPlayer(), new[] {trueProgrammer}, true);
 
-// Create a collection of all parties; this will assist with looping through the parties
-var parties = new[] {heroes, monsters};
+// Create a collection of enemy parties
+var enemies = new List<Party> {new (new ComputerPlayer(), new[] {new Skeleton()}), new (new ComputerPlayer(), new[] {new Skeleton(), new Skeleton()})};
 
-var gameOver = false;
-while (!gameOver)
+do
 {
-    // Loop through each party
-    // ReSharper disable once LoopCanBePartlyConvertedToQuery
-    foreach (var party in parties)
+    var enemyParty = enemies.First();
+    DisplayEnemyParty(enemyParty);
+    var battleOver = false;
+    do
     {
-        party.IsCurrentParty = true;
-        foreach (var character in party.Characters)
+        var battle = new[] {heroes, enemyParty};
+        foreach (var party in battle)
         {
-            Console.WriteLine($"It's {character.Name}'s turn ...");
-
-            var action = party.Player.SelectAction();
-
-            // DEBUG: Hero party does nothing, monsters attack.
-            //var action = character.Name.Equals(trueProgrammerName, StringComparison.CurrentCultureIgnoreCase) ? Action.Nothing : Action.Attack;
-
-            // TODO: Select target
-            var targetParty = parties.First(x => !x.IsCurrentParty);
-            var target      = targetParty.Characters.First();
-            DisplayCharacterAction(character, action, target);
-            if (target.HitPoints == 0)
+            party.IsCurrentParty = true;
+            foreach (var character in party.Characters)
             {
-                targetParty.Characters.Remove(target);
-                Console.WriteLine($"{target.Name} has been defeated!");
-                if (!targetParty.Characters.Any())
+                Console.WriteLine($"It's {character.Name}'s turn ...");
+
+                var action = party.Player.SelectAction();
+
+                // DEBUG: Hero party does nothing, monsters attack.
+                //var action = character.Name.Equals(trueProgrammerName, StringComparison.CurrentCultureIgnoreCase) ? Action.Nothing : Action.Attack;
+
+                // TODO: Select target
+                var targetParty = battle.First(x => !x.IsCurrentParty);
+                var target      = targetParty.Characters.First();
+                DisplayCharacterAction(character, action, target);
+                if (target.HitPoints == 0)
                 {
-                    gameOver = true;
+                    targetParty.Characters.Remove(target);
+                    Console.WriteLine($"{target.Name} has been defeated!");
+                    if (!targetParty.Characters.Any())
+                    {
+                        if (!targetParty.IsHeroParty)
+                        {
+                            // Remove the first Enemy party; it has been defeated
+                            enemies.RemoveAt(0);
+                        }
+
+                        battleOver = true;
+                    }
                 }
-            }
-            else
-            {
-                Thread.Sleep(500);
+                else
+                {
+                    Thread.Sleep(500);
+                }
+
                 party.IsCurrentParty = false;
             }
         }
     }
+    while (!battleOver);
 }
+while (enemies.Any() && heroes.Characters.Any());
 
 Console.WriteLine(
     heroes.Characters.Any() ? "The heroes have won, and the Uncoded One has been defeated!" : "The heroes have lost, and the Uncoded One's forces have prevailed...");
 return;
+
+void DisplayEnemyParty(Party party)
+{
+    Console.ForegroundColor = ConsoleColor.Magenta;
+    Console.WriteLine("You prepare to battle:");
+    foreach (var character in party.Characters)
+    {
+        Console.WriteLine($" * {character.Name}");
+    }
+
+    Console.ResetColor();
+}
 
 static string GetResponseFromConsole(string message)
 {
