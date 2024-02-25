@@ -43,13 +43,11 @@ do
             {
                 Console.WriteLine($"It's {character.Name}'s turn ...");
 
-                var action = party.Player.SelectAction();
-
-                // TODO: Select target
+                var action      = party.Player.SelectAction();
                 var targetParty = battle.First(x => !x.IsCurrentParty);
-                var target      = targetParty.Characters.First();
+                var target      = action == Action.DoNothing ? null : targetParty.Characters[party.Player.SelectTarget(targetParty.Characters)];
                 DisplayCharacterAction(character, action, target);
-                if (target.HitPoints == 0)
+                if (target?.HitPoints == 0)
                 {
                     targetParty.Characters.Remove(target);
                     Console.WriteLine($"{target.Name} has been defeated!");
@@ -68,9 +66,9 @@ do
                 {
                     Thread.Sleep(500);
                 }
-
-                party.IsCurrentParty = false;
             }
+
+            party.IsCurrentParty = false;
         }
     }
     while (!battleOver);
