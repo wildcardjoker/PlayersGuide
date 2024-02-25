@@ -16,3 +16,4 @@ The final battle has arrived. On a volcanic island, enshrouded in a cloud of ash
 - **Core Game**: Death (PR #64)
 - **Core Game**: Battle Series (PR #65)
 - **Core Game**: The Uncoded One (PR #66)
+- **Core Game**: The Player Decides (PR #67)

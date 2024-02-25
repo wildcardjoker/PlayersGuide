@@ -6,23 +6,26 @@
 // Each character in the party performs an action (not yet implemented; we'll be using a constant to represent the action for now)
 
 #region Using Directives
+using FinalBattle;
 using FinalBattle.Character;
 using FinalBattle.Character.Characters;
 using FinalBattle.Character.Player;
+using Humanizer;
 using Action = FinalBattle.Character.Action;
 #endregion
 
 Console.ForegroundColor = ConsoleColor.White;
-var trueProgrammerName = GetResponseFromConsole("What is your name, hero?");
-var trueProgrammer     = new TrueProgrammer(trueProgrammerName);
-var heroes             = new Party(new ComputerPlayer(), new[] {trueProgrammer}, true);
+var     selectedGameMode   = GetGameMode();
+IPlayer heroPlayer         = selectedGameMode == GameMode.ComputerVsComputer ? new ComputerPlayer() : new HumanPlayer();
+IPlayer monsterPlayer      = selectedGameMode == GameMode.HumanVsHuman ? new HumanPlayer() : new ComputerPlayer();
+var     trueProgrammerName = GetResponseFromConsole("What is your name, hero?");
+var     trueProgrammer     = new TrueProgrammer(trueProgrammerName);
+var     heroes             = new Party(heroPlayer, new[] {trueProgrammer}, true);
 
 // Create a collection of enemy parties
 var enemies = new List<Party>
 {
-    new (new ComputerPlayer(), new[] {new Skeleton()}),
-    new (new ComputerPlayer(), new[] {new Skeleton(), new Skeleton()}),
-    new (new ComputerPlayer(), new[] {new UncodedOne()})
+    new (monsterPlayer, new[] {new Skeleton()}), new (monsterPlayer, new[] {new Skeleton(), new Skeleton()}), new (monsterPlayer, new[] {new UncodedOne()})
 };
 
 do
@@ -40,16 +43,11 @@ do
             {
                 Console.WriteLine($"It's {character.Name}'s turn ...");
 
-                var action = party.Player.SelectAction();
-
-                // DEBUG: Hero party does nothing, monsters attack.
-                //var action = character.Name.Equals(trueProgrammerName, StringComparison.CurrentCultureIgnoreCase) ? Action.Nothing : Action.Attack;
-
-                // TODO: Select target
+                var action      = party.Player.SelectAction();
                 var targetParty = battle.First(x => !x.IsCurrentParty);
-                var target      = targetParty.Characters.First();
+                var target      = action == Action.DoNothing ? null : targetParty.Characters[party.Player.SelectTarget(targetParty.Characters)];
                 DisplayCharacterAction(character, action, target);
-                if (target.HitPoints == 0)
+                if (target?.HitPoints == 0)
                 {
                     targetParty.Characters.Remove(target);
                     Console.WriteLine($"{target.Name} has been defeated!");
@@ -68,9 +66,9 @@ do
                 {
                     Thread.Sleep(500);
                 }
-
-                party.IsCurrentParty = false;
             }
+
+            party.IsCurrentParty = false;
         }
     }
     while (!battleOver);
@@ -117,4 +115,22 @@ static void DisplayCharacterAction(Character character, Action action, Character
     }
 
     Console.WriteLine();
+}
+
+GameMode GetGameMode()
+{
+    Console.WriteLine("Please choose your game mode:");
+    var modes = (int[]) Enum.GetValues(typeof(GameMode));
+    foreach (GameMode mode in modes)
+    {
+        Console.WriteLine($"{(int) mode}: {mode.Humanize()}");
+    }
+
+    var selectedMode = 0;
+    while (!modes.Contains(selectedMode))
+    {
+        int.TryParse(GetResponseFromConsole("Game mode:"), out selectedMode);
+    }
+
+    return (GameMode) selectedMode;
 }
