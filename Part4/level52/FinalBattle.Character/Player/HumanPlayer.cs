@@ -8,7 +8,6 @@ using Humanizer;
 
 public class HumanPlayer : IPlayer
 {
-    #region IPlayer Members
     #region Implementation of IPlayer
     /// <inheritdoc />
     public Action SelectAction()
@@ -28,6 +27,23 @@ public class HumanPlayer : IPlayer
 
         return (Action) action;
     }
-    #endregion
+
+    /// <inheritdoc />
+    public int SelectTarget(List<Character> characters)
+    {
+        for (var i = 0; i < characters.Count; i++)
+        {
+            Console.WriteLine($"{i + 1} {characters[i].Name}");
+        }
+
+        var target = 0;
+        while (target <= 0 || target > characters.Count)
+        {
+            Console.Write("Which character do you want to target? ");
+            int.TryParse(Console.ReadLine(), out target);
+        }
+
+        return --target;
+    }
     #endregion
 }
