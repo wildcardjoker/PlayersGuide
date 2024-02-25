@@ -11,16 +11,14 @@
         #endregion
 
         #region IPlayer Members
-        #region Implementation of IPlayer
         /// <inheritdoc />
         public Action SelectAction()
         {
             Thread.Sleep(500); // simulate decision
             var availableActions = Enum.GetNames(typeof(Action));
-            var selectedAction   = _random.Next(availableActions.Length);
+            var selectedAction   = _random.Next(availableActions.Length) + 1;
             return (Action) selectedAction;
         }
-        #endregion
         #endregion
     }
 }
