@@ -6,12 +6,12 @@
 public enum Action
 {
     /// <summary>
-    ///     Do Nothing.
-    /// </summary>
-    Nothing,
-
-    /// <summary>
     ///     Attack the player
     /// </summary>
-    Attack
+    Attack = 1,
+
+    /// <summary>
+    ///     Do Nothing.
+    /// </summary>
+    Nothing
 }
