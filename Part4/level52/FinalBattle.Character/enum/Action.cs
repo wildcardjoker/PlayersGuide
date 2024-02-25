@@ -13,5 +13,5 @@ public enum Action
     /// <summary>
     ///     Do Nothing.
     /// </summary>
-    Nothing
+    DoNothing
 }

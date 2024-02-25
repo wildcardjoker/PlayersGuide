@@ -21,9 +21,9 @@ public static class ExtensionMethods
     {
         return action switch
         {
-            Action.Nothing => new AttackData($"{character} did NOTHING."),
-            Action.Attack  => AttackTarget(character, character.Attacks.First(), targetCharacter!),
-            _              => throw new ArgumentOutOfRangeException(nameof(action), action, null)
+            Action.DoNothing => new AttackData($"{character} did NOTHING."),
+            Action.Attack    => AttackTarget(character, character.Attacks.First(), targetCharacter!),
+            _                => throw new ArgumentOutOfRangeException(nameof(action), action, null)
         };
     }
 
