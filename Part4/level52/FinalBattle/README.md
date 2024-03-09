@@ -160,3 +160,22 @@ What do you want to do? 2
   - computer vs computer (a computer player running each team, as we have done so far)
   - human vs human (a human picks actions for both sides)
 - **Hint**: There are many ways you could approach this. My (RJ Whittaker's) solution was to build a `MenuItem` record that held information about options in the menu. It included the properties `string Description`, `bool IsEnabled`, and `IAction ActionToPerform`. `IAction` is my interface representing any of the action types, with implementations like `DoNothingAction` and `AttackAction`. I have a method that creates the list of menu items, and it produces a new `MenuItem` instance for each with a number. After getting the number, I find the right `MenuItem`, extract the `IAction`, and return it. That means I create many `IAction` objects that don't get used, but it is a system that is easy to extend in future challenges.
+
+## Expansion: The Game's Status
+
+This challenge gives us a clearer representation of the status of the game.
+
+## The Game's Status objectives
+
+- Before a character gets their turn, display the overall status of the battle. This status must include all characters in both parties with their current and total HP.
+- You must also somehow distinguish the character whose turn it is from the others with colour, a text marker, or something similar.
+- **Note**: You have flexibility in how you approach this challenge, but the following shows one possibility (with the current character coloured yellow instead of white):
+
+````console
+===============BATTLE===============
+TOG           (25/25)
+---------------- vs ----------------
+                    SKELETON ( 5/5 )
+                    SKELETON ( 5/5 )
+====================================
+````
