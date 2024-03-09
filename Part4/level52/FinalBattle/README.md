@@ -133,11 +133,11 @@ The game runs as a series of battles, not just one. The heroes do not win until 
 
 ## Core Game: The Uncoded One
 
-It is time to put the final boss nto the game: The Uncoded One itself. We will add this in as a third battle.
+It is time to put the final boss into the game: The Uncoded One itself. We will add this in as a third battle.
 
 ### The Uncoded One Objectives
 
-- Define a new type of monster: *The Uncoded One*. It should have `15 HP` and an *unrevalling* attack that randomly deals between 0 and 2 damage when used. (The Uncoded One ought to have more HP than the True Programmer, but much more than 15 HP means the Uncoded One wins everytime. We can adjust these numbers later.)
+- Define a new type of monster: *The Uncoded One*. It should have `15 HP` and an *unravelling* attack that randomly deals between 0 and 2 damage when used. (The Uncoded One ought to have more HP than the True Programmer, but much more than 15 HP means the Uncoded One wins every time. We can adjust these numbers later.)
 - Add a third battle to the series that contains The Uncoded One.
 
 ## Core Game: The Player Decides
@@ -146,7 +146,7 @@ We have one critical missing piece to add before our core game is done: letting 
 
 ### The Player Decides Objectives
 
-- The game shoudl allow a human player to play it by retrieving their action choices through the console window. For a human-controlled character, the human can use that character's standard attach or do nothing. It is acceptable for all attacks selected by the human to target the first (or random) target without allowing the player to pick one specifically. (You can let the player pick if you want, but it is not required.) The following is one possible approach:
+- The game should allow a human player to play it by retrieving their action choices through the console window. For a human-controlled character, the human can use that character's standard attach or do nothing. It is acceptable for all attacks selected by the human to target the first (or random) target without allowing the player to pick one specifically. (You can let the player pick if you want, but it is not required.) The following is one possible approach:
 
 ````console
 It is TOG's turn.
@@ -155,8 +155,8 @@ It is TOG's turn.
 What do you want to do? 2
 ````
 
-- As the game is starting, allow the user to choose from the three following gameplay modes: 
+- As the game is starting, allow the user to choose from the three following gameplay modes:
   - player vs computer (the human in charge of the heroes and the computer controlling the monsters)
   - computer vs computer (a computer player running each team, as we have done so far)
   - human vs human (a human picks actions for both sides)
-- **Hint**: There are many ways you could approach this. My (RJ Whittaker's) solution was to build a `MenuItem` record that held information about options in the menu. It included the properies `string Description`, `bool IsEnabled`, and `IAction ActionToPerform`. `IAction` is my interface representing any of the action types, with implementations like `DoNothingAction` and `AttackAction`. I have a method that creates the list of menu items, and it produces a new `MenuItem` instance for each with a number. After getting the number, I find the reight `MenuItem`, extract the `IAction`, and return it. That means I create many `IAction` objects that don't get used, but it is a system that is easy to extend in future challenges.
+- **Hint**: There are many ways you could approach this. My (RJ Whittaker's) solution was to build a `MenuItem` record that held information about options in the menu. It included the properties `string Description`, `bool IsEnabled`, and `IAction ActionToPerform`. `IAction` is my interface representing any of the action types, with implementations like `DoNothingAction` and `AttackAction`. I have a method that creates the list of menu items, and it produces a new `MenuItem` instance for each with a number. After getting the number, I find the right `MenuItem`, extract the `IAction`, and return it. That means I create many `IAction` objects that don't get used, but it is a system that is easy to extend in future challenges.
