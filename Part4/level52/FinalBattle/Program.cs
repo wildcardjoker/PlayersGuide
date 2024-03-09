@@ -31,7 +31,6 @@ var enemies = new List<Party>
 do
 {
     var enemyParty = enemies.First();
-    DisplayEnemyParty(enemyParty);
     var battleOver = false;
     do
     {
@@ -41,7 +40,8 @@ do
             party.IsCurrentParty = true;
             foreach (var character in party.Characters)
             {
-                Console.WriteLine($"It's {character.Name}'s turn ...");
+                character.IsActive = true;
+                DisplayBattleStatus(battle);
 
                 var action      = party.Player.SelectAction();
                 var targetParty = battle.First(x => !x.IsCurrentParty);
@@ -66,6 +66,8 @@ do
                 {
                     Thread.Sleep(500);
                 }
+
+                character.IsActive = false;
             }
 
             party.IsCurrentParty = false;
@@ -78,18 +80,6 @@ while (enemies.Any() && heroes.Characters.Any());
 Console.WriteLine(
     heroes.Characters.Any() ? "The heroes have won, and the Uncoded One has been defeated!" : "The heroes have lost, and the Uncoded One's forces have prevailed...");
 return;
-
-void DisplayEnemyParty(Party party)
-{
-    Console.ForegroundColor = ConsoleColor.Magenta;
-    Console.WriteLine("You prepare to battle:");
-    foreach (var character in party.Characters)
-    {
-        Console.WriteLine($" * {character.Name}");
-    }
-
-    Console.ResetColor();
-}
 
 static string GetResponseFromConsole(string message)
 {
@@ -133,4 +123,42 @@ GameMode GetGameMode()
     }
 
     return (GameMode) selectedMode;
+}
+
+void DisplayBattleStatus(Party[] battle)
+{
+    const string title               = " BATTLE ";
+    const string vs                  = " vs ";
+    var          headerLength        = Console.WindowWidth / 2;
+    var          header              = new string('=', headerLength - title.Length / 2);
+    var          vsHeader            = new string('-', headerLength - vs.Length    / 2);
+    var          maxCurrentHpPadding = (from party in battle select party.Characters.Max(x => x.HitPoints)).Max().ToString().Length;
+    var          maxMaxHpPadding     = (from party in battle select party.Characters.Max(x => x.MaxHitPoints)).Max().ToString().Length;
+    var          test                = from party in battle select party.Characters.Max(x => x.HitPoints);
+    Console.WriteLine($"{header}{title}{header}");
+    foreach (var party in battle.OrderByDescending(x => x.IsCurrentParty))
+    {
+        if (!party.IsCurrentParty)
+        {
+            Console.WriteLine($"{vsHeader}{vs}{vsHeader}");
+        }
+
+        foreach (var character in party.Characters)
+        {
+            var stats      = $"( {character.HitPoints.ToString().PadLeft(maxCurrentHpPadding)}/{character.MaxHitPoints.ToString().PadLeft(maxMaxHpPadding)} )";
+            var nameLength = character.Name.Length;
+            var name       = character.Name;
+            if (character.IsActive)
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                name                    = $"{name}*";
+                nameLength++;
+            }
+
+            Console.WriteLine($"{name}{stats.PadLeft(Console.WindowWidth - nameLength)}");
+            Console.ResetColor();
+        }
+    }
+
+    Console.WriteLine(new string('=', Console.WindowWidth));
 }
