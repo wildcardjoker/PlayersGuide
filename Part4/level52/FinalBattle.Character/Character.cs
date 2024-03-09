@@ -49,6 +49,14 @@
         public int HitPoints {get; private set;}
 
         /// <summary>
+        ///     Gets or sets a value indicating whether this is the Active character.
+        /// </summary>
+        /// <value>
+        ///     <c>true</c> if this is the current character; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsActive {get; set;}
+
+        /// <summary>
         ///     Gets the maximum hit points.
         /// </summary>
         /// <value>
