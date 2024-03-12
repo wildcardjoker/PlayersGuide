@@ -1,5 +1,9 @@
 ﻿namespace FinalBattle.Character.Player
 {
+    #region Using Directives
+    using Items;
+    #endregion
+
     /// <summary>
     ///     A computer/AI player. All decisions are made by the computer.
     /// </summary>
@@ -12,7 +16,7 @@
 
         #region IPlayer Members
         /// <inheritdoc />
-        public Action SelectAction()
+        public Action SelectAction(IEnumerable<Item> items)
         {
             Thread.Sleep(500); // simulate decision
             var availableActions = Enum.GetNames(typeof(Action));

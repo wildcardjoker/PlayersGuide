@@ -4,13 +4,14 @@ namespace FinalBattle.Character.Player;
 
 #region Using Directives
 using Humanizer;
+using Items;
 #endregion
 
 public class HumanPlayer : IPlayer
 {
     #region Implementation of IPlayer
     /// <inheritdoc />
-    public Action SelectAction()
+    public Action SelectAction(IEnumerable<Item> items)
     {
         var actionValues = (int[]) Enum.GetValues(typeof(Action));
         foreach (Action value in actionValues)
