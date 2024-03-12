@@ -9,6 +9,7 @@
 using FinalBattle;
 using FinalBattle.Character;
 using FinalBattle.Character.Characters;
+using FinalBattle.Character.Items;
 using FinalBattle.Character.Player;
 using Humanizer;
 using Action = FinalBattle.Character.Action;
@@ -20,12 +21,14 @@ IPlayer heroPlayer         = selectedGameMode == GameMode.ComputerVsComputer ? n
 IPlayer monsterPlayer      = selectedGameMode == GameMode.HumanVsHuman ? new HumanPlayer() : new ComputerPlayer();
 var     trueProgrammerName = GetResponseFromConsole("What is your name, hero?");
 var     trueProgrammer     = new TrueProgrammer(trueProgrammerName);
-var     heroes             = new Party(heroPlayer, new[] {trueProgrammer}, true);
+var     heroes             = new Party(heroPlayer, new[] {trueProgrammer}, new[] {new HealthPotion(), new HealthPotion(), new HealthPotion()}, true);
 
 // Create a collection of enemy parties
 var enemies = new List<Party>
 {
-    new (monsterPlayer, new[] {new Skeleton()}), new (monsterPlayer, new[] {new Skeleton(), new Skeleton()}), new (monsterPlayer, new[] {new UncodedOne()})
+    new (monsterPlayer, new[] {new Skeleton()}, new[] {new HealthPotion()}),
+    new (monsterPlayer, new[] {new Skeleton(), new Skeleton()}, new[] {new HealthPotion()}),
+    new (monsterPlayer, new[] {new UncodedOne()}, new[] {new HealthPotion()})
 };
 
 do
