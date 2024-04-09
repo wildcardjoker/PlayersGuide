@@ -192,5 +192,5 @@ Each party has a shared inventory of items. Players can choose to use an item as
 - Start the hero party with three health potions. Give each monster party one health potion.
 - The game must support the inclusion of a *use item* action, along with the item to use. When this action runs, it should cause the item's effect to occur and remove the item from the inventory.
 - The computer player should consider using a potion when (a) the team has a potion in their inventory and (b) the character's health is under half. Under these conditions, use a potion 25% of the time.
-- The console player should have the option to use a potion if the party has one.
+- The human player should have the option to use a potion if the party has one.
 - **Note**: Digging through the party inventory for potions is a little tricky. It is reasonable to assume (for now) that all items in the inventory are health potions. That will be a correct assumption until you make other item types. This assumption simplifies the changes you need to make to the different player types.
