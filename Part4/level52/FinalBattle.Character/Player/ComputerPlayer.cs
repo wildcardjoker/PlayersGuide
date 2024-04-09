@@ -1,9 +1,5 @@
 ﻿namespace FinalBattle.Character.Player
 {
-    #region Using Directives
-    using Items;
-    #endregion
-
     /// <summary>
     ///     A computer/AI player. All decisions are made by the computer.
     /// </summary>
@@ -16,11 +12,17 @@
 
         #region IPlayer Members
         /// <inheritdoc />
-        public Action SelectAction(IEnumerable<Item> items)
+        public Action SelectAction(Character character, Inventory inventory)
         {
             Thread.Sleep(500); // simulate decision
-            var availableActions = Enum.GetNames(typeof(Action));
-            var selectedAction   = _random.Next(availableActions.Length) + 1;
+            var availableActions = Enum.GetNames(typeof(Action)).ToList();
+            if (inventory.ContainsHealthPotion && character.IsWounded && _random.Next(1, 101) <= 25)
+            {
+                return Action.UseItem;
+            }
+
+            availableActions.Remove(Action.UseItem.ToString());
+            var selectedAction = _random.Next(availableActions.Count) + 1;
             return (Action) selectedAction;
         }
 

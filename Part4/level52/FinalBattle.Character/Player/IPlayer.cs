@@ -2,10 +2,6 @@
 
 namespace FinalBattle.Character.Player;
 
-#region Using Directives
-using Items;
-#endregion
-
 /// <summary>
 ///     Interface for all players.
 /// </summary>
@@ -16,7 +12,7 @@ public interface IPlayer
     ///     Selects the action.
     /// </summary>
     /// <returns>The Action to be performed by the player.</returns>
-    Action SelectAction(IEnumerable<Item> items);
+    Action SelectAction(Character character, Inventory inventory);
 
     /// <summary>
     ///     Selects the target.
