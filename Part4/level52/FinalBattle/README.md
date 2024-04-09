@@ -165,7 +165,7 @@ What do you want to do? 2
 
 This challenge gives us a clearer representation of the status of the game.
 
-## The Game's Status objectives
+## The Game's Status Objectives
 
 - Before a character gets their turn, display the overall status of the battle. This status must include all characters in both parties with their current and total HP.
 - You must also somehow distinguish the character whose turn it is from the others with colour, a text marker, or something similar.
@@ -179,3 +179,18 @@ TOG           (25/25)
                     SKELETON ( 5/5 )
 ====================================
 ````
+
+## Expansion: Items
+
+Each party has a shared inventory of items. Players can choose to use an item as an action. We will add a health potion item that players can use as an action.
+
+## Items Objectives
+
+- The game must support adding consumable items with the ability to use one as an action. Item types could be potentially very broad (keep that in mind when choosing your design), but all that is required now is a health potion item type. Items are usable, and when used, the reaction depends on the item type.
+- A health potion is the only item type we need to add here. It should increase the user's HP by 10 points when used. In doing so, the HP should not rise above the character's maximum HP.
+- The entire party shares inventory. Ensure parties can hold a collection of items.
+- Start the hero party with three health potions. Give each monster party one health potion.
+- The game must support the inclusion of a *use item* action, along with the item to use. When this action runs, it should cause the item's effect to occur and remove the item from the inventory.
+- The computer player should consider using a potion when (a) the team has a potion in their inventory and (b) the character's health is under half. Under these conditions, use a potion 25% of the time.
+- The human player should have the option to use a potion if the party has one.
+- **Note**: Digging through the party inventory for potions is a little tricky. It is reasonable to assume (for now) that all items in the inventory are health potions. That will be a correct assumption until you make other item types. This assumption simplifies the changes you need to make to the different player types.

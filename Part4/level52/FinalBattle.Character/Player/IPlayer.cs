@@ -12,7 +12,7 @@ public interface IPlayer
     ///     Selects the action.
     /// </summary>
     /// <returns>The Action to be performed by the player.</returns>
-    Action SelectAction();
+    Action SelectAction(Character character, Inventory inventory);
 
     /// <summary>
     ///     Selects the target.

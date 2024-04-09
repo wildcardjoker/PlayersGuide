@@ -18,3 +18,4 @@ The final battle has arrived. On a volcanic island, enshrouded in a cloud of ash
 - **Core Game**: The Uncoded One (PR #66)
 - **Core Game**: The Player Decides (PR #67)
 - **Expansion**: The Game's Status (PR #68)
+- **Expansion**: Items (PR #69)

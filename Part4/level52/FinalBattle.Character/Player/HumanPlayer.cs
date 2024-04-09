@@ -10,9 +10,14 @@ public class HumanPlayer : IPlayer
 {
     #region Implementation of IPlayer
     /// <inheritdoc />
-    public Action SelectAction()
+    public Action SelectAction(Character character, Inventory inventory)
     {
-        var actionValues = (int[]) Enum.GetValues(typeof(Action));
+        var actionValues = ((int[]) Enum.GetValues(typeof(Action))).ToList();
+        if (!inventory.ContainsHealthPotion)
+        {
+            actionValues.Remove((int) Action.UseItem);
+        }
+
         foreach (Action value in actionValues)
         {
             Console.WriteLine($"{(int) value} - {value.Humanize()}");
