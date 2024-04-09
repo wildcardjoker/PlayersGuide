@@ -23,6 +23,7 @@ public class HealthPotion : Item
     {
         Console.WriteLine($"{character} uses {Name}");
         character.ModifyHitPoints(HealPoints);
+        Console.WriteLine($"{character} HP is now {character.HitPoints}");
     }
     #endregion
 }
