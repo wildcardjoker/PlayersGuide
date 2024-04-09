@@ -19,6 +19,11 @@
         protected string Name {get; set;}
         #endregion
 
+        #region Overrides of Object
+        /// <inheritdoc />
+        public override string ToString() => Name;
+        #endregion
+
         /// <summary>
         ///     Uses this instance.
         /// </summary>
