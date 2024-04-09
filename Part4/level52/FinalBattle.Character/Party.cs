@@ -20,10 +20,10 @@
         /// <param name="isHeroParty">Indicates whether this is the Hero party</param>
         public Party(IPlayer player, IEnumerable<Character>? characters, IEnumerable<Item> items, bool isHeroParty = false)
         {
-            Player      = player;
-            IsHeroParty = isHeroParty;
-            Characters  = characters?.ToList() ?? new List<Character>();
-            Items       = items.ToList();
+            Player         = player;
+            IsHeroParty    = isHeroParty;
+            Characters     = characters?.ToList() ?? new List<Character>();
+            PartyInventory = new Inventory(items);
         }
         #endregion
 
@@ -55,7 +55,7 @@
         /// <value>
         ///     The items.
         /// </value>
-        public List<Item> Items {get;}
+        public Inventory PartyInventory {get;}
 
         /// <summary>
         ///     Gets the player.
