@@ -46,28 +46,35 @@ do
                 character.IsActive = true;
                 DisplayBattleStatus(battle);
 
-                var action      = party.Player.SelectAction();
-                var targetParty = battle.First(x => !x.IsCurrentParty);
-                var target      = action == Action.DoNothing ? null : targetParty.Characters[party.Player.SelectTarget(targetParty.Characters)];
-                DisplayCharacterAction(character, action, target);
-                if (target?.HitPoints == 0)
+                var action = party.Player.SelectAction(character, party.PartyInventory);
+                if (action == Action.UseItem)
                 {
-                    targetParty.Characters.Remove(target);
-                    Console.WriteLine($"{target.Name} has been defeated!");
-                    if (!targetParty.Characters.Any())
-                    {
-                        if (!targetParty.IsHeroParty)
-                        {
-                            // Remove the first Enemy party; it has been defeated
-                            enemies.RemoveAt(0);
-                        }
-
-                        battleOver = true;
-                    }
+                    UseItem(character, party);
                 }
                 else
                 {
-                    Thread.Sleep(500);
+                    var targetParty = battle.First(x => !x.IsCurrentParty);
+                    var target      = action == Action.Attack ? targetParty.Characters[party.Player.SelectTarget(targetParty.Characters)] : null;
+                    DisplayCharacterAction(character, action, target);
+                    if (target?.HitPoints == 0)
+                    {
+                        targetParty.Characters.Remove(target);
+                        Console.WriteLine($"{target.Name} has been defeated!");
+                        if (!targetParty.Characters.Any())
+                        {
+                            if (!targetParty.IsHeroParty)
+                            {
+                                // Remove the first Enemy party; it has been defeated
+                                enemies.RemoveAt(0);
+                            }
+
+                            battleOver = true;
+                        }
+                    }
+                    else
+                    {
+                        Thread.Sleep(500);
+                    }
                 }
 
                 character.IsActive = false;
@@ -137,7 +144,6 @@ void DisplayBattleStatus(Party[] battle)
     var          vsHeader            = new string('-', headerLength - vs.Length    / 2);
     var          maxCurrentHpPadding = (from party in battle select party.Characters.Max(x => x.HitPoints)).Max().ToString().Length;
     var          maxMaxHpPadding     = (from party in battle select party.Characters.Max(x => x.MaxHitPoints)).Max().ToString().Length;
-    var          test                = from party in battle select party.Characters.Max(x => x.HitPoints);
     Console.WriteLine($"{header}{title}{header}");
     foreach (var party in battle.OrderByDescending(x => x.IsCurrentParty))
     {
@@ -164,4 +170,34 @@ void DisplayBattleStatus(Party[] battle)
     }
 
     Console.WriteLine(new string('=', Console.WindowWidth));
+}
+
+void UseItem(Character character, Party party)
+{
+    // Display available items and quantity
+    // Player chooses item to use
+    // Item is used or player returns to menu.
+    int index;
+    if (party.Player is ComputerPlayer)
+    {
+        // Only Health potions at this stage.
+        index = 0;
+    }
+    else
+    {
+        Console.WriteLine("Your party has the following items");
+        for (var i = 0; i < party.PartyInventory.Items.Count; i++)
+        {
+            Console.WriteLine($"{i}: {party.PartyInventory.Items[i]}");
+        }
+
+        int.TryParse(GetResponseFromConsole("Please select the item to use"), out index);
+        if (index < 0 || index > party.PartyInventory.Items.Count - 1)
+        {
+            // Value is out of range
+            return;
+        }
+    }
+
+    party.PartyInventory.UseItem(character, index);
 }
