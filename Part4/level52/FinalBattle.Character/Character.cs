@@ -57,6 +57,14 @@
         public bool IsActive {get; set;}
 
         /// <summary>
+        ///     Gets a value indicating whether this <see cref="Character" /> is wounded.
+        /// </summary>
+        /// <value>
+        ///     <c>true</c> if wounded; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsWounded => HitPoints <= MaxHitPoints / 2;
+
+        /// <summary>
         ///     Gets the maximum hit points.
         /// </summary>
         /// <value>
