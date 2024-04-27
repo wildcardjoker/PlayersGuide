@@ -6,14 +6,19 @@ namespace FinalBattle.Character.Player;
 using Humanizer;
 #endregion
 
-public class HumanPlayer : IPlayer
+public class HumanPlayer : Player
 {
-    #region Implementation of IPlayer
+    #region Constructors
     /// <inheritdoc />
-    public Action SelectAction(Character character, Inventory inventory)
+    public HumanPlayer() {}
+    #endregion
+
+    /// <inheritdoc />
+    public override Action SelectAction()
+
     {
         var actionValues = ((int[]) Enum.GetValues(typeof(Action))).ToList();
-        if (!inventory.ContainsHealthPotion)
+        if (!CurrentParty.PartyInventory.ContainsHealthPotion)
         {
             actionValues.Remove((int) Action.UseItem);
         }
@@ -34,7 +39,7 @@ public class HumanPlayer : IPlayer
     }
 
     /// <inheritdoc />
-    public int SelectTarget(List<Character> characters)
+    public override int SelectTarget(List<Character> characters)
     {
         for (var i = 0; i < characters.Count; i++)
         {
@@ -50,5 +55,7 @@ public class HumanPlayer : IPlayer
 
         return --target;
     }
-    #endregion
+
+    /// <inheritdoc />
+    public override void UseItem(int index) => CurrentParty.PartyInventory.UseItem(CurrentCharacter, index);
 }

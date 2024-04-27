@@ -1,10 +1,5 @@
 ﻿// The final battle!
 
-// Create two characters, both skeletons
-// Create two parties of a variable number of characters (one character each to start with); one party of heroes, one of monsters
-// Loop through each party (heroes first) and loop through each character in the party
-// Each character in the party performs an action (not yet implemented; we'll be using a constant to represent the action for now)
-
 #region Using Directives
 using FinalBattle;
 using FinalBattle.Character;
@@ -16,28 +11,33 @@ using Action = FinalBattle.Character.Action;
 #endregion
 
 Console.ForegroundColor = ConsoleColor.White;
-var     selectedGameMode   = GetGameMode();
-IPlayer heroPlayer         = selectedGameMode == GameMode.ComputerVsComputer ? new ComputerPlayer() : new HumanPlayer();
-IPlayer monsterPlayer      = selectedGameMode == GameMode.HumanVsHuman ? new HumanPlayer() : new ComputerPlayer();
-var     trueProgrammerName = GetResponseFromConsole("What is your name, hero?");
-var     trueProgrammer     = new TrueProgrammer(trueProgrammerName);
-var     heroes             = new Party(heroPlayer, new[] {trueProgrammer}, new[] {new HealthPotion(), new HealthPotion(), new HealthPotion()}, true);
+var selectedGameMode = GetGameMode();
+
+// Set up the players
+Player heroPlayer    = selectedGameMode == GameMode.ComputerVsComputer ? new ComputerPlayer() : new HumanPlayer();
+Player monsterPlayer = selectedGameMode == GameMode.HumanVsHuman ? new HumanPlayer() : new ComputerPlayer();
+
+// Get the True Programmer's name
+var trueProgrammerName = GetResponseFromConsole("What is your name, hero?");
+var trueProgrammer     = new TrueProgrammer(trueProgrammerName);
+
+// Create the Hero party
+heroPlayer.Parties.Add(new Party(new[] {trueProgrammer}, new[] {new HealthPotion(), new HealthPotion(), new HealthPotion()}, true));
 
 // Create a collection of enemy parties
-var enemies = new List<Party>
-{
-    new (monsterPlayer, new[] {new Skeleton()}, new[] {new HealthPotion()}),
-    new (monsterPlayer, new[] {new Skeleton(), new Skeleton()}, new[] {new HealthPotion()}),
-    new (monsterPlayer, new[] {new UncodedOne()}, new[] {new HealthPotion()})
-};
+monsterPlayer.Parties.Add(new Party(new[] {new Skeleton()},                 new[] {new HealthPotion()}));
+monsterPlayer.Parties.Add(new Party(new[] {new Skeleton(), new Skeleton()}, new[] {new HealthPotion()}));
+monsterPlayer.Parties.Add(new Party(new[] {new UncodedOne()},               new[] {new HealthPotion()}));
 
+// Hero goes first
+var currentPlayer = heroPlayer;
 do
 {
-    var enemyParty = enemies.First();
+    //var enemyParty = monsterPlayer.Parties.First();
     var battleOver = false;
     do
     {
-        var battle = new[] {heroes, enemyParty};
+        var battle = new[] {heroPlayer.CurrentParty, monsterPlayer.CurrentParty};
         foreach (var party in battle)
         {
             party.IsCurrentParty = true;
@@ -46,15 +46,15 @@ do
                 character.IsActive = true;
                 DisplayBattleStatus(battle);
 
-                var action = party.Player.SelectAction(character, party.PartyInventory);
+                var action = currentPlayer.SelectAction();
                 if (action == Action.UseItem)
                 {
-                    UseItem(character, party);
+                    UseItem();
                 }
                 else
                 {
                     var targetParty = battle.First(x => !x.IsCurrentParty);
-                    var target      = action == Action.Attack ? targetParty.Characters[party.Player.SelectTarget(targetParty.Characters)] : null;
+                    var target      = action == Action.Attack ? targetParty.Characters[currentPlayer.SelectTarget(targetParty.Characters)] : null;
                     DisplayCharacterAction(character, action, target);
                     if (target?.HitPoints == 0)
                     {
@@ -65,7 +65,12 @@ do
                             if (!targetParty.IsHeroParty)
                             {
                                 // Remove the first Enemy party; it has been defeated
-                                enemies.RemoveAt(0);
+                                monsterPlayer.Parties.RemoveAt(0);
+                            }
+                            else
+                            {
+                                // Hero party has been defeated.
+                                heroPlayer.Parties.RemoveAt(0);
                             }
 
                             battleOver = true;
@@ -81,14 +86,15 @@ do
             }
 
             party.IsCurrentParty = false;
+            currentPlayer        = currentPlayer == heroPlayer ? monsterPlayer : heroPlayer;
         }
     }
     while (!battleOver);
 }
-while (enemies.Any() && heroes.Characters.Any());
+while (heroPlayer.Parties.Any() && monsterPlayer.Parties.Any());
 
 Console.WriteLine(
-    heroes.Characters.Any() ? "The heroes have won, and the Uncoded One has been defeated!" : "The heroes have lost, and the Uncoded One's forces have prevailed...");
+    heroPlayer.Parties.Any() ? "The heroes have won, and the Uncoded One has been defeated!" : "The heroes have lost, and the Uncoded One's forces have prevailed...");
 return;
 
 static string GetResponseFromConsole(string message)
@@ -172,32 +178,33 @@ void DisplayBattleStatus(Party[] battle)
     Console.WriteLine(new string('=', Console.WindowWidth));
 }
 
-void UseItem(Character character, Party party)
+void UseItem()
 {
     // Display available items and quantity
     // Player chooses item to use
     // Item is used or player returns to menu.
     int index;
-    if (party.Player is ComputerPlayer)
+    if (currentPlayer is ComputerPlayer)
     {
         // Only Health potions at this stage.
         index = 0;
     }
     else
     {
+        var inventory = currentPlayer.CurrentParty.PartyInventory;
         Console.WriteLine("Your party has the following items");
-        for (var i = 0; i < party.PartyInventory.Items.Count; i++)
+        for (var i = 0; i < inventory.Items.Count; i++)
         {
-            Console.WriteLine($"{i}: {party.PartyInventory.Items[i]}");
+            Console.WriteLine($"{i}: {inventory.Items[i]}");
         }
 
         int.TryParse(GetResponseFromConsole("Please select the item to use"), out index);
-        if (index < 0 || index > party.PartyInventory.Items.Count - 1)
+        if (index < 0 || index > inventory.Items.Count - 1)
         {
             // Value is out of range
             return;
         }
     }
 
-    party.PartyInventory.UseItem(character, index);
+    currentPlayer.UseItem(index);
 }
