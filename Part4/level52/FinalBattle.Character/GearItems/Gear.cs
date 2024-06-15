@@ -16,7 +16,7 @@
 
         #region Overrides of Object
         /// <inheritdoc />
-        public override string ToString() => GetType().Name;
+        public override string ToString() => GetType().Name.ToUpper();
         #endregion
     }
 }
