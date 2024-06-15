@@ -1,5 +1,9 @@
-﻿namespace FinalBattle.Character.Items
+﻿namespace FinalBattle.Character.GearItems
 {
+    #region Using Directives
+    using Items;
+    #endregion
+
     /// <inheritdoc />
     /// <summary>
     ///     Base class for items.

@@ -4,6 +4,7 @@
 using FinalBattle;
 using FinalBattle.Character;
 using FinalBattle.Character.Characters;
+using FinalBattle.Character.GearItems;
 using FinalBattle.Character.Items;
 using FinalBattle.Character.Player;
 using Humanizer;
@@ -22,12 +23,12 @@ var trueProgrammerName = GetResponseFromConsole("What is your name, hero?");
 var trueProgrammer     = new TrueProgrammer(trueProgrammerName);
 
 // Create the Hero party
-heroPlayer.Parties.Add(new Party(new[] {trueProgrammer}, new[] {new HealthPotion(), new HealthPotion(), new HealthPotion()}, true));
+heroPlayer.Parties.Add(new Party(new[] {trueProgrammer}, new[] {new HealthPotion(), new HealthPotion(), new HealthPotion()}, new List<Gear>(), true));
 
 // Create a collection of enemy parties
-monsterPlayer.Parties.Add(new Party(new[] {new Skeleton()},                 new[] {new HealthPotion()}));
-monsterPlayer.Parties.Add(new Party(new[] {new Skeleton(), new Skeleton()}, new[] {new HealthPotion()}));
-monsterPlayer.Parties.Add(new Party(new[] {new UncodedOne()},               new[] {new HealthPotion()}));
+monsterPlayer.Parties.Add(new Party(new[] {new Skeleton()},                 new[] {new HealthPotion()}, new List<Gear>()));
+monsterPlayer.Parties.Add(new Party(new[] {new Skeleton(), new Skeleton()}, new[] {new HealthPotion()}, new List<Gear>()));
+monsterPlayer.Parties.Add(new Party(new[] {new UncodedOne()},               new[] {new HealthPotion()}, new List<Gear>()));
 
 // Hero goes first
 var currentPlayer = heroPlayer;

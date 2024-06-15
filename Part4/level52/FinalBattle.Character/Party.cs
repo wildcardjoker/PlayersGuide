@@ -1,6 +1,7 @@
 ﻿namespace FinalBattle.Character
 {
     #region Using Directives
+    using GearItems;
     using Items;
     #endregion
 

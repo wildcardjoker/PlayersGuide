@@ -3,7 +3,7 @@
 namespace FinalBattle.Character;
 
 #region Using Directives
-using Items;
+using GearItems;
 #endregion
 
 /// <summary>
