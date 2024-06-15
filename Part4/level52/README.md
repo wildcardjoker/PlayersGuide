@@ -19,3 +19,4 @@ The final battle has arrived. On a volcanic island, enshrouded in a cloud of ash
 - **Core Game**: The Player Decides (PR #67)
 - **Expansion**: The Game's Status (PR #68)
 - **Expansion**: Items (PR #69)
+- **Expansion**: Gear (PR #71)
