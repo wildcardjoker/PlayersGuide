@@ -1,5 +1,9 @@
 ﻿namespace FinalBattle.Character
 {
+    #region Using Directives
+    using Items;
+    #endregion
+
     /// <summary>
     ///     Represents a Character
     /// </summary>
@@ -39,6 +43,14 @@
         ///     The current health.
         /// </value>
         public string CurrentHealth => $"{HitPoints}/{MaxHitPoints} HP";
+
+        /// <summary>
+        ///     Gets or sets the equipped gear.
+        /// </summary>
+        /// <value>
+        ///     The currently-equipped gear.
+        /// </value>
+        public Gear? EquippedGear {get; set;} = null;
 
         /// <summary>
         ///     Gets the hit points.
