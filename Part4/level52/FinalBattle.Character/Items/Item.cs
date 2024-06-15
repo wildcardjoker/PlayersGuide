@@ -1,10 +1,9 @@
 ﻿namespace FinalBattle.Character.Items
 {
-    /// <inheritdoc />
     /// <summary>
     ///     Base class for items.
     /// </summary>
-    public abstract class Item : InventoryItem
+    public abstract class Item
     {
         #region Constructors
         /// <summary>
@@ -12,6 +11,21 @@
         /// </summary>
         /// <param name="name">The name.</param>
         protected Item(string name) => Name = name.ToUpper();
+        #endregion
+
+        #region Properties
+        /// <summary>
+        ///     Gets or sets the name of the item.
+        /// </summary>
+        /// <value>
+        ///     The name.
+        /// </value>
+        protected string Name {get;}
+        #endregion
+
+        #region Overrides of Object
+        /// <inheritdoc />
+        public override string ToString() => Name;
         #endregion
 
         /// <summary>
