@@ -1,6 +1,7 @@
 ﻿namespace FinalBattle.Character
 {
     #region Using Directives
+    using GearItems;
     using Items;
     #endregion
 
@@ -15,12 +16,14 @@
         /// </summary>
         /// <param name="characters">The characters.</param>
         /// <param name="items">The starting items provided to the party.</param>
+        /// <param name="availableGear">The starting gear provided to the party.</param>
         /// <param name="isHeroParty">Indicates whether this is the Hero party</param>
-        public Party(IEnumerable<Character>? characters, IEnumerable<Item> items, bool isHeroParty = false)
+        public Party(IEnumerable<Character>? characters, IEnumerable<Item> items, IEnumerable<Gear>? availableGear = null, bool isHeroParty = false)
         {
             IsHeroParty    = isHeroParty;
             Characters     = characters?.ToList() ?? new List<Character>();
             PartyInventory = new Inventory(items);
+            PartyGear      = new AvailableGear(availableGear ?? new List<Gear>());
         }
         #endregion
 
@@ -42,9 +45,25 @@
         public bool IsCurrentParty {get; set;}
 
         /// <summary>
+        ///     Gets a value indicating whether any equippable gear is available.
+        /// </summary>
+        /// <value>
+        ///     <c>true</c> if any equippable gear is available; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsEquippableGearAvailable => PartyGear.Items.Any();
+
+        /// <summary>
         ///     Indicates if this is the Hero party
         /// </summary>
         public bool IsHeroParty {get;}
+
+        /// <summary>
+        ///     Gets the party gear.
+        /// </summary>
+        /// <value>
+        ///     The party gear.
+        /// </value>
+        public AvailableGear PartyGear {get;}
 
         /// <summary>
         ///     Gets the party's items.

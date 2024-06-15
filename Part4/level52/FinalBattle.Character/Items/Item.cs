@@ -6,6 +6,10 @@
     public abstract class Item
     {
         #region Constructors
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="Item" /> class.
+        /// </summary>
+        /// <param name="name">The name.</param>
         protected Item(string name) => Name = name.ToUpper();
         #endregion
 
@@ -16,7 +20,7 @@
         /// <value>
         ///     The name.
         /// </value>
-        protected string Name {get; set;}
+        protected string Name {get;}
         #endregion
 
         #region Overrides of Object

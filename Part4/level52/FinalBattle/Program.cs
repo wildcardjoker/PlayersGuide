@@ -4,6 +4,7 @@
 using FinalBattle;
 using FinalBattle.Character;
 using FinalBattle.Character.Characters;
+using FinalBattle.Character.GearItems;
 using FinalBattle.Character.Items;
 using FinalBattle.Character.Player;
 using Humanizer;
@@ -19,21 +20,20 @@ Player monsterPlayer = selectedGameMode == GameMode.HumanVsHuman ? new HumanPlay
 
 // Get the True Programmer's name
 var trueProgrammerName = GetResponseFromConsole("What is your name, hero?");
-var trueProgrammer     = new TrueProgrammer(trueProgrammerName);
+var trueProgrammer     = new TrueProgrammer(trueProgrammerName) {EquippedGear = new Sword()};
 
 // Create the Hero party
-heroPlayer.Parties.Add(new Party(new[] {trueProgrammer}, new[] {new HealthPotion(), new HealthPotion(), new HealthPotion()}, true));
+heroPlayer.Parties.Add(new Party(new[] {trueProgrammer}, new[] {new HealthPotion(), new HealthPotion(), new HealthPotion()}, new[] {new Sword()}, true));
 
 // Create a collection of enemy parties
-monsterPlayer.Parties.Add(new Party(new[] {new Skeleton()},                 new[] {new HealthPotion()}));
-monsterPlayer.Parties.Add(new Party(new[] {new Skeleton(), new Skeleton()}, new[] {new HealthPotion()}));
-monsterPlayer.Parties.Add(new Party(new[] {new UncodedOne()},               new[] {new HealthPotion()}));
+monsterPlayer.Parties.Add(new Party(new[] {new Skeleton {EquippedGear = new Dagger()}}, new[] {new HealthPotion()}));
+monsterPlayer.Parties.Add(new Party(new[] {new Skeleton(), new Skeleton()},             new[] {new HealthPotion()}, new[] {new Dagger(), new Dagger()}));
+monsterPlayer.Parties.Add(new Party(new[] {new UncodedOne()},                           new[] {new HealthPotion()}));
 
 // Hero goes first
 var currentPlayer = heroPlayer;
 do
 {
-    //var enemyParty = monsterPlayer.Parties.First();
     var battleOver = false;
     do
     {
@@ -47,39 +47,22 @@ do
                 DisplayBattleStatus(battle);
 
                 var action = currentPlayer.SelectAction();
-                if (action == Action.UseItem)
+                switch (action)
                 {
-                    UseItem();
-                }
-                else
-                {
-                    var targetParty = battle.First(x => !x.IsCurrentParty);
-                    var target      = action == Action.Attack ? targetParty.Characters[currentPlayer.SelectTarget(targetParty.Characters)] : null;
-                    DisplayCharacterAction(character, action, target);
-                    if (target?.HitPoints == 0)
-                    {
-                        targetParty.Characters.Remove(target);
-                        Console.WriteLine($"{target.Name} has been defeated!");
-                        if (!targetParty.Characters.Any())
-                        {
-                            if (!targetParty.IsHeroParty)
-                            {
-                                // Remove the first Enemy party; it has been defeated
-                                monsterPlayer.Parties.RemoveAt(0);
-                            }
-                            else
-                            {
-                                // Hero party has been defeated.
-                                heroPlayer.Parties.RemoveAt(0);
-                            }
+                    case Action.Attack:
+                    case Action.DoNothing:
+                        battleOver = PerformAction(battle, action, currentPlayer, character);
+                        break;
 
-                            battleOver = true;
-                        }
-                    }
-                    else
-                    {
-                        Thread.Sleep(500);
-                    }
+                    case Action.Equip:
+                        EquipItem();
+                        break;
+
+                    case Action.UseItem:
+                        UseItem();
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
                 }
 
                 character.IsActive = false;
@@ -107,20 +90,6 @@ static string GetResponseFromConsole(string message)
     }
 
     return response;
-}
-
-static void DisplayCharacterAction(Character character, Action action, Character? target)
-{
-    var result = character.PerformAction(action, target);
-    Console.WriteLine(result.Description);
-    if (result.Attack != null)
-    {
-        target!.ModifyHitPoints(-result.Damage);
-        Console.WriteLine($"{result.Attack} dealt {result.Damage} to {target}");
-        Console.WriteLine($"{target} is now at {target.CurrentHealth}");
-    }
-
-    Console.WriteLine();
 }
 
 GameMode GetGameMode()
@@ -160,9 +129,10 @@ void DisplayBattleStatus(Party[] battle)
 
         foreach (var character in party.Characters)
         {
-            var stats      = $"( {character.HitPoints.ToString().PadLeft(maxCurrentHpPadding)}/{character.MaxHitPoints.ToString().PadLeft(maxMaxHpPadding)} )";
-            var nameLength = character.Name.Length;
-            var name       = character.Name;
+            var stats        = $"( {character.HitPoints.ToString().PadLeft(maxCurrentHpPadding)}/{character.MaxHitPoints.ToString().PadLeft(maxMaxHpPadding)} )";
+            var equippedGear = character.EquippedGear == null ? string.Empty : $" ({character.EquippedGear.GetType().Name})";
+            var name         = $"{character.Name}{equippedGear}";
+            var nameLength   = name.Length;
             if (character.IsActive)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
@@ -176,6 +146,42 @@ void DisplayBattleStatus(Party[] battle)
     }
 
     Console.WriteLine(new string('=', Console.WindowWidth));
+}
+
+void EquipItem()
+{
+    // Display available gear
+    // Player chooses gear to equip
+    // Gear is equipped or player returns to menu.
+    int index;
+    var inventory = currentPlayer.CurrentParty.PartyGear;
+
+    // If the current player is a computer, select the first available weapon
+    // If the current player is a human AND only there is only one equippable item, select it automatically
+    // Otherwise, display a list of available gear and allow the player to choose.
+    if (currentPlayer is ComputerPlayer || (currentPlayer is HumanPlayer && inventory.Items.Count == 1))
+    {
+        // Use first available weapon
+        index = 0;
+    }
+    else
+    {
+        Console.WriteLine("Your party has the following gear");
+        for (var i = 0; i < inventory.Items.Count; i++)
+        {
+            Console.WriteLine($"{i}: {inventory.Items[i]}");
+        }
+
+        int.TryParse(GetResponseFromConsole("Please select the item to use"), out index);
+        if (index < 0 || index > inventory.Items.Count - 1)
+        {
+            // Value is out of range
+            return;
+        }
+    }
+
+    var character = currentPlayer.CurrentCharacter;
+    currentPlayer.CurrentParty.PartyGear.Equip(character, index);
 }
 
 void UseItem()
@@ -207,4 +213,56 @@ void UseItem()
     }
 
     currentPlayer.UseItem(index);
+}
+
+bool PerformAction(IEnumerable<Party> parties, Action action, Player player, Character character)
+{
+    {
+        var battleOver  = false;
+        var targetParty = parties.First(x => !x.IsCurrentParty);
+        var target      = action == Action.Attack ? targetParty.Characters[player.SelectTarget(targetParty.Characters)] : null;
+        DisplayCharacterAction(character, action, player is ComputerPlayer, target);
+        if (target?.HitPoints == 0)
+        {
+            targetParty.Characters.Remove(target);
+            Console.WriteLine($"{target.Name} has been defeated!");
+            if (targetParty.Characters.Any())
+            {
+                return battleOver;
+            }
+
+            if (!targetParty.IsHeroParty)
+            {
+                // Remove the first Enemy party; it has been defeated
+                monsterPlayer.Parties.RemoveAt(0);
+            }
+            else
+            {
+                // Hero party has been defeated.
+                heroPlayer.Parties.RemoveAt(0);
+            }
+
+            battleOver = true;
+        }
+        else
+        {
+            Thread.Sleep(500);
+        }
+
+        return battleOver;
+    }
+
+    static void DisplayCharacterAction(Character character, Action action, bool isComputerPlayer, Character? target)
+    {
+        var result = character.PerformAction(action, isComputerPlayer, target);
+        Console.WriteLine(result.Description);
+        if (result.Attack != null)
+        {
+            target!.ModifyHitPoints(-result.Damage);
+            Console.WriteLine($"{result.Attack} dealt {result.Damage} to {target}");
+            Console.WriteLine($"{target} is now at {target.CurrentHealth}");
+        }
+
+        Console.WriteLine();
+    }
 }

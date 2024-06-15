@@ -194,3 +194,25 @@ Each party has a shared inventory of items. Players can choose to use an item as
 - The computer player should consider using a potion when (a) the team has a potion in their inventory and (b) the character's health is under half. Under these conditions, use a potion 25% of the time.
 - The human player should have the option to use a potion if the party has one.
 - **Note**: Digging through the party inventory for potions is a little tricky. It is reasonable to assume (for now) that all items in the inventory are health potions. That will be a correct assumption until you make other item types. This assumption simplifies the changes you need to make to the different player types.
+
+## Expansion: Gear
+
+Characters can equip gear that allows them to have a second special attack. A party can have gear in their shared inventory, but unlike items, gear is not usable until a character equips it, and it takes a turn to equip gear from inventory.
+
+## Gear Objectives
+
+- The game must support the concept of gear. All gear has a name and an attack they provide.
+- Each character can equip one piece of gear.
+- Each party also has a collection of unequipped gear.
+- Add the ability to perform an `equip` action, which knows what gear is being equipped. When this action runs, it should move the gear from the party's inventory to the character.
+- If a character already has something equipped, the previously equipped gear should be unequipped and moved back to the party's shared inventory.
+- The computer player should equip gear. If a character has nothing equipped but the party has equippable gear, the computer player should choose to equip the gear 50% of the time.
+- **Note**: If you also did the Items challenge, using potions should be a priority over equipping gear.
+- The console player should also have the option to equip gear. If there is more than one thing to equip, allow the player to choose from all available options.
+- The computer player should prefer the attack provided by equipped gear when one is available. Gear-based attacks are typically stronger.
+- If gear is equipped, the human player should be able to pick either the standard attack or the gear-based attack.
+- The True Programmer character should start the game with a `sword` item equipped. The sword should have a `slash` attack that deals 2 points of damage.
+- Create a `dagger` with the attack `stab` that reliably deals 1 point of damage.
+- Start the first battle's skeleton with a dagger equipped. This one was prepared for battle.
+- Put two daggers in the team inventory for the second battle. Both skeletons will be able to use a dagger, but they will have to equip it first. These two were less prepared.
+- **Optional**: If you did *The Game's Status*, consider showing what gear each character has equipped.

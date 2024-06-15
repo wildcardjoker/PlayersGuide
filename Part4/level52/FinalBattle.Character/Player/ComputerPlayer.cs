@@ -26,7 +26,14 @@
                 return Action.UseItem;
             }
 
+            // If the character has no gear equipped, and gear is available, always equip it (if the character didn't use a health potion).
+            if (currentCharacter.EquippedGear == null && CurrentParty.IsEquippableGearAvailable)
+            {
+                return Action.Equip;
+            }
+
             availableActions.Remove(Action.UseItem.ToString());
+            availableActions.Remove(Action.Equip.ToString());
             var selectedAction = _random.Next(availableActions.Count) + 1;
             return (Action) selectedAction;
         }

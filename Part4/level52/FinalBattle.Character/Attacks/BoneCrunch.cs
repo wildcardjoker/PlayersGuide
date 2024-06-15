@@ -14,11 +14,11 @@ public class BoneCrunch : Attack
 
     #region Constructors
     /// <inheritdoc />
-    public BoneCrunch() : base("bone crunch") {}
+    public BoneCrunch() : base("bone crunch", 2) {}
     #endregion
 
     #region Implementation of IAttack
     /// <inheritdoc />
-    public override int CalculateDamage() => _random.Next(2);
+    public override int CalculateDamage() => _random.Next(Damage);
     #endregion
 }
