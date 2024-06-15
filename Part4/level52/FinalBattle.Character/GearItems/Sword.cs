@@ -1,6 +1,11 @@
 ﻿namespace FinalBattle.Character.GearItems
 {
-    internal class Sword : Gear
+    /// <inheritdoc />
+    /// <summary>
+    ///     A sword, deals 2 points of damage
+    /// </summary>
+    /// <seealso cref="T:FinalBattle.Character.GearItems.Gear" />
+    public class Sword : Gear
     {
         #region Constructors
         /// <inheritdoc />

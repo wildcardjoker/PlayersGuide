@@ -34,6 +34,12 @@
         /// </value>
         protected string Attack {get; init;}
 
+        /// <summary>
+        ///     Gets the damage.
+        /// </summary>
+        /// <value>
+        ///     The damage.
+        /// </value>
         protected int Damage {get; init;}
         #endregion
     }
