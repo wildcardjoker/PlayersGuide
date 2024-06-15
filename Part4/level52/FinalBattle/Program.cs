@@ -169,7 +169,7 @@ void EquipItem()
         Console.WriteLine("Your party has the following gear");
         for (var i = 0; i < inventory.Items.Count; i++)
         {
-            Console.WriteLine($"{i}: {inventory.Items[i]}");
+            Console.WriteLine($"{i}: {inventory.Items[i].Description}");
         }
 
         int.TryParse(GetResponseFromConsole("Please select the item to use"), out index);
@@ -224,7 +224,10 @@ bool PerformAction(IEnumerable<Party> parties, Action action, Player player, Cha
         DisplayCharacterAction(character, action, player is ComputerPlayer, target);
         if (target?.HitPoints == 0)
         {
-            LootEnemy(target, character);
+            if (!targetParty.IsHeroParty)
+            {
+                LootEnemy(target, character);
+            }
 
             targetParty.Characters.Remove(target);
             if (!targetParty.HasBeenDefeated)
@@ -278,7 +281,7 @@ void LootEnemy(Character target, Character character)
     }
 
     var gear = target.EquippedGear;
-    Console.WriteLine($"{character} looted {gear} from {target}");
+    Console.WriteLine($"{character} looted {gear.Description} from {target}");
     currentPlayer.CurrentParty.PartyGear.Items.Add(target.EquippedGear);
 }
 
@@ -292,6 +295,17 @@ void LootParty(Character character)
         {
             Console.WriteLine($"{character} looted {item}");
             currentPlayer.CurrentParty.PartyInventory.Items.Add(item);
+        }
+    }
+
+    // Recover any items from the party's gear inventory.
+    var gearInventory = monsterPlayer.Parties.First().PartyGear.Items;
+    if (gearInventory.Any())
+    {
+        foreach (var item in gearInventory)
+        {
+            Console.WriteLine($"{character} looted {item.Description}");
+            currentPlayer.CurrentParty.PartyGear.Items.Add(item);
         }
     }
 
