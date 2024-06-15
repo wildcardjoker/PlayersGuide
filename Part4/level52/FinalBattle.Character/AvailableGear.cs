@@ -36,7 +36,14 @@ public class AvailableGear
     /// <param name="index">The index.</param>
     public void Equip(Character character, int index)
     {
-        Items[index].Equip(character);
+        if (character.EquippedGear != null)
+        {
+            Console.WriteLine($"{character} unequips {character.EquippedGear}");
+            Items.Add(character.EquippedGear);
+        }
+
+        Console.WriteLine($"{character} equips {Items[index]}");
+        character.EquippedGear = Items[index];
         Items.RemoveAt(index);
     }
 }

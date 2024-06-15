@@ -23,10 +23,5 @@
         /// </summary>
         /// <param name="character">The character.</param>
         public abstract void Attack(Character character);
-
-        /// <summary>
-        ///     Uses this instance.
-        /// </summary>
-        public abstract void Equip(Character character);
     }
 }
