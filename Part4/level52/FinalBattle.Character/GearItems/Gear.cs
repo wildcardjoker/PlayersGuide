@@ -1,46 +1,22 @@
 ﻿namespace FinalBattle.Character.GearItems
 {
     #region Using Directives
-    using Items;
     #endregion
 
     /// <inheritdoc />
     /// <summary>
     ///     Base class for items.
     /// </summary>
-    public abstract class Gear : InventoryItem
+    public abstract class Gear : Attack
     {
         #region Constructors
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="Gear" /> class.
-        /// </summary>
-        /// <param name="name">The name.</param>
-        /// <param name="attack">The attack description</param>
-        /// <param name="damage">The amount of damage inflicted by the gear.</param>
-        protected Gear(string name, string attack, int damage)
-        {
-            Name   = name.ToUpper();
-            Attack = attack.ToUpper();
-            Damage = damage;
-        }
+        /// <inheritdoc />
+        protected Gear(string name) : base(name) {}
         #endregion
 
-        #region Properties
-        /// <summary>
-        ///     Gets the attack.
-        /// </summary>
-        /// <value>
-        ///     The attack.
-        /// </value>
-        protected string Attack {get; init;}
-
-        /// <summary>
-        ///     Gets the damage.
-        /// </summary>
-        /// <value>
-        ///     The damage.
-        /// </value>
-        protected int Damage {get; init;}
+        #region Overrides of Object
+        /// <inheritdoc />
+        public override string ToString() => Name;
         #endregion
     }
 }

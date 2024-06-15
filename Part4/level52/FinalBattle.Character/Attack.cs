@@ -30,7 +30,7 @@ public abstract class Attack
     /// <value>
     ///     The name.
     /// </value>
-    public string Name {get;}
+    protected string Name {get;}
     #endregion
 
     /// <summary>

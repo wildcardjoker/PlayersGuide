@@ -9,7 +9,12 @@
     {
         #region Constructors
         /// <inheritdoc />
-        public Dagger() : base("Dagger", "stab", 1) {}
+        public Dagger() : base("stab") {}
+        #endregion
+
+        #region Overrides of Attack
+        /// <inheritdoc />
+        public override int CalculateDamage() => Damage = 1;
         #endregion
     }
 }
