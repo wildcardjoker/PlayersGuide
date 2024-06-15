@@ -45,6 +45,14 @@
         public bool IsCurrentParty {get; set;}
 
         /// <summary>
+        ///     Gets a value indicating whether any equippable gear is available.
+        /// </summary>
+        /// <value>
+        ///     <c>true</c> if any equippable gear is available; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsEquippableGearAvailable => PartyGear.Items.Any();
+
+        /// <summary>
         ///     Indicates if this is the Hero party
         /// </summary>
         public bool IsHeroParty {get;}
