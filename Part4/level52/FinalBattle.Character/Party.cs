@@ -37,6 +37,14 @@
         public List<Character> Characters {get;}
 
         /// <summary>
+        ///     Gets a value indicating whether the party has been defeated (no more characters in party).
+        /// </summary>
+        /// <value>
+        ///     <c>true</c> if this party has been defeated; otherwise, <c>false</c>.
+        /// </value>
+        public bool HasBeenDefeated => !Characters.Any();
+
+        /// <summary>
         ///     Gets or sets a value indicating whether this party is currently playing.
         /// </summary>
         /// <value>
