@@ -23,6 +23,11 @@ public class HumanPlayer : Player
             actionValues.Remove((int) Action.UseItem);
         }
 
+        if (!CurrentParty.IsEquippableGearAvailable)
+        {
+            actionValues.Remove((int) Action.Equip);
+        }
+
         foreach (Action value in actionValues)
         {
             Console.WriteLine($"{(int) value} - {value.Humanize()}");
