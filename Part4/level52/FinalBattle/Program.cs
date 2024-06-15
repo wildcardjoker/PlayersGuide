@@ -23,7 +23,7 @@ var trueProgrammerName = GetResponseFromConsole("What is your name, hero?");
 var trueProgrammer     = new TrueProgrammer(trueProgrammerName) {EquippedGear = new Sword()};
 
 // Create the Hero party
-heroPlayer.Parties.Add(new Party(new[] {trueProgrammer}, new[] {new HealthPotion(), new HealthPotion(), new HealthPotion()}, new[] {new Sword()}, true));
+heroPlayer.Parties.Add(new Party(new[] {trueProgrammer}, new[] {new HealthPotion(), new HealthPotion(), new HealthPotion()}, isHeroParty: true));
 
 // Create a collection of enemy parties
 monsterPlayer.Parties.Add(new Party(new[] {new Skeleton {EquippedGear = new Dagger()}}, new[] {new HealthPotion()}));
@@ -169,7 +169,7 @@ void EquipItem()
         Console.WriteLine("Your party has the following gear");
         for (var i = 0; i < inventory.Items.Count; i++)
         {
-            Console.WriteLine($"{i}: {inventory.Items[i]}");
+            Console.WriteLine($"{i}: {inventory.Items[i].Description}");
         }
 
         int.TryParse(GetResponseFromConsole("Please select the item to use"), out index);
@@ -224,23 +224,28 @@ bool PerformAction(IEnumerable<Party> parties, Action action, Player player, Cha
         DisplayCharacterAction(character, action, player is ComputerPlayer, target);
         if (target?.HitPoints == 0)
         {
+            if (!targetParty.IsHeroParty)
+            {
+                LootEnemy(target, character);
+            }
+
             targetParty.Characters.Remove(target);
-            Console.WriteLine($"{target.Name} has been defeated!");
-            if (targetParty.Characters.Any())
+            if (!targetParty.HasBeenDefeated)
             {
                 return battleOver;
             }
 
             if (!targetParty.IsHeroParty)
             {
-                // Remove the first Enemy party; it has been defeated
-                monsterPlayer.Parties.RemoveAt(0);
+                LootParty(character);
             }
             else
             {
                 // Hero party has been defeated.
                 heroPlayer.Parties.RemoveAt(0);
             }
+
+            Console.WriteLine($"{target.Name} has been defeated!");
 
             battleOver = true;
         }
@@ -265,4 +270,45 @@ bool PerformAction(IEnumerable<Party> parties, Action action, Player player, Cha
 
         Console.WriteLine();
     }
+}
+
+void LootEnemy(Character target, Character character)
+{
+    // Recover any equipped gear that the enemy was carrying.
+    if (target.EquippedGear == null)
+    {
+        return;
+    }
+
+    var gear = target.EquippedGear;
+    Console.WriteLine($"{character} looted {gear.Description} from {target}");
+    currentPlayer.CurrentParty.PartyGear.Items.Add(target.EquippedGear);
+}
+
+void LootParty(Character character)
+{
+    // Recover any items from the party's inventory.
+    var inventory = monsterPlayer.Parties.First().PartyInventory.Items;
+    if (inventory.Any())
+    {
+        foreach (var item in inventory)
+        {
+            Console.WriteLine($"{character} looted {item}");
+            currentPlayer.CurrentParty.PartyInventory.Items.Add(item);
+        }
+    }
+
+    // Recover any items from the party's gear inventory.
+    var gearInventory = monsterPlayer.Parties.First().PartyGear.Items;
+    if (gearInventory.Any())
+    {
+        foreach (var item in gearInventory)
+        {
+            Console.WriteLine($"{character} looted {item.Description}");
+            currentPlayer.CurrentParty.PartyGear.Items.Add(item);
+        }
+    }
+
+    // Remove the first Enemy party; it has been defeated
+    monsterPlayer.Parties.RemoveAt(0);
 }
