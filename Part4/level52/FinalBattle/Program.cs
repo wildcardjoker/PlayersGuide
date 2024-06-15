@@ -160,9 +160,10 @@ void DisplayBattleStatus(Party[] battle)
 
         foreach (var character in party.Characters)
         {
-            var stats      = $"( {character.HitPoints.ToString().PadLeft(maxCurrentHpPadding)}/{character.MaxHitPoints.ToString().PadLeft(maxMaxHpPadding)} )";
-            var nameLength = character.Name.Length;
-            var name       = character.Name;
+            var stats        = $"( {character.HitPoints.ToString().PadLeft(maxCurrentHpPadding)}/{character.MaxHitPoints.ToString().PadLeft(maxMaxHpPadding)} )";
+            var nameLength   = character.Name.Length;
+            var equippedGear = character.EquippedGear == null ? string.Empty : $" ({character.EquippedGear})";
+            var name         = $"{character.Name}{equippedGear}";
             if (character.IsActive)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
