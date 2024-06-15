@@ -59,11 +59,11 @@ public static class ExtensionMethods
             index++;
         }
 
-        var selection = -1;
-        while (selection < 0)
+        index = -1;
+        while (index < 0)
         {
             Console.Write("Which attack do you choose? ");
-            int.TryParse(Console.ReadLine(), out selection);
+            int.TryParse(Console.ReadLine(), out index);
         }
 
         return attacks[index];

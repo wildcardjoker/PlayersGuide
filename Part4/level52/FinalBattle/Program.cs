@@ -130,9 +130,9 @@ void DisplayBattleStatus(Party[] battle)
         foreach (var character in party.Characters)
         {
             var stats        = $"( {character.HitPoints.ToString().PadLeft(maxCurrentHpPadding)}/{character.MaxHitPoints.ToString().PadLeft(maxMaxHpPadding)} )";
-            var nameLength   = character.Name.Length;
-            var equippedGear = character.EquippedGear == null ? string.Empty : $" ({character.EquippedGear})";
+            var equippedGear = character.EquippedGear == null ? string.Empty : $" ({character.EquippedGear.GetType().Name})";
             var name         = $"{character.Name}{equippedGear}";
+            var nameLength   = name.Length;
             if (character.IsActive)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
@@ -221,7 +221,7 @@ bool PerformAction(IEnumerable<Party> parties, Action action, Player player, Cha
         var battleOver  = false;
         var targetParty = parties.First(x => !x.IsCurrentParty);
         var target      = action == Action.Attack ? targetParty.Characters[player.SelectTarget(targetParty.Characters)] : null;
-        DisplayCharacterAction(character, action, target);
+        DisplayCharacterAction(character, action, player is ComputerPlayer, target);
         if (target?.HitPoints == 0)
         {
             targetParty.Characters.Remove(target);
@@ -252,9 +252,9 @@ bool PerformAction(IEnumerable<Party> parties, Action action, Player player, Cha
         return battleOver;
     }
 
-    static void DisplayCharacterAction(Character character, Action action, Character? target)
+    static void DisplayCharacterAction(Character character, Action action, bool isComputerPlayer, Character? target)
     {
-        var result = character.PerformAction(action, target);
+        var result = character.PerformAction(action, isComputerPlayer, target);
         Console.WriteLine(result.Description);
         if (result.Attack != null)
         {

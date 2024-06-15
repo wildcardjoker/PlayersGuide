@@ -11,7 +11,7 @@
     {
         #region Constructors
         /// <inheritdoc />
-        protected Gear(string name) : base(name) {}
+        protected Gear(string name, int damage) : base(name, damage) {}
         #endregion
 
         #region Overrides of Object

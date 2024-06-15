@@ -8,12 +8,12 @@
     {
         #region Constructors
         /// <inheritdoc />
-        public Punch() : base("punch") {}
+        public Punch() : base("punch", 1) {}
         #endregion
 
         #region Implementation of IAttack
         /// <inheritdoc />
-        public override int CalculateDamage() => Damage = 1;
+        public override int CalculateDamage() => Damage;
         #endregion
     }
 }

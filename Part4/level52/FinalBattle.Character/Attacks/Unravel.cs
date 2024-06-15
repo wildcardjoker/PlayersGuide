@@ -14,11 +14,11 @@ public class Unravel : Attack
 
     #region Constructors
     /// <inheritdoc />
-    public Unravel() : base("Unravelling") {}
+    public Unravel() : base("Unravelling", 2) {}
     #endregion
 
     #region Implementation of IAttack
     /// <inheritdoc />
-    public override int CalculateDamage() => _random.Next(2);
+    public override int CalculateDamage() => _random.Next(Damage);
     #endregion
 }

@@ -9,12 +9,12 @@
     {
         #region Constructors
         /// <inheritdoc />
-        public Sword() : base("slash") {}
+        public Sword() : base("slash", 2) {}
         #endregion
 
         #region Overrides of Attack
         /// <inheritdoc />
-        public override int CalculateDamage() => Damage = 2;
+        public override int CalculateDamage() => Damage;
         #endregion
     }
 }
