@@ -224,13 +224,7 @@ bool PerformAction(IEnumerable<Party> parties, Action action, Player player, Cha
         DisplayCharacterAction(character, action, player is ComputerPlayer, target);
         if (target?.HitPoints == 0)
         {
-            // Recover any equipped gear that the enemy was carrying.
-            if (target.EquippedGear != null)
-            {
-                var gear = target.EquippedGear;
-                Console.WriteLine($"{character} looted {gear} from {target}");
-                currentPlayer.CurrentParty.PartyGear.Items.Add(target.EquippedGear);
-            }
+            LootEnemy(target, character);
 
             targetParty.Characters.Remove(target);
             Console.WriteLine($"{target.Name} has been defeated!");
@@ -273,4 +267,17 @@ bool PerformAction(IEnumerable<Party> parties, Action action, Player player, Cha
 
         Console.WriteLine();
     }
+}
+
+void LootEnemy(Character target, Character character)
+{
+    // Recover any equipped gear that the enemy was carrying.
+    if (target.EquippedGear == null)
+    {
+        return;
+    }
+
+    var gear = target.EquippedGear;
+    Console.WriteLine($"{character} looted {gear} from {target}");
+    currentPlayer.CurrentParty.PartyGear.Items.Add(target.EquippedGear);
 }
