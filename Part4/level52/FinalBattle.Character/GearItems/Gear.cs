@@ -16,7 +16,13 @@
 
         #region Overrides of Object
         /// <inheritdoc />
-        public override string ToString() => GetType().Name.ToUpper();
+        public override string ToString() => Name;
+
+        /// <summary>
+        ///     The gear's description (weapon type)
+        /// </summary>
+        /// <returns></returns>
+        public string Description => GetType().Name.ToUpper();
         #endregion
     }
 }
