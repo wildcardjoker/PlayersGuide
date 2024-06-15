@@ -216,3 +216,17 @@ Characters can equip gear that allows them to have a second special attack. A pa
 - Start the first battle's skeleton with a dagger equipped. This one was prepared for battle.
 - Put two daggers in the team inventory for the second battle. Both skeletons will be able to use a dagger, but they will have to equip it first. These two were less prepared.
 - **Optional**: If you did *The Game's Status*, consider showing what gear each character has equipped.
+
+## Expansion: Stolen Inventory
+
+**Requires that you have done either *Items* or *Gear***
+
+This feature will allow us to have a basic loot system. When a character dies, the opposing side should immediately recover the dead character's equipped gear. When the monster party is eliminated, the monster party's unequipped gear and items should be transferred to the hero party.
+
+Id you only did *Items* or *Gear*, some of the objectives below will not apply to you. Do the ones that apply.
+
+### Stolen Inventory Objectives
+
+- If you did the *Items* challenge, when a party is eliminated, transfer all items from the losing party's inventory items to the winning party. Display a message that indicates which items have been acquired. **Note**: It is okay only to do this when the hero party wins. When the monster party wins a battle, the game ends.
+- If you did the *Gear* challenge, when a party is eliminated, transfer all unequipped gear from the losing party's inventory to the winning party. Display a message that indicates when gear has been acquired.
+- If you did the *Gear* challenge, when a character is eliminated, transfer any equipped gear to the winning party's inventory. Display a message that states gear that was acquired.
