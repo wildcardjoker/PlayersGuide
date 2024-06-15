@@ -23,7 +23,7 @@ var trueProgrammerName = GetResponseFromConsole("What is your name, hero?");
 var trueProgrammer     = new TrueProgrammer(trueProgrammerName) {EquippedGear = new Sword()};
 
 // Create the Hero party
-heroPlayer.Parties.Add(new Party(new[] {trueProgrammer}, new[] {new HealthPotion(), new HealthPotion(), new HealthPotion()}, new[] {new Sword()}, true));
+heroPlayer.Parties.Add(new Party(new[] {trueProgrammer}, new[] {new HealthPotion(), new HealthPotion(), new HealthPotion()}, isHeroParty: true));
 
 // Create a collection of enemy parties
 monsterPlayer.Parties.Add(new Party(new[] {new Skeleton {EquippedGear = new Dagger()}}, new[] {new HealthPotion()}));
