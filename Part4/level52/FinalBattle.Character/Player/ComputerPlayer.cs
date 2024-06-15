@@ -33,6 +33,7 @@
             }
 
             availableActions.Remove(Action.UseItem.ToString());
+            availableActions.Remove(Action.Equip.ToString());
             var selectedAction = _random.Next(availableActions.Count) + 1;
             return (Action) selectedAction;
         }
