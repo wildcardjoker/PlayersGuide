@@ -28,7 +28,7 @@ heroPlayer.Parties.Add(new Party(new[] {trueProgrammer}, new[] {new HealthPotion
 // Create a collection of enemy parties
 monsterPlayer.Parties.Add(new Party(new[] {new Skeleton {EquippedGear = new Dagger()}}, new[] {new HealthPotion()}));
 monsterPlayer.Parties.Add(new Party(new[] {new Skeleton(), new Skeleton()},             new[] {new HealthPotion()}, new[] {new Dagger(), new Dagger()}));
-monsterPlayer.Parties.Add(new Party(new[] {new UncodedOne()},                           new[] {new HealthPotion()}, new[] {new Dagger(), new Dagger()}));
+monsterPlayer.Parties.Add(new Party(new[] {new UncodedOne()},                           new[] {new HealthPotion()}));
 
 // Hero goes first
 var currentPlayer = heroPlayer;
