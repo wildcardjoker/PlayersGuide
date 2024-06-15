@@ -33,7 +33,6 @@ monsterPlayer.Parties.Add(new Party(new[] {new UncodedOne()},               new[
 var currentPlayer = heroPlayer;
 do
 {
-    //var enemyParty = monsterPlayer.Parties.First();
     var battleOver = false;
     do
     {
