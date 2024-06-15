@@ -18,12 +18,12 @@
         /// <param name="items">The starting items provided to the party.</param>
         /// <param name="availableGear">The starting gear provided to the party.</param>
         /// <param name="isHeroParty">Indicates whether this is the Hero party</param>
-        public Party(IEnumerable<Character>? characters, IEnumerable<Item> items, IEnumerable<Gear> availableGear, bool isHeroParty = false)
+        public Party(IEnumerable<Character>? characters, IEnumerable<Item> items, IEnumerable<Gear>? availableGear = null, bool isHeroParty = false)
         {
             IsHeroParty    = isHeroParty;
             Characters     = characters?.ToList() ?? new List<Character>();
             PartyInventory = new Inventory(items);
-            PartyGear      = new AvailableGear(availableGear);
+            PartyGear      = new AvailableGear(availableGear ?? new List<Gear>());
         }
         #endregion
 
