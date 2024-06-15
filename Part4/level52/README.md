@@ -20,3 +20,4 @@ The final battle has arrived. On a volcanic island, enshrouded in a cloud of ash
 - **Expansion**: The Game's Status (PR #68)
 - **Expansion**: Items (PR #69)
 - **Expansion**: Gear (PR #71)
+- **Expansion**: Stolen Inventory (PR #72)
