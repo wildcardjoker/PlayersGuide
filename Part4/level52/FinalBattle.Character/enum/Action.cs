@@ -16,6 +16,11 @@ public enum Action
     DoNothing,
 
     /// <summary>
+    ///     Equip an item
+    /// </summary>
+    Equip,
+
+    /// <summary>
     ///     Use an Item
     /// </summary>
     UseItem
