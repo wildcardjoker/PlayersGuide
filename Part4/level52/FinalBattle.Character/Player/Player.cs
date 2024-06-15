@@ -17,6 +17,14 @@ public abstract class Player
 
     #region Properties
     /// <summary>
+    ///     Gets the current character.
+    /// </summary>
+    /// <value>
+    ///     The current character.
+    /// </value>
+    public Character CurrentCharacter => CurrentParty.Characters.First(x => x.IsActive);
+
+    /// <summary>
     ///     Gets the current party.
     /// </summary>
     /// <value>
@@ -31,14 +39,6 @@ public abstract class Player
     ///     The party.
     /// </value>
     public List<Party> Parties {get;}
-
-    /// <summary>
-    ///     Gets the current character.
-    /// </summary>
-    /// <value>
-    ///     The current character.
-    /// </value>
-    protected Character CurrentCharacter => CurrentParty.Characters.First(x => x.IsActive);
     #endregion
 
     /// <summary>
