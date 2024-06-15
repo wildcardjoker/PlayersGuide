@@ -154,14 +154,18 @@ void EquipItem()
     // Player chooses gear to equip
     // Gear is equipped or player returns to menu.
     int index;
-    if (currentPlayer is ComputerPlayer)
+    var inventory = currentPlayer.CurrentParty.PartyGear;
+
+    // If the current player is a computer, select the first available weapon
+    // If the current player is a human AND only there is only one equippable item, select it automatically
+    // Otherwise, display a list of available gear and allow the player to choose.
+    if (currentPlayer is ComputerPlayer || (currentPlayer is HumanPlayer && inventory.Items.Count == 1))
     {
         // Use first available weapon
         index = 0;
     }
     else
     {
-        var inventory = currentPlayer.CurrentParty.PartyGear;
         Console.WriteLine("Your party has the following gear");
         for (var i = 0; i < inventory.Items.Count; i++)
         {
