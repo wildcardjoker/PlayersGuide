@@ -1,7 +1,7 @@
 ﻿namespace FinalBattle.Character.Items
 {
     /// <summary>
-    ///     Base class for inventory items (potions, weapons, etc)
+    ///     Base class for inventory items (potions, weapons, etc.)
     /// </summary>
     public class InventoryItem
     {
