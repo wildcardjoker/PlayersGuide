@@ -227,7 +227,6 @@ bool PerformAction(IEnumerable<Party> parties, Action action, Player player, Cha
             LootEnemy(target, character);
 
             targetParty.Characters.Remove(target);
-            Console.WriteLine($"{target.Name} has been defeated!");
             if (!targetParty.HasBeenDefeated)
             {
                 return battleOver;
@@ -235,14 +234,15 @@ bool PerformAction(IEnumerable<Party> parties, Action action, Player player, Cha
 
             if (!targetParty.IsHeroParty)
             {
-                // Remove the first Enemy party; it has been defeated
-                monsterPlayer.Parties.RemoveAt(0);
+                LootParty(character);
             }
             else
             {
                 // Hero party has been defeated.
                 heroPlayer.Parties.RemoveAt(0);
             }
+
+            Console.WriteLine($"{target.Name} has been defeated!");
 
             battleOver = true;
         }
@@ -280,4 +280,21 @@ void LootEnemy(Character target, Character character)
     var gear = target.EquippedGear;
     Console.WriteLine($"{character} looted {gear} from {target}");
     currentPlayer.CurrentParty.PartyGear.Items.Add(target.EquippedGear);
+}
+
+void LootParty(Character character)
+{
+    // Recover any items from the party's inventory.
+    var inventory = monsterPlayer.Parties.First().PartyInventory.Items;
+    if (inventory.Any())
+    {
+        foreach (var item in inventory)
+        {
+            Console.WriteLine($"{character} looted {item}");
+            currentPlayer.CurrentParty.PartyInventory.Items.Add(item);
+        }
+    }
+
+    // Remove the first Enemy party; it has been defeated
+    monsterPlayer.Parties.RemoveAt(0);
 }
