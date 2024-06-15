@@ -50,10 +50,8 @@ do
                 switch (action)
                 {
                     case Action.Attack:
-                        battleOver = AttackEnemy(battle, action, currentPlayer, character, monsterPlayer, heroPlayer, battleOver);
-                        break;
-
                     case Action.DoNothing:
+                        battleOver = PerformAction(battle, action, currentPlayer, character);
                         break;
 
                     case Action.Equip:
@@ -213,38 +211,41 @@ void UseItem()
     currentPlayer.UseItem(index);
 }
 
-bool AttackEnemy(Party[] parties, Action action1, Player player, Character character1, Player monsterPlayer1, Player heroPlayer1, bool b)
+bool PerformAction(IEnumerable<Party> parties, Action action, Player player, Character character)
 {
     {
+        var battleOver  = false;
         var targetParty = parties.First(x => !x.IsCurrentParty);
-        var target      = action1 == Action.Attack ? targetParty.Characters[player.SelectTarget(targetParty.Characters)] : null;
-        DisplayCharacterAction(character1, action1, target);
+        var target      = action == Action.Attack ? targetParty.Characters[player.SelectTarget(targetParty.Characters)] : null;
+        DisplayCharacterAction(character, action, target);
         if (target?.HitPoints == 0)
         {
             targetParty.Characters.Remove(target);
             Console.WriteLine($"{target.Name} has been defeated!");
-            if (!targetParty.Characters.Any())
+            if (targetParty.Characters.Any())
             {
-                if (!targetParty.IsHeroParty)
-                {
-                    // Remove the first Enemy party; it has been defeated
-                    monsterPlayer1.Parties.RemoveAt(0);
-                }
-                else
-                {
-                    // Hero party has been defeated.
-                    heroPlayer1.Parties.RemoveAt(0);
-                }
-
-                b = true;
+                return battleOver;
             }
+
+            if (!targetParty.IsHeroParty)
+            {
+                // Remove the first Enemy party; it has been defeated
+                monsterPlayer.Parties.RemoveAt(0);
+            }
+            else
+            {
+                // Hero party has been defeated.
+                heroPlayer.Parties.RemoveAt(0);
+            }
+
+            battleOver = true;
         }
         else
         {
             Thread.Sleep(500);
         }
 
-        return b;
+        return battleOver;
     }
 
     static void DisplayCharacterAction(Character character, Action action, Character? target)
