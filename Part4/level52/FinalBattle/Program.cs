@@ -263,9 +263,16 @@ bool PerformAction(IEnumerable<Party> parties, Action action, Player player, Cha
         Console.WriteLine(result.Description);
         if (result.Attack != null)
         {
-            target!.ModifyHitPoints(-result.Damage);
-            Console.WriteLine($"{result.Attack} dealt {result.Damage} to {target}");
-            Console.WriteLine($"{target} is now at {target.CurrentHealth}");
+            if (result.WasSuccessful)
+            {
+                target!.ModifyHitPoints(-result.Damage);
+                Console.WriteLine($"{result.Attack} dealt {result.Damage} to {target}");
+                Console.WriteLine($"{target} is now at {target.CurrentHealth}");
+            }
+            else
+            {
+                Console.WriteLine($"{character} missed!");
+            }
         }
 
         Console.WriteLine();
