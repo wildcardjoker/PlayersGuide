@@ -21,3 +21,4 @@ The final battle has arrived. On a volcanic island, enshrouded in a cloud of ash
 - **Expansion**: Items (PR #69)
 - **Expansion**: Gear (PR #71)
 - **Expansion**: Stolen Inventory (PR #72)
+- **Expansion**: Vin Fletcher (PR #73)
