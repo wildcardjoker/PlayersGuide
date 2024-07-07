@@ -7,6 +7,10 @@ namespace FinalBattle.Character;
 /// </summary>
 public abstract class Attack
 {
+    #region Fields
+    private readonly Random random = new Random();
+    #endregion
+
     #region Constructors
     /// <summary>
     ///     Initializes a new instance of the <see cref="Attack" /> class.
@@ -32,7 +36,7 @@ public abstract class Attack
     /// <value>
     ///     The chance to hit.
     /// </value>
-    public float ChanceToHit {get; private set;}
+    public float ChanceToHit {get;}
 
     /// <summary>
     ///     Gets the damage.
@@ -56,6 +60,20 @@ public abstract class Attack
     /// </summary>
     /// <returns>The amount of damage inflicted by the character.</returns>
     public abstract int CalculateDamage();
+
+    /// <summary>
+    ///     Determines whether this attack was successful.
+    /// </summary>
+    /// <returns>
+    ///     <c>true</c> if this attack was successful; otherwise, <c>false</c>.
+    /// </returns>
+    public bool IsSuccess() =>
+        ChanceToHit switch
+        {
+            0 => false,
+            1 => true,
+            _ => random.NextSingle() <= ChanceToHit
+        };
 
     #region Overrides of Object
     /// <inheritdoc />
