@@ -238,5 +238,5 @@ The True Programmer does not have to fight the Uncoded One alone! The hero party
 ### Vin Flecther Objectives
 
 - When an attack generates attack data, it must also include a probability of success. `0` is guaranteed failure, `1` is guaranteed success, `0.5` is 50/50, etc.
-- Modify your attack actino to account for the possibility of missing. If an attack misses, don't damage the target and instead report that the attack missed. For example, `VIN FLETCHER MISSED!`
+- Modify your attack action to account for the possibility of missing the target. If an attack misses, don't damage the target and instead report that the attack missed. For example, `VIN FLETCHER MISSED!`
 - Create a new character type to represent Vin Fletcher. He starts with 15 HP. If you did the `Gear` challenge, Vin should have the same standard *punch* attack the True Programmer has and equip him with a *Vin's Bow* gear with an attack called *quick shot* that deals 3 damage but only successeds 50% of the time. If you did not do the *Gear* challenge, give Vin *quick shot* as his standard attack.
