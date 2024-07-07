@@ -27,9 +27,10 @@ public class AttackData
     /// <param name="damage">The damage.</param>
     public AttackData(Attack attack, string description, int damage = 0)
     {
-        Attack      = attack;
-        Damage      = damage;
-        Description = description;
+        Attack        = attack;
+        Damage        = damage;
+        Description   = description;
+        WasSuccessful = attack.IsSuccess();
     }
     #endregion
 
@@ -57,5 +58,13 @@ public class AttackData
     ///     The description.
     /// </value>
     public string Description {get; private set;}
+
+    /// <summary>
+    ///     Gets a value indicating whether the attack was successful.
+    /// </summary>
+    /// <value>
+    ///     <c>true</c> if the attack was successful; otherwise, <c>false</c>.
+    /// </value>
+    public bool WasSuccessful {get; private set;}
     #endregion
 }
