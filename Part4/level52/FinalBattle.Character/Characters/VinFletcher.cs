@@ -10,10 +10,10 @@ using GearItems;
 /// <summary>
 ///     The True Programmer
 /// </summary>
-public class TrueProgrammer : Character
+public class VinFletcher : Character
 {
     #region Constructors
     /// <inheritdoc />
-    public TrueProgrammer(string name) : base(name, new[] {new Punch()}, 25) => EquippedGear = new Sword();
+    public VinFletcher() : base("Vin Fletcher", new[] {new Punch()}, 15) => EquippedGear = new VinsBow();
     #endregion
 }

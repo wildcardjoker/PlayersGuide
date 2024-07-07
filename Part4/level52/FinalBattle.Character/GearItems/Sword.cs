@@ -9,7 +9,7 @@
     {
         #region Constructors
         /// <inheritdoc />
-        public Sword() : base("slash", 2) {}
+        public Sword() : base("slash", 0.75f, 2) {}
         #endregion
 
         #region Overrides of Attack

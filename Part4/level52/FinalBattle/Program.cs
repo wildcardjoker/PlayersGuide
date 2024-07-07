@@ -20,10 +20,11 @@ Player monsterPlayer = selectedGameMode == GameMode.HumanVsHuman ? new HumanPlay
 
 // Get the True Programmer's name
 var trueProgrammerName = GetResponseFromConsole("What is your name, hero?");
-var trueProgrammer     = new TrueProgrammer(trueProgrammerName) {EquippedGear = new Sword()};
+var trueProgrammer     = new TrueProgrammer(trueProgrammerName);
+var vinFletcher        = new VinFletcher();
 
 // Create the Hero party
-heroPlayer.Parties.Add(new Party(new[] {trueProgrammer}, new[] {new HealthPotion(), new HealthPotion(), new HealthPotion()}, isHeroParty: true));
+heroPlayer.Parties.Add(new Party(new Character[] {trueProgrammer, vinFletcher}, new[] {new HealthPotion(), new HealthPotion(), new HealthPotion()}, isHeroParty: true));
 
 // Create a collection of enemy parties
 monsterPlayer.Parties.Add(new Party(new[] {new Skeleton {EquippedGear = new Dagger()}}, new[] {new HealthPotion()}));
@@ -130,7 +131,7 @@ void DisplayBattleStatus(Party[] battle)
         foreach (var character in party.Characters)
         {
             var stats        = $"( {character.HitPoints.ToString().PadLeft(maxCurrentHpPadding)}/{character.MaxHitPoints.ToString().PadLeft(maxMaxHpPadding)} )";
-            var equippedGear = character.EquippedGear == null ? string.Empty : $" ({character.EquippedGear.GetType().Name})";
+            var equippedGear = character.EquippedGear == null ? string.Empty : $" ({character.EquippedGear.Description})";
             var name         = $"{character.Name}{equippedGear}";
             var nameLength   = name.Length;
             if (character.IsActive)
@@ -263,9 +264,16 @@ bool PerformAction(IEnumerable<Party> parties, Action action, Player player, Cha
         Console.WriteLine(result.Description);
         if (result.Attack != null)
         {
-            target!.ModifyHitPoints(-result.Damage);
-            Console.WriteLine($"{result.Attack} dealt {result.Damage} to {target}");
-            Console.WriteLine($"{target} is now at {target.CurrentHealth}");
+            if (result.WasSuccessful)
+            {
+                target!.ModifyHitPoints(-result.Damage);
+                Console.WriteLine($"{result.Attack} dealt {result.Damage} to {target}");
+                Console.WriteLine($"{target} is now at {target.CurrentHealth}");
+            }
+            else
+            {
+                Console.WriteLine($"{character} missed!");
+            }
         }
 
         Console.WriteLine();

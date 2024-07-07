@@ -8,7 +8,7 @@
     {
         #region Constructors
         /// <inheritdoc />
-        public Punch() : base("punch", 1) {}
+        public Punch() : base("punch", 1, 1) {}
         #endregion
 
         #region Implementation of IAttack

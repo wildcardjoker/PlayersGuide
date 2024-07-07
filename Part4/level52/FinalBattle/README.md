@@ -230,3 +230,13 @@ Id you only did *Items* or *Gear*, some of the objectives below will not apply t
 - If you did the *Items* challenge, when a party is eliminated, transfer all items from the losing party's inventory items to the winning party. Display a message that indicates which items have been acquired. **Note**: It is okay only to do this when the hero party wins. When the monster party wins a battle, the game ends.
 - If you did the *Gear* challenge, when a party is eliminated, transfer all unequipped gear from the losing party's inventory to the winning party. Display a message that indicates when gear has been acquired.
 - If you did the *Gear* challenge, when a character is eliminated, transfer any equipped gear to the winning party's inventory. Display a message that states gear that was acquired.
+
+## Expansion: Vin Fletcher
+
+The True Programmer does not have to fight the Uncoded One alone! The hero party can have other heroes (companions) that should each get their turn to fight. In this challenge, we will add our favourite arrow maker, Vin Fletcher, to the game. This challenge will also add in the possibility for an attack to sometimes miss.
+
+### Vin Flecther Objectives
+
+- When an attack generates attack data, it must also include a probability of success. `0` is guaranteed failure, `1` is guaranteed success, `0.5` is 50/50, etc.
+- Modify your attack action to account for the possibility of missing the target. If an attack misses, don't damage the target and instead report that the attack missed. For example, `VIN FLETCHER MISSED!`
+- Create a new character type to represent Vin Fletcher. He starts with 15 HP. If you did the `Gear` challenge, Vin should have the same standard *punch* attack the True Programmer has and equip him with a *Vin's Bow* gear with an attack called *quick shot* that deals 3 damage but only successeds 50% of the time. If you did not do the *Gear* challenge, give Vin *quick shot* as his standard attack.
