@@ -12,15 +12,28 @@ public abstract class Attack
     ///     Initializes a new instance of the <see cref="Attack" /> class.
     /// </summary>
     /// <param name="name">The name.</param>
-    /// <param name="damage"></param>
-    protected Attack(string name, int damage)
+    /// <param name="chanceToHit">
+    ///     The chance of a successful attack, expressed as a percentage. 0 is an automatic failure, 1 is
+    ///     an automatic hit.
+    /// </param>
+    /// <param name="damage">The amount of damage that the attack inflicts.</param>
+    protected Attack(string name, float chanceToHit, int damage)
     {
-        Name   = name.ToUpper();
-        Damage = damage;
+        Name        = name.ToUpper();
+        ChanceToHit = chanceToHit;
+        Damage      = damage;
     }
     #endregion
 
     #region Properties
+    /// <summary>
+    ///     Gets the chance to hit.
+    /// </summary>
+    /// <value>
+    ///     The chance to hit.
+    /// </value>
+    public float ChanceToHit {get; private set;}
+
     /// <summary>
     ///     Gets the damage.
     /// </summary>

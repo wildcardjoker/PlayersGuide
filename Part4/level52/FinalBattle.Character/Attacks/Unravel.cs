@@ -14,7 +14,7 @@ public class Unravel : Attack
 
     #region Constructors
     /// <inheritdoc />
-    public Unravel() : base("Unravelling", 2) {}
+    public Unravel() : base("Unravelling", 0.8f, 2) {}
     #endregion
 
     #region Implementation of IAttack
