@@ -55,7 +55,7 @@ public static class ExtensionMethods
         Console.WriteLine("You can choose from the following attacks:");
         foreach (var attack in attacks)
         {
-            Console.WriteLine($"{index}: {attack} ({attack.Damage} damage)");
+            Console.WriteLine($"{index}: {attack} ({attack.Damage} damage, {attack.ChanceToHit:P0} chance to hit)");
             index++;
         }
 
