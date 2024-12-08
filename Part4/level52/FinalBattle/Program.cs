@@ -46,6 +46,11 @@ do
             foreach (var character in party.Characters)
             {
                 character.IsActive = true;
+                if (!battle.First(p => !p.IsCurrentParty).Characters.Any())
+                {
+                    battle = new[] {heroPlayer.CurrentParty, monsterPlayer.CurrentParty};
+                }
+
                 DisplayBattleStatus(battle);
 
                 var action = currentPlayer.SelectAction();
