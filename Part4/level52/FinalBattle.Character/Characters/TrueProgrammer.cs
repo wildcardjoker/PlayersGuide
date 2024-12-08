@@ -7,6 +7,7 @@ using Attacks;
 using GearItems;
 #endregion
 
+/// <inheritdoc />
 /// <summary>
 ///     The True Programmer
 /// </summary>
@@ -14,6 +15,6 @@ public class TrueProgrammer : Character
 {
     #region Constructors
     /// <inheritdoc />
-    public TrueProgrammer(string name) : base(name, new[] {new Punch()}, 25) => EquippedGear = new Sword();
+    public TrueProgrammer(string name) : base(name, new[] {new Punch()}, new AttackModifier(), 25) => EquippedGear = new Sword();
     #endregion
 }
