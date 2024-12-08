@@ -28,6 +28,7 @@ heroPlayer.Parties.Add(new Party(new Character[] {trueProgrammer, vinFletcher}, 
 
 // Create a collection of enemy parties
 monsterPlayer.Parties.Add(new Party(new[] {new Skeleton {EquippedGear = new Dagger()}}, new[] {new HealthPotion()}));
+monsterPlayer.Parties.Add(new Party(new[] {new StoneAmarok()},                          Array.Empty<Item>()));
 monsterPlayer.Parties.Add(new Party(new[] {new Skeleton(), new Skeleton()},             new[] {new HealthPotion()}, new[] {new Dagger(), new Dagger()}));
 monsterPlayer.Parties.Add(new Party(new[] {new UncodedOne()},                           new[] {new HealthPotion()}));
 
@@ -266,6 +267,12 @@ bool PerformAction(IEnumerable<Party> parties, Action action, Player player, Cha
         {
             if (result.WasSuccessful)
             {
+                if (target!.AttackModifier.HasModifier)
+                {
+                    result = target.AttackModifier.ModifyAttack(result);
+                    Console.WriteLine(result.Description);
+                }
+
                 target!.ModifyHitPoints(-result.Damage);
                 Console.WriteLine($"{result.Attack} dealt {result.Damage} to {target}");
                 Console.WriteLine($"{target} is now at {target.CurrentHealth}");
