@@ -4,15 +4,16 @@
     using Attacks;
     #endregion
 
+    /// <inheritdoc />
     /// <summary>
     ///     A Skeleton character
     /// </summary>
-    /// <seealso cref="FinalBattle.Character.Character" />
+    /// <seealso cref="T:FinalBattle.Character.Character" />
     public class Skeleton : Character
     {
         #region Constructors
         /// <inheritdoc />
-        public Skeleton() : base("Skeleton", new[] {new BoneCrunch()}, 5) {}
+        public Skeleton() : base("Skeleton", new[] {new BoneCrunch()}, new AttackModifier(), 5) {}
         #endregion
     }
 }

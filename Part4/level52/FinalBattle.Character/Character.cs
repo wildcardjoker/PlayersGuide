@@ -17,17 +17,27 @@
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="attacks">The attacks available to the character</param>
+        /// <param name="attackModifier">The attack modifier (increases or decreases damage incurred)</param>
         /// <param name="hitPoints">The hit points.</param>
-        public Character(string name, IEnumerable<Attack>? attacks, int hitPoints = 10)
+        public Character(string name, IEnumerable<Attack>? attacks, AttackModifier attackModifier, int hitPoints = 10)
         {
-            Name         = name.ToUpper();
-            Attacks      = attacks?.ToList() ?? new List<Attack>();
-            HitPoints    = hitPoints;
-            MaxHitPoints = hitPoints;
+            Name           = name.ToUpper();
+            Attacks        = attacks?.ToList() ?? new List<Attack>();
+            AttackModifier = attackModifier;
+            HitPoints      = hitPoints;
+            MaxHitPoints   = hitPoints;
         }
         #endregion
 
         #region Properties
+        /// <summary>
+        ///     Gets the attack modifier.
+        /// </summary>
+        /// <value>
+        ///     The attack modifier.
+        /// </value>
+        public AttackModifier AttackModifier {get;}
+
         /// <summary>
         ///     Gets the attacks.
         /// </summary>

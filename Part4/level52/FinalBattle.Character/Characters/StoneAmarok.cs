@@ -6,14 +6,14 @@
 
     /// <inheritdoc />
     /// <summary>
-    ///     The Uncoded One
+    ///     A Stone Amarok. Has 4 HP and a Bite attack
     /// </summary>
     /// <seealso cref="T:FinalBattle.Character.Character" />
-    public class UncodedOne : Character
+    public class StoneAmarok : Character
     {
         #region Constructors
         /// <inheritdoc />
-        public UncodedOne() : base("The Uncoded One", new[] {new Unravel()}, new AttackModifier(), 15) {}
+        public StoneAmarok() : base("Stone Amarok", new[] {new Bite()}, new AttackModifier("Stone Armour", -1), 4) {}
         #endregion
     }
 }
