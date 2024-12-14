@@ -278,7 +278,7 @@ bool PerformAction(IEnumerable<Party> parties, Action action, Player player, Cha
                     Console.WriteLine(result.Description);
                 }
 
-                target!.ModifyHitPoints(-result.Damage);
+                target.ModifyHitPoints(-result.Damage);
                 Console.WriteLine($"{result.Attack} dealt {result.Damage} to {target}");
                 Console.WriteLine($"{target} is now at {target.CurrentHealth}");
             }

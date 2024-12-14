@@ -12,19 +12,24 @@ public abstract class Attack
     #endregion
 
     #region Constructors
+    /// <inheritdoc />
+    protected Attack(string name, float chanceToHit, int damage) : this(name, DamageType.Normal, chanceToHit, damage) {}
+
     /// <summary>
     ///     Initializes a new instance of the <see cref="Attack" /> class.
     /// </summary>
     /// <param name="name">The name.</param>
+    /// <param name="damageType">The damage type inflicted by the attack</param>
     /// <param name="chanceToHit">
     ///     The chance of a successful attack, expressed as a percentage. 0 is an automatic failure, 1 is
     ///     an automatic hit.
     /// </param>
     /// <param name="damage">The amount of damage that the attack inflicts.</param>
-    protected Attack(string name, float chanceToHit, int damage)
+    protected Attack(string name, DamageType damageType, float chanceToHit, int damage)
     {
         Name        = name.ToUpper();
         ChanceToHit = chanceToHit;
+        DamageType  = damageType;
         Damage      = damage;
     }
     #endregion
@@ -45,6 +50,8 @@ public abstract class Attack
     ///     The damage.
     /// </value>
     public int Damage {get;}
+
+    public DamageType DamageType {get;}
 
     /// <summary>
     ///     Gets the name.

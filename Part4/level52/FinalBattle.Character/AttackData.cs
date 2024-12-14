@@ -28,7 +28,7 @@ public class AttackData
     public AttackData(Attack attack, string description, int damage = 0)
     {
         Attack        = attack;
-        Damage        = damage;
+        Damage        = Math.Clamp(damage, 0, 100);
         Description   = description;
         WasSuccessful = attack.IsSuccess();
     }
