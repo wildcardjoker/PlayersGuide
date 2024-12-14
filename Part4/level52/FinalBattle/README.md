@@ -235,21 +235,37 @@ Id you only did *Items* or *Gear*, some of the objectives below will not apply t
 
 The True Programmer does not have to fight the Uncoded One alone! The hero party can have other heroes (companions) that should each get their turn to fight. In this challenge, we will add our favourite arrow maker, Vin Fletcher, to the game. This challenge will also add in the possibility for an attack to sometimes miss.
 
-### Vin Flecther Objectives
+### Vin Fletcher Objectives
 
 - When an attack generates attack data, it must also include a probability of success. `0` is guaranteed failure, `1` is guaranteed success, `0.5` is 50/50, etc.
 - Modify your attack action to account for the possibility of missing the target. If an attack misses, don't damage the target and instead report that the attack missed. For example, `VIN FLETCHER MISSED!`
-- Create a new character type to represent Vin Fletcher. He starts with 15 HP. If you did the `Gear` challenge, Vin should have the same standard *punch* attack the True Programmer has and equip him with a *Vin's Bow* gear with an attack called *quick shot* that deals 3 damage but only successeds 50% of the time. If you did not do the *Gear* challenge, give Vin *quick shot* as his standard attack.
+- Create a new character type to represent Vin Fletcher. He starts with 15 HP. If you did the `Gear` challenge, Vin should have the same standard *punch* attack the True Programmer has and equip him with a *Vin's Bow* gear with an attack called *quick shot* that deals 3 damage but only succeeds 50% of the time. If you did not do the *Gear* challenge, give Vin *quick shot* as his standard attack.
 
 ## Expansion: Attack Modifiers
 
-An *attack modifier* is a character attribute that adjusts attacks involving them. We will make only defensive attack modifiers for this challenge, which apply when a character is on th ereceiving end of an attack. You can add offensive attack modifiers as a part of the *Making it Yours* challenge. Attack modifiers are applied when an attack action is being resolved. An attack modifier takes the current attack data as input and produces new, potentially altered attack data. For example, it could reduce the damage done (a resistance to the attack) or increase it (a weakness to the attack). This challenge will add a new monster type with reistance to all attacks, reducing incoming damage by 1.
+An *attack modifier* is a character attribute that adjusts attacks involving them. We will make only defensive attack modifiers for this challenge, which apply when a character is on the receiving end of an attack. You can add offensive attack modifiers as a part of the *Making it Yours* challenge. Attack modifiers are applied when an attack action is being resolved. An attack modifier takes the current attack data as input and produces new, potentially altered attack data. For example, it could reduce the damage done (a resistance to the attack) or increase it (a weakness to the attack). This challenge will add a new monster type with resistance to all attacks, reducing incoming damage by 1.
 
 ### Attack Modifiers Objectives
 
-- The game must be able to represent attack modifiers. Addack modifiers take attack data as an input and produce new attack data as a result, possibly tweaking the attack data in the process. Attack modifiers also have names.
+- The game must be able to represent attack modifiers. Attack modifiers take attack data as an input and produce new attack data as a result, possibly tweaking the attack data in the process. Attack modifiers also have names.
 - All characters should be able to have a defensive attack modifier.
 - When performing an attack, see if the target character has a defensive attack modifier before delivering damage to the target. If it does, allow the modifier to manipulate the attack data and use the modified results instead.
-- When attack modifiers adjust damage, they should report that they changed the damage and by how much. For example, `STONE ARMOUR resudced the attack by 1 point`.
-- The game must support a new *ston amarok* character. Stone amaroks have 4 HP and a standard `bite` attack that deals 1 damage. The also have a defensive attack modifier called `stone armour` that reduces all attacks by 1 damage. If your heroes still only have a 1-point `punch` attack, change something so that the heroes can survive an encounter with stone amaroks.
+- When attack modifiers adjust damage, they should report that they changed the damage and by how much. For example, `STONE ARMOUR reduced the attack by 1 point`.
+- The game must support a new *stone amarok* character. Stone amaroks have 4 HP and a standard `bite` attack that deals 1 damage. The also have a defensive attack modifier called `stone armour` that reduces all attacks by 1 damage. If your heroes still only have a 1-point `punch` attack, change something so that the heroes can survive an encounter with stone amaroks.
 - Add a battle that includes two stone amaroks as monsters.
+
+## Expansion: Damage Types
+
+> [!NOTE]
+> This challenge requires that you have done *Attack Modifiers*.
+
+Attacks should have a damage type that may affect how it works. For now, our damage types must include at least *normal* and *decoding*, but you can add additional damage types (such as *fire* or *ice*) if you want. The damage type primarily adds flavour to the game but also leads to additional game mechanics.
+
+For example, we will give the True Programmer a defensive attack modifier called *Object Sight*, which gives the character resistance to *decoding* damage.
+
+### Damage Types Objectives
+
+- Attack data should include a damage type. You are free to define any damage types that you think make sense, but include the damage types of *normal* (or similar) and *decoding*. **Hint**: An `enum` might be a good choice for this.
+- Have each attack use one of these types when producing damage data. Use whatever damage types you wish, but make the Uncoded One's *unravelling* attack be *decoding* damage.
+- Give the True Programmer character a defensive attack modifier called *Object Sight* that reduces *decoding* damage by 2.
+- Increase the *unravelling* attack to deal `0` to `4` damage randomly, instead of `0` to `2`, ensuring that this attack is the single most powerful attack in the game (but one that the hero has resistance to).
