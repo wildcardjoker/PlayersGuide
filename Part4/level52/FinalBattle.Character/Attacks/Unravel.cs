@@ -2,10 +2,11 @@
 
 namespace FinalBattle.Character.Attacks;
 
+/// <inheritdoc />
 /// <summary>
 ///     An unravelling attack
 /// </summary>
-/// <seealso cref="FinalBattle.Character.Attack" />
+/// <seealso cref="T:FinalBattle.Character.Attack" />
 public class Unravel : Attack
 {
     #region Fields
@@ -14,7 +15,7 @@ public class Unravel : Attack
 
     #region Constructors
     /// <inheritdoc />
-    public Unravel() : base("Unravelling", DamageType.Decoding, 0.8f, 2) {}
+    public Unravel() : base("Unravelling", DamageType.Decoding, 0.8f, 4) {}
     #endregion
 
     #region Implementation of IAttack
