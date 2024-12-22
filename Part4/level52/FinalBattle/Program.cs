@@ -22,9 +22,11 @@ Player monsterPlayer = selectedGameMode == GameMode.HumanVsHuman ? new HumanPlay
 var trueProgrammerName = GetResponseFromConsole("What is your name, hero?");
 var trueProgrammer     = new TrueProgrammer(trueProgrammerName);
 var vinFletcher        = new VinFletcher();
+var mylaraAndSkorin    = new MylaraAndSkorin();
 
 // Create the Hero party
-heroPlayer.Parties.Add(new Party(new Character[] {trueProgrammer, vinFletcher}, new[] {new HealthPotion(), new HealthPotion(), new HealthPotion()}, isHeroParty: true));
+heroPlayer.Parties.Add(
+    new Party(new Character[] {trueProgrammer, vinFletcher, mylaraAndSkorin}, new[] {new HealthPotion(), new HealthPotion(), new HealthPotion()}, isHeroParty: true));
 
 // Create a collection of enemy parties
 monsterPlayer.Parties.Add(new Party(new[] {new Skeleton {EquippedGear = new Dagger()}}, new[] {new HealthPotion()}));
@@ -40,15 +42,23 @@ do
     do
     {
         var battle = new[] {heroPlayer.CurrentParty, monsterPlayer.CurrentParty};
+
         foreach (var party in battle)
         {
-            party.IsCurrentParty = true;
+            party!.IsCurrentParty = true;
             foreach (var character in party.Characters)
             {
-                character.IsActive = true;
-                if (!battle.First(p => !p.IsCurrentParty).Characters.Any())
+                character!.IsActive = true;
+                if (!battle.First(p => !p?.IsCurrentParty ?? false)?.Characters.Any() ?? false)
                 {
                     battle = new[] {heroPlayer.CurrentParty, monsterPlayer.CurrentParty};
+                }
+
+                if (battle.Any(b => b == null))
+                {
+                    // One of the parties has been defeated
+                    battleOver = true;
+                    break;
                 }
 
                 DisplayBattleStatus(battle);
@@ -117,26 +127,26 @@ GameMode GetGameMode()
     return (GameMode) selectedMode;
 }
 
-void DisplayBattleStatus(Party[] battle)
+void DisplayBattleStatus(Party?[] battle)
 {
     const string title               = " BATTLE ";
     const string vs                  = " vs ";
     var          headerLength        = Console.WindowWidth / 2;
     var          header              = new string('=', headerLength - title.Length / 2);
     var          vsHeader            = new string('-', headerLength - vs.Length    / 2);
-    var          maxCurrentHpPadding = (from party in battle select party.Characters.Max(x => x.HitPoints)).Max().ToString().Length;
-    var          maxMaxHpPadding     = (from party in battle select party.Characters.Max(x => x.MaxHitPoints)).Max().ToString().Length;
+    var          maxCurrentHpPadding = (from party in battle select party.Characters.Max(x => x!.HitPoints!)).Max().ToString().Length;
+    var          maxMaxHpPadding     = (from party in battle select party.Characters.Max(x => x!.MaxHitPoints!)).Max().ToString().Length;
     Console.WriteLine($"{header}{title}{header}");
-    foreach (var party in battle.OrderByDescending(x => x.IsCurrentParty))
+    foreach (var party in battle.OrderByDescending(x => x!.IsCurrentParty))
     {
-        if (!party.IsCurrentParty)
+        if (!party!.IsCurrentParty)
         {
             Console.WriteLine($"{vsHeader}{vs}{vsHeader}");
         }
 
         foreach (var character in party.Characters)
         {
-            var stats        = $"( {character.HitPoints.ToString().PadLeft(maxCurrentHpPadding)}/{character.MaxHitPoints.ToString().PadLeft(maxMaxHpPadding)} )";
+            var stats        = $"( {character!.HitPoints.ToString().PadLeft(maxCurrentHpPadding)}/{character.MaxHitPoints.ToString().PadLeft(maxMaxHpPadding)} )";
             var equippedGear = character.EquippedGear == null ? string.Empty : $" ({character.EquippedGear.Description})";
             var name         = $"{character.Name}{equippedGear}";
             var nameLength   = name.Length;
@@ -161,7 +171,7 @@ void EquipItem()
     // Player chooses gear to equip
     // Gear is equipped or player returns to menu.
     int index;
-    var inventory = currentPlayer.CurrentParty.PartyGear;
+    var inventory = currentPlayer!.CurrentParty!.PartyGear;
 
     // If the current player is a computer, select the first available weapon
     // If the current player is a human AND only there is only one equippable item, select it automatically
@@ -204,7 +214,7 @@ void UseItem()
     }
     else
     {
-        var inventory = currentPlayer.CurrentParty.PartyInventory;
+        var inventory = currentPlayer!.CurrentParty!.PartyInventory;
         Console.WriteLine("Your party has the following items");
         for (var i = 0; i < inventory.Items.Count; i++)
         {
@@ -222,16 +232,16 @@ void UseItem()
     currentPlayer.UseItem(index);
 }
 
-bool PerformAction(IEnumerable<Party> parties, Action action, Player player, Character character)
+bool PerformAction(IEnumerable<Party?> parties, Action action, Player player, Character? character)
 {
     {
         var battleOver  = false;
-        var targetParty = parties.First(x => !x.IsCurrentParty);
-        var target      = action == Action.Attack ? targetParty.Characters[player.SelectTarget(targetParty.Characters)] : null;
-        DisplayCharacterAction(character, action, player is ComputerPlayer, target);
+        var targetParty = parties.First(x => !x!.IsCurrentParty!);
+        var target      = action == Action.Attack ? targetParty!.Characters![player.SelectTarget(targetParty!.Characters!)] : null;
+        DisplayCharacterAction(character, action, player is ComputerPlayer, target!);
         if (target?.HitPoints == 0)
         {
-            if (!targetParty.IsHeroParty)
+            if (!targetParty!.IsHeroParty!)
             {
                 LootEnemy(target, character);
             }
@@ -264,7 +274,7 @@ bool PerformAction(IEnumerable<Party> parties, Action action, Player player, Cha
         return battleOver;
     }
 
-    static void DisplayCharacterAction(Character character, Action action, bool isComputerPlayer, Character? target)
+    static void DisplayCharacterAction(Character? character, Action action, bool isComputerPlayer, Character target)
     {
         var result = character.PerformAction(action, isComputerPlayer, target);
         Console.WriteLine(result.Description);
@@ -292,7 +302,7 @@ bool PerformAction(IEnumerable<Party> parties, Action action, Player player, Cha
     }
 }
 
-void LootEnemy(Character target, Character character)
+void LootEnemy(Character target, Character? character)
 {
     // Recover any equipped gear that the enemy was carrying.
     if (target.EquippedGear == null)
@@ -302,30 +312,30 @@ void LootEnemy(Character target, Character character)
 
     var gear = target.EquippedGear;
     Console.WriteLine($"{character} looted {gear.Description} from {target}");
-    currentPlayer.CurrentParty.PartyGear.Items.Add(target.EquippedGear);
+    currentPlayer!.CurrentParty!.PartyGear.Items.Add(target.EquippedGear);
 }
 
-void LootParty(Character character)
+void LootParty(Character? character)
 {
     // Recover any items from the party's inventory.
-    var inventory = monsterPlayer.Parties.First().PartyInventory.Items;
-    if (inventory.Any())
+    var inventory = monsterPlayer.Parties.First()?.PartyInventory.Items;
+    if (inventory?.Any() ?? false)
     {
         foreach (var item in inventory)
         {
             Console.WriteLine($"{character} looted {item}");
-            currentPlayer.CurrentParty.PartyInventory.Items.Add(item);
+            currentPlayer!.CurrentParty!.PartyInventory.Items.Add(item);
         }
     }
 
     // Recover any items from the party's gear inventory.
-    var gearInventory = monsterPlayer.Parties.First().PartyGear.Items;
-    if (gearInventory.Any())
+    var gearInventory = monsterPlayer.Parties.First()?.PartyGear.Items;
+    if (gearInventory?.Any() ?? false)
     {
         foreach (var item in gearInventory)
         {
             Console.WriteLine($"{character} looted {item.Description}");
-            currentPlayer.CurrentParty.PartyGear.Items.Add(item);
+            currentPlayer!.CurrentParty!.PartyGear.Items.Add(item);
         }
     }
 

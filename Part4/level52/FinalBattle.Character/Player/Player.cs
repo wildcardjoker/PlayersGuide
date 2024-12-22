@@ -12,7 +12,7 @@ public abstract class Player
     /// <summary>
     ///     Create a new <c>Player</c> object and initialize the list of parties.
     /// </summary>
-    protected Player() => Parties = new List<Party>();
+    protected Player() => Parties = new List<Party?>();
     #endregion
 
     #region Properties
@@ -22,7 +22,7 @@ public abstract class Player
     /// <value>
     ///     The current character.
     /// </value>
-    public Character CurrentCharacter => CurrentParty.Characters.First(x => x.IsActive);
+    public Character? CurrentCharacter => CurrentParty?.Characters?.First(x => x is {IsActive: true});
 
     /// <summary>
     ///     Gets the current party.
@@ -30,7 +30,7 @@ public abstract class Player
     /// <value>
     ///     The current party.
     /// </value>
-    public Party CurrentParty => Parties.First();
+    public Party? CurrentParty => Parties.FirstOrDefault();
 
     /// <summary>
     ///     Gets the Party associated with this player.
@@ -38,7 +38,7 @@ public abstract class Player
     /// <value>
     ///     The party.
     /// </value>
-    public List<Party> Parties {get;}
+    public List<Party?> Parties {get;}
     #endregion
 
     /// <summary>

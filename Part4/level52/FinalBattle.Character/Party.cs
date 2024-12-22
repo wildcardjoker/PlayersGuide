@@ -18,10 +18,10 @@
         /// <param name="items">The starting items provided to the party.</param>
         /// <param name="availableGear">The starting gear provided to the party.</param>
         /// <param name="isHeroParty">Indicates whether this is the Hero party</param>
-        public Party(IEnumerable<Character>? characters, IEnumerable<Item> items, IEnumerable<Gear>? availableGear = null, bool isHeroParty = false)
+        public Party(IEnumerable<Character?>? characters, IEnumerable<Item> items, IEnumerable<Gear>? availableGear = null, bool isHeroParty = false)
         {
             IsHeroParty    = isHeroParty;
-            Characters     = characters?.ToList() ?? new List<Character>();
+            Characters     = characters?.ToList() ?? new List<Character?>();
             PartyInventory = new Inventory(items);
             PartyGear      = new AvailableGear(availableGear ?? new List<Gear>());
         }
@@ -34,7 +34,7 @@
         /// <value>
         ///     The characters.
         /// </value>
-        public List<Character> Characters {get;}
+        public List<Character?> Characters {get;}
 
         /// <summary>
         ///     Gets a value indicating whether the party has been defeated (no more characters in party).

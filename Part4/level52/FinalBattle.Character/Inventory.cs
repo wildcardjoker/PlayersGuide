@@ -24,7 +24,7 @@ public class Inventory
     public List<Item> Items {get;}
     #endregion
 
-    public void UseItem(Character character, int index)
+    public void UseItem(Character? character, int index)
     {
         Items[index].Use(character);
         Items.RemoveAt(index);
