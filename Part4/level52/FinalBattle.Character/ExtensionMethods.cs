@@ -2,6 +2,10 @@
 
 namespace FinalBattle.Character;
 
+#region Using Directives
+using Attacks;
+#endregion
+
 /// <summary>
 ///     Extension methods for working with Characters and related properties.
 /// </summary>
@@ -18,7 +22,7 @@ public static class ExtensionMethods
     ///     The adjective related to the specified action.
     /// </returns>
     /// <exception cref="ArgumentOutOfRangeException">The specified action is not valid.</exception>
-    public static AttackData PerformAction(this Character character, Action action, bool isComputerPlayer, Character? targetCharacter)
+    public static AttackData PerformAction(this Character? character, Action action, bool isComputerPlayer, Character targetCharacter)
     {
         return action switch
         {
@@ -28,14 +32,20 @@ public static class ExtensionMethods
         };
     }
 
-    private static AttackData AttackTarget(Character character, Attack attack, Character targetCharacter)
+    private static AttackData AttackTarget(Character? character, Attack attack, Character targetCharacter)
     {
         var attackDescription = $"{character} used {attack} on {targetCharacter}.";
         return new AttackData(attack, attackDescription, attack.CalculateDamage());
     }
 
-    private static Attack GetPreferredAttack(bool isComputerPlayer, Character character)
+    private static Attack GetPreferredAttack(bool isComputerPlayer, Character? character)
     {
+        if (character == null)
+        {
+            // no character, no attack
+            return new NoAttack();
+        }
+
         // Computer player always prefers gear-based attack
         if (isComputerPlayer && character.EquippedGear != null)
         {

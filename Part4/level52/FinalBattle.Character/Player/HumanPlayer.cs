@@ -18,7 +18,7 @@ public class HumanPlayer : Player
 
     {
         var actionValues = ((int[]) Enum.GetValues(typeof(Action))).ToList();
-        if (!CurrentParty.PartyInventory.ContainsHealthPotion)
+        if (!CurrentParty!.PartyInventory.ContainsHealthPotion)
         {
             actionValues.Remove((int) Action.UseItem);
         }
@@ -62,5 +62,5 @@ public class HumanPlayer : Player
     }
 
     /// <inheritdoc />
-    public override void UseItem(int index) => CurrentParty.PartyInventory.UseItem(CurrentCharacter, index);
+    public override void UseItem(int index) => CurrentParty!.PartyInventory.UseItem(CurrentCharacter, index);
 }

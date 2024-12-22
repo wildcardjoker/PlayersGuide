@@ -19,10 +19,10 @@ public class HealthPotion : Item
 
     #region Overrides of Item
     /// <inheritdoc />
-    public override void Use(Character character)
+    public override void Use(Character? character)
     {
         Console.WriteLine($"{character} uses {Name}");
-        character.ModifyHitPoints(HealPoints);
+        character!.ModifyHitPoints(HealPoints);
         Console.WriteLine($"{character} HP is now {character.HitPoints}");
     }
     #endregion

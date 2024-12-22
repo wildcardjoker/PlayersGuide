@@ -31,6 +31,6 @@
         /// <summary>
         ///     Uses this instance.
         /// </summary>
-        public abstract void Use(Character character);
+        public abstract void Use(Character? character);
     }
 }

@@ -34,8 +34,14 @@ public class AvailableGear
     /// </summary>
     /// <param name="character">The character.</param>
     /// <param name="index">The index.</param>
-    public void Equip(Character character, int index)
+    public void Equip(Character? character, int index)
     {
+        if (character == null)
+        {
+            // No character to equip the gear
+            return;
+        }
+
         if (character.EquippedGear != null)
         {
             Console.WriteLine($"{character} unequips {character.EquippedGear}");

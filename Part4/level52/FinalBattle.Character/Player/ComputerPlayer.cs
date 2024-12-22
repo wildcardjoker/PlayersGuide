@@ -18,16 +18,16 @@
         /// <inheritdoc />
         public override Action SelectAction()
         {
-            var currentCharacter = CurrentParty.Characters.First(x => x.IsActive);
+            var currentCharacter = CurrentParty!.Characters.First(x => x!.IsActive);
             Thread.Sleep(500); // simulate decision
             var availableActions = Enum.GetNames(typeof(Action)).ToList();
-            if (CurrentParty.PartyInventory.ContainsHealthPotion && currentCharacter.IsWounded && _random.Next(1, 101) <= 25)
+            if (CurrentParty.PartyInventory.ContainsHealthPotion && currentCharacter!.IsWounded && _random.Next(1, 101) <= 25)
             {
                 return Action.UseItem;
             }
 
             // If the character has no gear equipped, and gear is available, always equip it (if the character didn't use a health potion).
-            if (currentCharacter.EquippedGear == null && CurrentParty.IsEquippableGearAvailable)
+            if (currentCharacter!.EquippedGear == null && CurrentParty.IsEquippableGearAvailable)
             {
                 return Action.Equip;
             }
@@ -46,7 +46,7 @@
         {
             // Only Health potions at this stage.
             index = 0;
-            CurrentParty.PartyInventory.UseItem(CurrentCharacter, index);
+            CurrentParty!.PartyInventory.UseItem(CurrentCharacter, index);
         }
     }
 }
