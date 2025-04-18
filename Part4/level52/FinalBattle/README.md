@@ -285,7 +285,7 @@ The possibilities are endless, but here are some ideas:
 - Add offensive attack modifiers.
 - Let characters equip more than one piece of gear.
 - Let gear provide offensive and defensive attack modifiers. (A Binary Helm that reduces all damage done by 1 when equipped, for example.)
-- Experience Points. As heroes defect monsters, give them XP to track their accomplishments.
+- Experience Points. As heroes defeat monsters, give them XP to track their accomplishments.
 - More monster types.
 - Add attack side effects, which allow an attack to run other logic when an attack happens. Maybe a Shadow Octopoid with a *grapple* attack that has a chance of stealing equipped gear.
 - Load levels from a file instead of hardcoding them in the game.
