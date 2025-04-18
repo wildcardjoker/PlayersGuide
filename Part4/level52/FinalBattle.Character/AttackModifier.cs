@@ -13,19 +13,21 @@ public class AttackModifier
 {
     #region Constructors
     /// <inheritdoc />
-    public AttackModifier(string name = "none", int modifier = 0) : this(name, DamageType.Normal, modifier) {}
+    public AttackModifier(string name = "none", int modifier = 0) : this(name, AttackModifierType.Defensive, DamageType.Normal, modifier) {}
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="AttackModifier" /> class.
     /// </summary>
     /// <param name="name">The name of the attack modifier.</param>
+    /// <param name="modifierType">The Attack Modifier type (offensive or defensive).</param>
     /// <param name="resistsDamageType">The type of damage that the attack modifier resists. The default is <c>Normal</c>.</param>
     /// <param name="modifier">The value of the attack modifier.</param>
-    public AttackModifier(string name, DamageType resistsDamageType, int modifier)
+    public AttackModifier(string name, AttackModifierType modifierType, DamageType resistsDamageType, int modifier)
     {
         Name              = name;
         Modifier          = modifier;
         ResistsDamageType = resistsDamageType;
+        ModifierType      = modifierType;
     }
     #endregion
 
@@ -37,6 +39,8 @@ public class AttackModifier
     ///     <c>true</c> if this instance has an Attack Modifier; otherwise, <c>false</c>.
     /// </value>
     public bool HasModifier => Modifier != 0;
+
+    public AttackModifierType ModifierType {get;}
 
     /// <summary>
     ///     Gets the value of the attack modifier.
@@ -62,12 +66,16 @@ public class AttackModifier
     /// </summary>
     /// <param name="attackData">The original attack data.</param>
     /// <returns>A new <c>AttackData</c> object with a modified damage amount.</returns>
-    public AttackData ModifyAttack(AttackData attackData) => attackData.Attack?.DamageType != ResistsDamageType
-                                                                 ? attackData
-                                                                 : new AttackData(
-                                                                     attackData.Attack ?? new NoAttack(),
-                                                                     $"{this} reduced damage by {Math.Abs(Modifier)}",
-                                                                     attackData.Damage + Modifier);
+    public AttackData ModifyAttack(AttackData attackData)
+    {
+        if (Modifier == 0 || (ModifierType == AttackModifierType.Defensive && attackData.Attack?.DamageType != ResistsDamageType))
+        {
+            return attackData;
+        }
+
+        var message = ModifierType == AttackModifierType.Offensive ? $"{this} added {Modifier} damage" : $"{this} reduced damage by {Math.Abs(Modifier)}";
+        return new AttackData(attackData.Attack ?? new NoAttack(), message, attackData.Damage + Modifier);
+    }
 
     #region Overrides of Object
     /// <inheritdoc />

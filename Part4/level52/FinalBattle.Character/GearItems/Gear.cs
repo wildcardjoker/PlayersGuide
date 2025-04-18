@@ -1,8 +1,5 @@
 ﻿namespace FinalBattle.Character.GearItems
 {
-    #region Using Directives
-    #endregion
-
     /// <inheritdoc />
     /// <summary>
     ///     Base class for items.
@@ -15,10 +12,22 @@
 
         #region Constructors
         /// <inheritdoc />
-        protected Gear(string name, float chanceToHit, int damage) : base(name, chanceToHit, damage) {}
+        protected Gear(string name, float chanceToHit, int damage, AttackModifier? attackModifier = null) : base(name, chanceToHit, damage) =>
+            Modifier = attackModifier;
 
         /// <inheritdoc />
-        protected Gear(string name, string description, float chanceToHit, int damage) : base(description, chanceToHit, damage) => Description = name;
+        protected Gear(string name, string description, float chanceToHit, int damage, AttackModifier? attackModifier = null) : base(description, chanceToHit, damage)
+        {
+            Description = name;
+            Modifier    = attackModifier;
+        }
+        #endregion
+
+        #region Properties
+        /// <summary>
+        ///     Modifier applied to the attack's damage or chance to hit.
+        /// </summary>
+        public AttackModifier? Modifier {get;}
         #endregion
 
         #region Overrides of Object
