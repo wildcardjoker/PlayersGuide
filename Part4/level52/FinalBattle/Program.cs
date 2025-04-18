@@ -286,7 +286,15 @@ bool PerformAction(IEnumerable<Party?> parties, Action action, Player player, Ch
         {
             if (result.WasSuccessful)
             {
-                if (target!.AttackModifier.HasModifier)
+                // Apply offensive modifiers to the attack (applies to equipped gear only)
+                if (result.Attack.AttackModifier != null)
+                {
+                    result = result.Attack is Gear ? character!.EquippedGear!.AttackModifier!.ModifyAttack(result) : result.Attack.AttackModifier.ModifyAttack(result);
+                    Console.WriteLine(result.Description);
+                }
+
+                // Apply defensive modifiers to the target
+                if (target.AttackModifier.HasModifier)
                 {
                     result = target.AttackModifier.ModifyAttack(result);
                     Console.WriteLine(result.Description);

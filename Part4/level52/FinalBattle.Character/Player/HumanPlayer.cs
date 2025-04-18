@@ -6,6 +6,11 @@ namespace FinalBattle.Character.Player;
 using Humanizer;
 #endregion
 
+/// <inheritdoc />
+/// <summary>
+///     Represents a Human Player.
+/// </summary>
+/// <seealso cref="T:FinalBattle.Character.Player.Player" />
 public class HumanPlayer : Player
 {
     #region Constructors

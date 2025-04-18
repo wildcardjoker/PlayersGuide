@@ -15,6 +15,11 @@ public class TrueProgrammer : Character
 {
     #region Constructors
     /// <inheritdoc />
-    public TrueProgrammer(string name) : base(name, new[] {new Punch()}, new AttackModifier("Object Sight", DamageType.Decoding, -2), 25) => EquippedGear = new Sword();
+    public TrueProgrammer(string name) : base(
+        name,
+        new Attack[] {new Punch(), new ChargedPunch()},
+        new AttackModifier("Object Sight", AttackModifierType.Defensive, DamageType.Decoding, -2),
+        25) =>
+        EquippedGear = new FlamingSword();
     #endregion
 }

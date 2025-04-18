@@ -15,5 +15,15 @@ public enum DamageType
     /// <summary>
     ///     Decoding damage type.
     /// </summary>
-    Decoding
+    Decoding,
+
+    /// <summary>
+    ///     Fire damage type.
+    /// </summary>
+    Fire,
+
+    /// <summary>
+    ///     Physical damage type.
+    /// </summary>
+    Physical
 }
