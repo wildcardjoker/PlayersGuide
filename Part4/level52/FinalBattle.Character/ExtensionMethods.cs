@@ -27,7 +27,7 @@ public static class ExtensionMethods
         return action switch
         {
             Action.DoNothing => new AttackData($"{character} did NOTHING."),
-            Action.Attack    => AttackTarget(character, GetPreferredAttack(isComputerPlayer, character), targetCharacter!),
+            Action.Attack    => AttackTarget(character, GetPreferredAttack(isComputerPlayer, character), targetCharacter),
             _                => throw new ArgumentOutOfRangeException(nameof(action), action, null)
         };
     }
@@ -61,21 +61,22 @@ public static class ExtensionMethods
         // Allow human player to choose attack.
         var attacks = new List<Attack> {character.EquippedGear}; // Equipped gear is always the first attack option
         attacks.AddRange(character.Attacks);
-        var index = 0;
+        var index = 1;
         Console.WriteLine("You can choose from the following attacks:");
         foreach (var attack in attacks)
         {
-            Console.WriteLine($"{index}: {attack} ({attack.Damage} damage, {attack.ChanceToHit:P0} chance to hit)");
+            var modifier = attack.AttackModifier is null ? string.Empty : $" + {attack.AttackModifier.Modifier} {attack.AttackModifier} damage";
+            Console.WriteLine($"{index}: {attack} ({attack.Damage} damage{modifier}, {attack.ChanceToHit:P0} chance to hit)");
             index++;
         }
 
-        index = -1;
-        while (index < 0)
+        index = 0;
+        while (index < 1 || index > attacks.Count)
         {
             Console.Write("Which attack do you choose? ");
             int.TryParse(Console.ReadLine(), out index);
         }
 
-        return attacks[index];
+        return attacks[index - 1];
     }
 }

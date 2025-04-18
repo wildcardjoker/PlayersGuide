@@ -41,12 +41,12 @@ public class AttackModifier
     /// </value>
     public bool HasModifier => Modifier != 0;
 
-    public AttackModifierType ModifierType {get;}
-
     /// <summary>
     ///     Gets the value of the attack modifier.
     /// </summary>
-    private int Modifier {get; set;}
+    public int Modifier {get; set;}
+
+    public AttackModifierType ModifierType {get;}
 
     /// <summary>
     ///     Gets the name of the attack modifier.
