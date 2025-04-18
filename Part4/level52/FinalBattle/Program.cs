@@ -26,7 +26,10 @@ var mylaraAndSkorin    = new MylaraAndSkorin();
 
 // Create the Hero party
 heroPlayer.Parties.Add(
-    new Party(new Character[] {trueProgrammer, vinFletcher, mylaraAndSkorin}, new[] {new HealthPotion(), new HealthPotion(), new HealthPotion()}, isHeroParty: true));
+    new Party(
+        new Character[] {trueProgrammer, vinFletcher, mylaraAndSkorin},
+        new Item[] {new SimulasSoup(), new HealthPotion(), new HealthPotion(), new HealthPotion()},
+        isHeroParty: true));
 
 // Create a collection of enemy parties
 monsterPlayer.Parties.Add(new Party(new[] {new Skeleton {EquippedGear = new Dagger()}}, new[] {new HealthPotion()}));
@@ -36,6 +39,7 @@ monsterPlayer.Parties.Add(new Party(new[] {new UncodedOne()},                   
 
 // Hero goes first
 var currentPlayer = heroPlayer;
+
 do
 {
     var battleOver = false;
