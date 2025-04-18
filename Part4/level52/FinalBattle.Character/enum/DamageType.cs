@@ -20,5 +20,10 @@ public enum DamageType
     /// <summary>
     ///     Fire damage type.
     /// </summary>
-    Fire
+    Fire,
+
+    /// <summary>
+    ///     Physical damage type.
+    /// </summary>
+    Physical
 }
