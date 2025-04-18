@@ -4,6 +4,7 @@ namespace FinalBattle.Character;
 
 #region Using Directives
 using Attacks;
+using GearItems;
 #endregion
 
 /// <summary>
@@ -45,7 +46,7 @@ public class AttackModifier
     /// <summary>
     ///     Gets the value of the attack modifier.
     /// </summary>
-    private int Modifier {get;}
+    private int Modifier {get; set;}
 
     /// <summary>
     ///     Gets the name of the attack modifier.
@@ -62,18 +63,27 @@ public class AttackModifier
     #endregion
 
     /// <summary>
-    ///     Modifies the attack by Modifier.
+    ///     Modifies the attack by Modifier, including Gear-based modifiers.
     /// </summary>
     /// <param name="attackData">The original attack data.</param>
     /// <returns>A new <c>AttackData</c> object with a modified damage amount.</returns>
     public AttackData ModifyAttack(AttackData attackData)
     {
+        // Handle standard modifiers
         if (Modifier == 0 || (ModifierType == AttackModifierType.Defensive && attackData.Attack?.DamageType != ResistsDamageType))
         {
             return attackData;
         }
 
+        // Check if the attack is Gear-based and apply Gear-specific logic
+        if (attackData.Attack is Gear gear && gear.Modifier != null)
+        {
+            Modifier = gear.Modifier.Modifier;
+        }
+
+        // Standard modifier logic
         var message = ModifierType == AttackModifierType.Offensive ? $"{this} added {Modifier} damage" : $"{this} reduced damage by {Math.Abs(Modifier)}";
+
         return new AttackData(attackData.Attack ?? new NoAttack(), message, attackData.Damage + Modifier);
     }
 

@@ -9,7 +9,7 @@
     {
         #region Constructors
         /// <inheritdoc />
-        public FlamingSword() : base("slash", 0.75f, 2, new AttackModifier("fire", AttackModifierType.Offensive, DamageType.Fire, 2)) {}
+        public FlamingSword() : base("slash", 0.75f, 2, new AttackModifier("fire", AttackModifierType.Offensive, DamageType.Fire, 1)) {}
         #endregion
 
         #region Overrides of Attack
