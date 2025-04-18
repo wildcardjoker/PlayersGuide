@@ -12,37 +12,31 @@
 
         #region Constructors
         /// <inheritdoc />
-        protected Gear(string name, float chanceToHit, int damage, AttackModifier? attackModifier = null) : base(name, chanceToHit, damage) =>
-            Modifier = attackModifier;
+        protected Gear(string name, float chanceToHit, int damage, AttackModifier? attackModifier = null) : base(name, chanceToHit, damage, attackModifier) {}
 
         /// <inheritdoc />
-        protected Gear(string name, string description, float chanceToHit, int damage, AttackModifier? attackModifier = null) : base(description, chanceToHit, damage)
-        {
+        protected Gear(string name, string description, float chanceToHit, int damage, AttackModifier? attackModifier = null) : base(
+            description,
+            chanceToHit,
+            damage,
+            attackModifier) =>
             Description = name;
-            Modifier    = attackModifier;
-        }
         #endregion
 
         #region Properties
         /// <summary>
-        ///     Modifier applied to the attack's damage or chance to hit.
-        /// </summary>
-        public AttackModifier? Modifier {get;}
-        #endregion
-
-        #region Overrides of Object
-        /// <inheritdoc />
-        public override string ToString() => Name;
-
-        /// <summary>
         ///     The gear's description (weapon type)
         /// </summary>
-        /// <returns></returns>
         public string Description
         {
             get => string.IsNullOrWhiteSpace(_description) ? GetType().Name.ToUpper() : _description.ToUpper();
             private set => _description = value;
         }
+        #endregion
+
+        #region Overrides of Object
+        /// <inheritdoc />
+        public override string ToString() => Name;
         #endregion
     }
 }

@@ -76,9 +76,9 @@ public class AttackModifier
         }
 
         // Check if the attack is Gear-based and apply Gear-specific logic
-        if (attackData.Attack is Gear gear && gear.Modifier != null)
+        if (attackData.Attack is Gear {AttackModifier: not null} gear)
         {
-            Modifier = gear.Modifier.Modifier;
+            Modifier = gear.AttackModifier!.Modifier;
         }
 
         // Standard modifier logic

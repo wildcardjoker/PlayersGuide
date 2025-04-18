@@ -13,7 +13,8 @@ public abstract class Attack
 
     #region Constructors
     /// <inheritdoc />
-    protected Attack(string name, float chanceToHit, int damage) : this(name, DamageType.Normal, chanceToHit, damage) {}
+    protected Attack(string name, float chanceToHit, int damage, AttackModifier? attackModifier = null) :
+        this(name, DamageType.Normal, chanceToHit, damage, attackModifier) {}
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="Attack" /> class.
@@ -25,43 +26,45 @@ public abstract class Attack
     ///     an automatic hit.
     /// </param>
     /// <param name="damage">The amount of damage that the attack inflicts.</param>
-    protected Attack(string name, DamageType damageType, float chanceToHit, int damage)
+    /// <param name="attackModifier">The attack modifier applied to this attack.</param>
+    protected Attack(string name, DamageType damageType, float chanceToHit, int damage, AttackModifier? attackModifier = null)
     {
-        Name        = name.ToUpper();
-        ChanceToHit = chanceToHit;
-        DamageType  = damageType;
-        Damage      = damage;
+        Name           = name;
+        DamageType     = damageType;
+        ChanceToHit    = chanceToHit;
+        Damage         = damage;
+        AttackModifier = attackModifier;
     }
     #endregion
 
     #region Properties
     /// <summary>
+    ///     Gets or sets the attack modifier.
+    /// </summary>
+    public AttackModifier? AttackModifier {get;}
+
+    /// <summary>
     ///     Gets the chance to hit.
     /// </summary>
-    /// <value>
-    ///     The chance to hit.
-    /// </value>
     public float ChanceToHit {get;}
 
     /// <summary>
     ///     Gets the damage.
     /// </summary>
-    /// <value>
-    ///     The damage.
-    /// </value>
     public int Damage {get;}
 
+    /// <summary>
+    ///     Gets the damage type.
+    /// </summary>
     public DamageType DamageType {get;}
 
     /// <summary>
     ///     Gets the name.
     /// </summary>
-    /// <value>
-    ///     The name.
-    /// </value>
     protected string Name {get;}
     #endregion
 
+    #region Methods
     /// <summary>
     ///     Calculates the damage.
     /// </summary>
@@ -74,15 +77,8 @@ public abstract class Attack
     /// <returns>
     ///     <c>true</c> if this attack was successful; otherwise, <c>false</c>.
     /// </returns>
-    public bool IsSuccess() =>
-        ChanceToHit switch
-        {
-            0 => false,
-            1 => true,
-            _ => random.NextSingle() <= ChanceToHit
-        };
+    public bool IsSuccess() => random.NextDouble() < ChanceToHit;
 
-    #region Overrides of Object
     /// <inheritdoc />
     public override string ToString() => Name;
     #endregion
