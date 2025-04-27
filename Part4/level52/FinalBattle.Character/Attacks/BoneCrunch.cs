@@ -14,7 +14,7 @@ public class BoneCrunch : Attack
 
     #region Constructors
     /// <inheritdoc />
-    public BoneCrunch() : base("bone crunch", 0.3f, 2) {}
+    public BoneCrunch() : base("bone crunch", 0.8f, 2) {}
     #endregion
 
     #region Implementation of IAttack
