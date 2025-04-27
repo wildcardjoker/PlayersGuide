@@ -280,16 +280,25 @@ Use your best judgement when awarding yourself XP, comparing what you've chosen 
 
 The possibilities are endless, but here are some ideas:
 
-- More heroes. You could add Mylara and Skorin, whose gear (or standard attack) is the Cannon of Consolas, which deals 1 damage most of the time, 2 damage every multiple of 3 or 5, and 5 damage every multiple of 3 and 5. (This adds some continuity from the early part of the book!)
-- Add more item types. Maybe Simula's soup is a full heal, restoring HP to its maximum.
-- Add offensive attack modifiers.
+- More heroes. You could add Mylara and Skorin, whose gear (or standard attack) is the Cannon of Consolas, which deals 1 damage most of the time, 2 damage every multiple of 3 or 5, and 5 damage every multiple of 3 and 5. (This adds some continuity from the early part of the book!) *Implemented in [PR 78](https://github.com/wildcardjoker/PlayersGuide/pull/78)*
+- Add more item types. Maybe Simula's soup is a full heal, restoring HP to its maximum. *Implemented in [PR 79](https://github.com/wildcardjoker/PlayersGuide/pull/79)*
+- Add offensive attack modifiers. *Implemented in [PR 80](https://github.com/wildcardjoker/PlayersGuide/pull/80)*
 - Let characters equip more than one piece of gear.
 - Let gear provide offensive and defensive attack modifiers. (A Binary Helm that reduces all damage done by 1 when equipped, for example.)
 - Experience Points. As heroes defeat monsters, give them XP to track their accomplishments.
-- More monster types.
+- More monster types. *(Lazily) Implemented in [PR 81](https://github.com/wildcardjoker/PlayersGuide/pull/81)*
 - Add attack side effects, which allow an attack to run other logic when an attack happens. Maybe a Shadow Octopoid with a *grapple* attack that has a chance of stealing equipped gear.
 - Load levels from a file instead of hardcoding them in the game.
 - Display a small indicator in the status display that gives you a warning if a character is close to death. Perhaps a yellow [!] if the character is under 25% and a red [!] if the character is under 10%.
 - Allow characters to taunt their enemies with messages like the Uncoded One saying `<<THE UNRAVELLING OF ALL THINGS IS INEVITABLE>>` and a skeleton saying `We will repel your spineless assault!`
 - Allow characters to have temporary effects applied to them. For example, a poison effect that deals 1 damage per turn for three turns.
 - Strip out all *C# Player's Guide*-specific elements and re-theme the game into your own creation.
+
+## Expansion: Restoring Balance
+
+Depending on the challenges you completed, the game is likely not very balanced anymore. Either the heroes or the monsters win all the time. Without changing logic and mechanics, adjust things like potion counts, attack strengths and probabilities, the number of battles and monsters they contain to produce a version of the game where if you play wisely, you are likely to win, but if you play poorly, you will lose.
+
+### Restoring Balance Objectives
+
+- Tweak aspects of the game (no need to write new logic, just change parameters and character counts, etc.) until you have something challenging and fun.
+- Do what you can to ensure that the Uncoded One feels formidable.
