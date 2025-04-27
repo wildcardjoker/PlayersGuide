@@ -19,7 +19,7 @@ public class TrueProgrammer : Character
         name,
         new Attack[] {new Punch(), new ChargedPunch()},
         new AttackModifier("Object Sight", AttackModifierType.Defensive, DamageType.Decoding, -2),
-        25) =>
+        20) =>
         EquippedGear = new FlamingSword();
     #endregion
 }
