@@ -36,7 +36,7 @@ monsterPlayer.Parties.Add(new Party(new[] {new Rat()},                          
 monsterPlayer.Parties.Add(new Party(new[] {new Skeleton {EquippedGear = new Dagger()}}, new[] {new HealthPotion()}));
 monsterPlayer.Parties.Add(new Party(new[] {new StoneAmarok()},                          Array.Empty<Item>()));
 monsterPlayer.Parties.Add(new Party(new[] {new Skeleton(), new Skeleton()},             new[] {new HealthPotion()}, new[] {new Dagger(), new Dagger()}));
-monsterPlayer.Parties.Add(new Party(new[] {new UncodedOne()},                           new[] {new HealthPotion()}));
+monsterPlayer.Parties.Add(new Party(new[] {new UncodedOne()},                           new[] {new HealthPotion(), new HealthPotion(), new HealthPotion()}));
 
 // Hero goes first
 var currentPlayer = heroPlayer;
@@ -98,8 +98,18 @@ do
 }
 while (heroPlayer.Parties.Any() && monsterPlayer.Parties.Any());
 
-Console.WriteLine(
-    heroPlayer.Parties.Any() ? "The heroes have won, and the Uncoded One has been defeated!" : "The heroes have lost, and the Uncoded One's forces have prevailed...");
+if (heroPlayer.Parties.Any())
+{
+    Console.ForegroundColor = ConsoleColor.Green;
+    Console.WriteLine("The heroes have won, and the Uncoded One has been defeated!");
+}
+else
+{
+    Console.ForegroundColor = ConsoleColor.Red;
+    Console.WriteLine("The heroes have lost, and the Uncoded One's forces have prevailed...");
+}
+
+Console.ResetColor();
 return;
 
 static string GetResponseFromConsole(string message)

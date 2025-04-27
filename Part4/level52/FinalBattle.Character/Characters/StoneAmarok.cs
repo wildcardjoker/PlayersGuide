@@ -13,7 +13,7 @@
     {
         #region Constructors
         /// <inheritdoc />
-        public StoneAmarok() : base("Stone Amarok", new[] {new Bite()}, new AttackModifier("Stone Armour", -1), 4) {}
+        public StoneAmarok() : base("Stone Amarok", new[] {new Bite()}, new AttackModifier("Stone Armour", -1), 5) {}
         #endregion
     }
 }

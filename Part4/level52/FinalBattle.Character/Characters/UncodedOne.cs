@@ -13,7 +13,7 @@
     {
         #region Constructors
         /// <inheritdoc />
-        public UncodedOne() : base("The Uncoded One", new[] {new Unravel()}, new AttackModifier(), 15) {}
+        public UncodedOne() : base("The Uncoded One", new[] {new Unravel()}, new AttackModifier(), 70) {}
         #endregion
     }
 }

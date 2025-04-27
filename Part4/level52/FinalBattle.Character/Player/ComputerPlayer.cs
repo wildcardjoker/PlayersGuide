@@ -1,9 +1,10 @@
 ﻿namespace FinalBattle.Character.Player
 {
+    /// <inheritdoc />
     /// <summary>
     ///     A computer/AI player. All decisions are made by the computer.
     /// </summary>
-    /// <seealso cref="IPlayer" />
+    /// <seealso cref="T:FinalBattle.Character.Player.Player" />
     public class ComputerPlayer : Player
     {
         #region Fields
@@ -32,10 +33,11 @@
                 return Action.Equip;
             }
 
-            availableActions.Remove(Action.UseItem.ToString());
-            availableActions.Remove(Action.Equip.ToString());
-            var selectedAction = _random.Next(availableActions.Count) + 1;
-            return (Action) selectedAction;
+            availableActions.Remove(nameof(Action.UseItem));
+            availableActions.Remove(nameof(Action.Equip));
+            return (Action) _random.Next(availableActions.Count) + 1;
+
+            //return selectedAction == Action.DoNothing ? Action.Attack : selectedAction; // Never do nothing.
         }
 
         /// <inheritdoc />

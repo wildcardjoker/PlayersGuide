@@ -80,6 +80,6 @@ public abstract class Attack
     public bool IsSuccess() => random.NextDouble() < ChanceToHit;
 
     /// <inheritdoc />
-    public override string ToString() => Name;
+    public override string ToString() => Name.ToUpper();
     #endregion
 }

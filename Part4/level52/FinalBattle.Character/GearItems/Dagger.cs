@@ -9,7 +9,7 @@
     {
         #region Constructors
         /// <inheritdoc />
-        public Dagger() : base("stab", 0.8f, 1) {}
+        public Dagger() : base("stab", 0.9f, 1) {}
         #endregion
 
         #region Overrides of Attack

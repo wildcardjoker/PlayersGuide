@@ -13,7 +13,7 @@
     {
         #region Constructors
         /// <inheritdoc />
-        public Skeleton() : base("Skeleton", new[] {new BoneCrunch()}, new AttackModifier(), 5) {}
+        public Skeleton() : base("Skeleton", new[] {new BoneCrunch()}, new AttackModifier()) {}
         #endregion
     }
 }
