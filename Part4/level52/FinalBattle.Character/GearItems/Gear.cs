@@ -36,7 +36,7 @@
 
         #region Overrides of Object
         /// <inheritdoc />
-        public override string ToString() => Name;
+        public override string ToString() => Name.ToUpper();
         #endregion
     }
 }
