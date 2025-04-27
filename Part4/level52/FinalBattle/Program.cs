@@ -32,6 +32,7 @@ heroPlayer.Parties.Add(
         isHeroParty: true));
 
 // Create a collection of enemy parties
+monsterPlayer.Parties.Add(new Party(new[] {new Rat()},                                  Array.Empty<Item>(), Array.Empty<Gear>()));
 monsterPlayer.Parties.Add(new Party(new[] {new Skeleton {EquippedGear = new Dagger()}}, new[] {new HealthPotion()}));
 monsterPlayer.Parties.Add(new Party(new[] {new StoneAmarok()},                          Array.Empty<Item>()));
 monsterPlayer.Parties.Add(new Party(new[] {new Skeleton(), new Skeleton()},             new[] {new HealthPotion()}, new[] {new Dagger(), new Dagger()}));
